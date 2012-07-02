@@ -22,7 +22,7 @@ import "FieldSpec.proto";
 
 // define static message fields for meta data
 extend google.protobuf.MessageOptions {
-	optional int32 optionTypeIndex = 50001; // message type index
+	optional sint32 optionTypeIndex = 50001; // message type index
 	optional string optionExtensionPrefix = 50002; // message type name prefix
 	optional string optionEnumNameSuffix = 50003; // message enum name suffix
 }
@@ -100,6 +100,7 @@ message MarketData {
 		RESET_CUVOL = 4;
 	}
 
+	//
 	optional Type type = 1;
 	//
 	optional sint64 marketId = 2; // market guid; base for entries
@@ -124,7 +125,7 @@ message MarketNews {
 	}
 
 	optional Type type = 1;
-	optional int64 marketId = 2;
+	optional sint64 marketId = 2;
 	repeated MarketNewsEntry entry = 3;
 }
 
@@ -151,12 +152,12 @@ message LoginResponse {
 
 //
 message InstrumentRequest {
-	optional int64 marketId = 1;
+	optional sint64 marketId = 1;
 }
 
 // minimum market-state required entries
 message InstrumentResponse {
-	optional int64 marketId = 1;
+	optional sint64 marketId = 1;
 	optional Decimal priceIncrement = 2;
 	optional string marketDescriptor = 3; // complete json object
 }
@@ -171,7 +172,7 @@ message DataSubscribeRequest {
 	}
 
 	repeated Type type = 1; // empty means none
-	optional int64 marketId = 2;
+	optional sint64 marketId = 2;
 }
 
 //
@@ -183,7 +184,7 @@ message DataSubscribeResponse {
 	}
 
 	optional Type type = 1;
-	optional int64 marketId = 2;
+	optional sint64 marketId = 2;
 	optional string comment = 3;
 }
 
@@ -198,7 +199,7 @@ message NewsSubscribeRequest {
 	}
 
 	repeated Type type = 1;
-	optional int64 marketId = 2;
+	optional sint64 marketId = 2;
 }
 
 message NewsSubscribeResponse {
@@ -209,7 +210,7 @@ message NewsSubscribeResponse {
 	}
 
 	optional Type type = 1;
-	optional int64 marketId = 2;
+	optional sint64 marketId = 2;
 	optional string comment = 3;
 }
 
@@ -217,7 +218,7 @@ message NewsSubscribeResponse {
 
 // bidirectional keep alive
 message HeartBeat {
-	optional int64 interval = 1;
+	optional sint64 interval = 1;
 }
 
 // ##################################################

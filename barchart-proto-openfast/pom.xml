@@ -32,7 +32,7 @@
 
 		<!-- MAIN -->
 
-		<!-- protocol buffers -->
+		<!-- fix/fast -->
 		<dependency>
 			<groupId>org.openfast</groupId>
 			<artifactId>openfast</artifactId>
