@@ -14,12 +14,34 @@ option java_generate_equals_and_hash = true;
 //
 option optimize_for = SPEED;
 
-// base - entry contract
+//
 /**
  *
- * actualValue = baseValue + entryOffset
+ * base - entry contracts:
+ *
+ * 1) actualValue = baseValue + entryOffset
+ *
+ * 2) actualValue = entryOverride over baseDefault
  *
  */
+
+ //
+ /**
+  * enum rules
+  *
+  * 1) index in 0...127 takes 1 byte on wire
+  *
+  * 2) index in 128 and more takes varInt128 more bytes on wire
+  *
+  * 3) keep most frequent first
+  *
+  * 4) can not change name/index after published
+  *
+  * 5) can add more new name/index
+  *
+  * 6) can add more name for same index
+  *
+  */
 
 // price, size, percent
 message Decimal {
@@ -65,13 +87,14 @@ message MarketDataEntry {
 		PERIOD_MONTH = 6;
 		PERIOD_YEAR = 7;
 		//
-		SESSION_OVERNIGHT = 10; // FORM-T, etc
+		SESSION_OVERNIGHT = 51; // such as FORM-T
 		//
 		STATUS_MARKET_OPEN = 101;
 		STATUS_MARKET_CLOSE = 102;
 		STATUS_MARKET_PRE_OPEN = 103;
 		STATUS_MARKET_PRE_CLOSE = 104;
 		//
+		// XXX 128 XXX
 	}
 	// entry action
 	enum Action {

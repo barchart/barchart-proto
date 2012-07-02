@@ -31,56 +31,56 @@ extend google.protobuf.MessageOptions {
 // note: order by most frequent first
 // note: must use suffix due to global scope
 enum MessageType {
-	MarketDataType = 100;
-	MarketNewsType = 101;
+//
+	MarketDataType = 50;
+	MarketNewsType = 51;
 	//
-	DataSubscribeRequestType = 102;
-	DataSubscribeResponseType = 103;
+	DataSubscribeRequestType = 100;
+	DataSubscribeResponseType = 101;
 	//
-	NewsSubscribeRequestType = 104;
-	NewsSubscribeResponseType = 105;
+	NewsSubscribeRequestType = 102;
+	NewsSubscribeResponseType = 103;
 	//
-	InstrumentRequestType = 106;
-	InstrumentResponseType = 107;
+	InstrumentRequestType = 104;
+	InstrumentResponseType = 105;
 	//
-	LoginRequestType = 108;
-	LoginResponseType = 109;
+	LoginRequestType = 106;
+	LoginResponseType = 107;
 	//
-	MarketStatusType = 110;
+	HeartBeatType = 127;
 	//
-	HeartBeatType = 111;
-	//
+	// XXX 128 XXX takes 2 bytes
 }
 
 // forward declaration of sub types / extensions
 // note: keep in sync with enum
 // note: must use prefix due to global scope
 extend Base {
-	optional MarketData messageMarketData = 100;
-	optional MarketNews messageMarketNews = 101;
+//
+	optional MarketData messageMarketData = 50;
+	optional MarketNews messageMarketNews = 51;
 	//
-	optional DataSubscribeRequest messageDataSubscribeRequest = 102;
-	optional DataSubscribeResponse messageDataSubscribeResponse = 103;
+	optional DataSubscribeRequest messageDataSubscribeRequest = 100;
+	optional DataSubscribeResponse messageDataSubscribeResponse = 101;
 	//
-	optional NewsSubscribeRequest messageNewsSubscribeRequest = 104;
-	optional NewsSubscribeResponse messageNewsSubscribeResponse = 105;
+	optional NewsSubscribeRequest messageNewsSubscribeRequest = 102;
+	optional NewsSubscribeResponse messageNewsSubscribeResponse = 103;
 	//
-	optional LoginRequest messageLoginRequest = 106;
-	optional LoginResponse messageLoginResponse = 107;
+	optional LoginRequest messageLoginRequest = 104;
+	optional LoginResponse messageLoginResponse = 105;
 	//
-	optional InstrumentRequest messageInstrumentRequest = 108;
-	optional InstrumentResponse messageInstrumentResponse = 109;
+	optional InstrumentRequest messageInstrumentRequest = 106;
+	optional InstrumentResponse messageInstrumentResponse = 107;
 	//
-	optional MarketStatus messageMarketStatus = 110;
+	optional HeartBeat messageHeartBeat = 127;
 	//
-	optional HeartBeat messageHeartBeat = 111;
 }
 
 // message base for extensions / sub types
 message Base {
 	option (optionEnumNameSuffix) = "Type"; // rule for enum names
 	option (optionExtensionPrefix) = "message"; // rule for extension names
-	extensions 100 to max; // message polymorph range
+	extensions 50 to 127; // message polymorph range
 	//
 	optional MessageType type = 1; // message type selector
 	optional int64 sequence = 2; // message sequence number
@@ -157,22 +157,6 @@ message InstrumentResponse {
 	optional int64 marketId = 1;
 	optional Decimal priceIncrement = 2;
 	optional string marketDescriptor = 3; // complete json object
-}
-
-// ##################################################
-
-// state transitions
-message MarketStatus {
-	enum Type {
-		OPENED = 0;
-		CLOSED = 1;
-		PRE_OPEN = 2;
-		PRE_CLOSE = 3;
-	}
-
-	optional Type type = 1;
-	optional int64 marketId = 2;
-	optional string comment = 3;
 }
 
 // ##################################################

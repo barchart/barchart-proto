@@ -23,9 +23,12 @@ public class Factory {
 		return RANDOM.getAndIncrement() % size;
 	}
 
+	static final MarketDataEntry.Descriptor[] DESC_VALS = MarketDataEntry.Descriptor
+			.values();
+
 	static MarketDataEntry.Descriptor getDescriptorMod(final int size) {
-		final int index = getIntMod(size);
-		return MarketDataEntry.Descriptor.valueOf(index);
+		final int index = getIntMod(size) % DESC_VALS.length;
+		return DESC_VALS[index];
 	}
 
 	public enum Mode {
