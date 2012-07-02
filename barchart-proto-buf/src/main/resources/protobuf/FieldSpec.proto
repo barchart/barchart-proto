@@ -27,54 +27,9 @@ message Decimal {
 	optional sint32 exponent = 2;
 }
 
+
 // universal data entry field
 message MarketDataEntry {
-	enum Type {
-	//
-		TRADE = 0;
-		//
-		BID = 1; // book side
-		ASK = 2; // book side
-		//
-		OPEN = 3;
-		HIGH = 4;
-		LOW = 5;
-		CLOSE = 6;
-		SETTLE = 7;
-		//
-		VOLUME = 8;
-		INTEREST = 9;
-		//
-		CUVOL = 10;
-		//
-	}
-
-	enum Action {
-		ADD = 0; // new, create, insert
-		EDIT = 1; // merge, modify, replace, override, overlay
-		REMOVE = 2; // delete, erase, clear, reset
-	}
-	//
-	// keep frequent field index in 1..15 range
-	//
-	optional Type type = 1;
-	optional Action action = 2;
-	optional int64 marketId = 3; // override base;
-	optional int64 sequence = 4; // market-local sequence number
-	optional sint64 timeStamp = 5; // offset to base; millisUTC
-	//
-	optional Decimal price = 6;
-	optional Decimal size = 7;
-	//
-	optional sint64 index = 8; // such as book level, cuvol position, etc
-	//
-	optional sint32 tradeDate = 9; // offset to base; days
-	//
-	optional sint32 timeStampMicro = 15; // offset to timeStamp; microsUTC: :-)
-}
-
-// alternative rendering of decimal : flat price/size
-message MarketDataEntry2 {
 // primary entry category; single
 	enum Type {
 	//
@@ -127,11 +82,9 @@ message MarketDataEntry2 {
 	optional int64 sequence = 5; // market-local sequence number
 	optional sint64 timeStamp = 6; // offset to base; millisUTC
 	//
-	// XXX
 	optional sint64 priceMantissa = 7;
 	optional sint32 priceExponent = 8;
 	//
-	// XXX
 	optional sint64 sizeMantissa = 9;
 	optional sint32 sizeExponent = 10;
 	//

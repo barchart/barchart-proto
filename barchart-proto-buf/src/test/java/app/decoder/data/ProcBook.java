@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.barchart.feed.base.book.api.MarketDoBookEntry;
 import com.barchart.feed.base.market.api.MarketDo;
-import com.barchart.proto.buf.MarketDataEntry2.Descriptor;
+import com.barchart.proto.buf.MarketDataEntry.Descriptor;
 import com.barchart.util.values.api.TimeValue;
 
 public class ProcBook {

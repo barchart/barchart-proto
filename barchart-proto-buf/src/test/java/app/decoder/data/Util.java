@@ -3,8 +3,8 @@ package app.decoder.data;
 import org.joda.time.DateTimeZone;
 import org.joda.time.MutableDateTime;
 
-import com.barchart.proto.buf.MarketData2;
-import com.barchart.proto.buf.MarketDataEntry2;
+import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry;
 import com.barchart.util.values.api.PriceValue;
 import com.barchart.util.values.api.SizeValue;
 import com.barchart.util.values.api.TimeValue;
@@ -15,8 +15,8 @@ import com.barchart.util.values.provider.ValueConst;
 public class Util {
 
 	/** entry overrides message; 0 is default */
-	public static int getPriceExponent(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static int getPriceExponent(final MarketData message,
+			final MarketDataEntry entry) {
 
 		if (entry.hasPriceExponent()) {
 			return entry.getPriceExponent();
@@ -31,8 +31,8 @@ public class Util {
 	}
 
 	/** entry overrides message; 0 is default */
-	public static int getSizeExponent(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static int getSizeExponent(final MarketData message,
+			final MarketDataEntry entry) {
 
 		if (entry.hasSizeExponent()) {
 			return entry.getSizeExponent();
@@ -47,8 +47,8 @@ public class Util {
 	}
 
 	/** NULL_PRICE for missing */
-	public static PriceValue getPrice(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static PriceValue getPrice(final MarketData message,
+			final MarketDataEntry entry) {
 
 		if (entry.hasPriceMantissa()) {
 
@@ -66,8 +66,8 @@ public class Util {
 	}
 
 	/** NULL_SIZE for missing; need change XXX type */
-	public static SizeValue getSize(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static SizeValue getSize(final MarketData message,
+			final MarketDataEntry entry) {
 
 		if (entry.hasSizeMantissa()) {
 
@@ -84,8 +84,8 @@ public class Util {
 	}
 
 	/** entry is offset to message; default XXX for missing */
-	public static TimeValue getTimeStamp(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static TimeValue getTimeStamp(final MarketData message,
+			final MarketDataEntry entry) {
 
 		final boolean isValid = message.hasTimeStamp() || entry.hasTimeStamp();
 
@@ -106,8 +106,8 @@ public class Util {
 	}
 
 	/** entry is offset to message; default XXX for missing */
-	public static TimeValue getTradeDate(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static TimeValue getTradeDate(final MarketData message,
+			final MarketDataEntry entry) {
 
 		final boolean isValid = message.hasTradeDate() || entry.hasTradeDate();
 
@@ -131,16 +131,16 @@ public class Util {
 
 	}
 
-	public static boolean hasMarketId(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static boolean hasMarketId(final MarketData message,
+			final MarketDataEntry entry) {
 
 		return message.hasMarketId() || entry.hasMarketId();
 
 	}
 
 	/** entry overrides message; 0 for missing */
-	public static long getMarketId(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static long getMarketId(final MarketData message,
+			final MarketDataEntry entry) {
 
 		if (entry.hasMarketId()) {
 			return entry.getMarketId();
@@ -155,8 +155,8 @@ public class Util {
 	}
 
 	/** entry is offset to message; 0 for missing */
-	public static long getSequence(final MarketData2 message,
-			final MarketDataEntry2 entry) {
+	public static long getSequence(final MarketData message,
+			final MarketDataEntry entry) {
 
 		return message.getSequence() + entry.getSequence();
 

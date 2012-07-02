@@ -64,6 +64,8 @@ public class Util {
 
 		final Inflater zipper = zipUnpack.get();
 
+		zipper.reset();
+
 		zipper.setInput(arrayIn, 0, arrayIn.length);
 
 		final int sizeOut = zipper.inflate(arrayOut);

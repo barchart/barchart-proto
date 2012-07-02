@@ -7,9 +7,8 @@ import app.decoder.cons.MessageTarget;
 import app.decoder.proc.MarketProcessor;
 
 import com.barchart.proto.buf.Base;
-import com.barchart.proto.buf.MarketData2;
-import com.barchart.proto.buf.MarketDataEntry2;
-import com.barchart.proto.buf.MarketDataEntry2.Type;
+import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry;
 import com.barchart.proto.buf.MessageCodec;
 import com.barchart.proto.buf.MessageVisitor;
 
@@ -29,21 +28,21 @@ public class MainDecoder {
 
 		// ######## encode
 
-		final MarketDataEntry2.Builder entryBuilder = MarketDataEntry2
+		final MarketDataEntry.Builder entryBuilder = MarketDataEntry
 				.newBuilder();
 
-		entryBuilder.setType(Type.TRADE);
+		entryBuilder.setType(MarketDataEntry.Type.TRADE);
 		entryBuilder.setMarketId(123);
 
-		final MarketDataEntry2 dataEntry = entryBuilder.build();
+		final MarketDataEntry dataEntry = entryBuilder.build();
 
 		//
 
-		final MarketData2.Builder messageBuilder = MarketData2.newBuilder();
+		final MarketData.Builder messageBuilder = MarketData.newBuilder();
 
 		messageBuilder.addEntry(dataEntry);
 
-		final MarketData2 message = messageBuilder.build();
+		final MarketData message = messageBuilder.build();
 
 		//
 

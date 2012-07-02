@@ -87,8 +87,8 @@ public class MessageCodec {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	private static <MESSAGE extends Message> MESSAGE castType(
-			final Base base, final Class<MESSAGE> klaz) throws Exception {
+	private static <MESSAGE extends Message> MESSAGE castType(final Base base,
+			final Class<MESSAGE> klaz) throws Exception {
 
 		final GeneratedExtension<Base, Message> extension = messageMetaMap
 				.get(klaz).extension;
@@ -136,12 +136,6 @@ public class MessageCodec {
 			break;
 		case MarketNewsType:
 			visitor.apply(base.getExtension(messageMarketNews), market);
-			break;
-
-		// experimental
-
-		case MarketData2Type:
-			visitor.apply(base.getExtension(messageMarketData2), market);
 			break;
 
 		default:

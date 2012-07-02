@@ -5,12 +5,11 @@ import java.io.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import bench.message.Factory.Mode;
 import bench.zip_jdk.Util;
 
 import com.barchart.proto.buf.Base;
-import com.barchart.proto.buf.Decimal;
 import com.barchart.proto.buf.MarketData;
-import com.barchart.proto.buf.MarketDataEntry;
 import com.barchart.proto.buf.MessageCodec;
 import com.barchart.proto.buf.MessageVisitor;
 
@@ -27,110 +26,18 @@ public class MainMarketDataSpeed {
 	static final long A_LONG = Long.MAX_VALUE - 3;
 	static final int AN_INT = Integer.MAX_VALUE - 3;
 
-	static MarketDataEntry buildFieldHard() {
+	static Base buildBase(final Mode mode) {
 
-		final MarketDataEntry.Builder builder = MarketDataEntry.newBuilder();
-
-		builder.setType(MarketDataEntry.Type.OPEN);
-		builder.setAction(MarketDataEntry.Action.EDIT);
-
-		builder.setMarketId(A_LONG);
-		builder.setSequence(A_LONG);
-
-		final Decimal price = Decimal.newBuilder().setMantissa(A_LONG)
-				.setExponent(AN_INT).build();
-
-		final Decimal size = Decimal.newBuilder().setMantissa(A_LONG)
-				.setExponent(AN_INT).build();
-
-		builder.setPrice(price);
-		builder.setSize(size);
-		builder.setIndex(A_LONG);
-
-		builder.setTimeStamp(A_LONG);
-		builder.setTradeDate(AN_INT);
-
-		return builder.build();
-
-	}
-
-	static MarketDataEntry buildFieldEasy() {
-
-		final MarketDataEntry.Builder builder = MarketDataEntry.newBuilder();
-
-		builder.setType(MarketDataEntry.Type.BID);
-		builder.setAction(MarketDataEntry.Action.ADD);
-
-		// builder.setMarketId(AN_INT);
-		// builder.setSequence(AN_INT);
-
-		final Decimal price = Decimal.newBuilder().setMantissa(123456)
-				.setExponent(-2).build();
-
-		final Decimal size = Decimal.newBuilder().setMantissa(123)
-				.setExponent(0).build();
-
-		builder.setPrice(price);
-		builder.setSize(size);
-		builder.setIndex(123);
-
-		// builder.setTimeStamp(123);
-		// builder.setTradeDate(123);
-
-		return builder.build();
-
-	}
-
-	static MarketData buildMessageHard() {
-
-		final MarketData.Builder builder = MarketData.newBuilder();
-
-		builder.setType(MarketData.Type.SNAPSHOT);
-		builder.setMarketId(A_LONG);
-
-		// builder.setTimeStamp(A_LONG);
-		// builder.setTradeDate(AN_INT);
-
-		for (int k = 0; k < COUNT_ENTRY; k++) {
-			builder.addEntry(buildFieldHard());
-		}
-
-		return builder.build();
-
-	}
-
-	static MarketData buildMessageEasy() {
-
-		final MarketData.Builder builder = MarketData.newBuilder();
-
-		builder.setType(MarketData.Type.SNAPSHOT);
-		builder.setMarketId(AN_INT);
-
-		for (int k = 0; k < COUNT_ENTRY; k++) {
-			builder.addEntry(buildFieldEasy());
-		}
-
-		return builder.build();
-
-	}
-
-	static MarketData buildMessage() {
-
-		return buildMessageEasy();
-	}
-
-	static Base buildBase() {
-
-		final MarketData message = buildMessageEasy();
+		final MarketData message = Factory.newMessage(mode);
 
 		final Base base = MessageCodec.encode(message);
 
 		return base;
 	}
 
-	static void testWireSize() throws Exception {
+	static void testWireSize(final Mode mode) throws Exception {
 
-		final Base message = buildBase();
+		final Base message = buildBase(mode);
 
 		final int wireSize = message.getSerializedSize();
 
@@ -148,22 +55,25 @@ public class MainMarketDataSpeed {
 
 		log.debug("zip arrayIn.length  : {}", arrayIn.length);
 		log.debug("zip arrayOut.length : {}", arrayOut.length);
-		log.debug("zip ratio : {}", arrayIn.length / arrayOut.length);
+
+		final float ratio = 1.0F * arrayIn.length / arrayOut.length;
+
+		log.debug("zip ratio : {}", ratio);
 
 	}
 
-	static void testSpeedBuild() {
+	static void testSpeedBuild(final Mode mode) {
 
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			final Base message = buildBase();
+			final Base message = buildBase(mode);
 		}
 
 		final long timeStart = System.nanoTime();
 
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			final Base message = buildBase();
+			final Base message = buildBase(mode);
 		}
 
 		final long timeFinish = System.nanoTime();
@@ -176,9 +86,9 @@ public class MainMarketDataSpeed {
 
 	}
 
-	static void testSpeedWrite() throws Exception {
+	static void testSpeedWrite(final Mode mode) throws Exception {
 
-		final Base messageOut = buildBase();
+		final Base messageOut = buildBase(mode);
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -196,18 +106,20 @@ public class MainMarketDataSpeed {
 		}
 
 		final long timeFinish = System.nanoTime();
+
 		final long timeChange = timeFinish - timeStart;
+
 		final long buildSpeed = timeChange / COUNT_TEST;
 
 		log.debug("msg write speed, nano : {}", buildSpeed);
 
 	}
 
-	static void testSpeedDecode() throws Exception {
+	static void testSpeedDecode(final Mode mode) throws Exception {
 
-		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>();
+		final MessageVisitor visitor = new MessageVisitor.Adaptor();
 
-		final Base messageOut = buildBase();
+		final Base messageOut = buildBase(mode);
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -237,14 +149,14 @@ public class MainMarketDataSpeed {
 
 	}
 
-	static void testSpeedAll() throws Exception {
+	static void testSpeedAll(final Mode mode) throws Exception {
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>();
 
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
 
-			final Base messageOut = buildBase();
+			final Base messageOut = buildBase(mode);
 
 			final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -261,7 +173,7 @@ public class MainMarketDataSpeed {
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
 
-			final Base messageOut = buildBase();
+			final Base messageOut = buildBase(mode);
 
 			final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -277,9 +189,31 @@ public class MainMarketDataSpeed {
 
 		final long timeChange = timeFinish - timeStart;
 
-		final long buildSpeed = timeChange / COUNT_TEST;
+		final long speed = timeChange / COUNT_TEST;
 
-		log.debug("msg build/write/decode speed, nano : {}", buildSpeed);
+		log.debug("msg build/write/decode speed, nano : {}", speed);
+
+	}
+
+	static void testProfile(final Factory.Mode mode) throws Exception {
+
+		log.debug("#############################");
+
+		log.debug("MODE  : {}", mode);
+
+		log.debug("COUNT_TEST  : {}", COUNT_TEST);
+
+		testWireSize(mode);
+
+		testSpeedBuild(mode);
+
+		testSpeedWrite(mode);
+
+		testSpeedDecode(mode);
+
+		testSpeedAll(mode);
+
+		log.debug("#############################");
 
 	}
 
@@ -287,18 +221,19 @@ public class MainMarketDataSpeed {
 
 		log.debug("init");
 
-		log.debug("COUNT_TEST  : {}", COUNT_TEST);
-		log.debug("COUNT_ENTRY : {}", COUNT_ENTRY);
+		testProfile(Mode.SNAPSHOT_SIMPLE);
 
-		testWireSize();
+		testProfile(Mode.SNAPSHOT_COMPLEX);
 
-		testSpeedBuild();
+		testProfile(Mode.SNAPSHOT_SIMPLE_DESC);
 
-		testSpeedWrite();
+		//
 
-		testSpeedDecode();
+		testProfile(Mode.UPDATE_SIMPLE);
 
-		testSpeedAll();
+		testProfile(Mode.UPDATE_COMPLEX);
+
+		testProfile(Mode.UPDATE_SIMPLE_DESC);
 
 		log.debug("done");
 

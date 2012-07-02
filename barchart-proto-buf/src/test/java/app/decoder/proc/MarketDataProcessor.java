@@ -9,19 +9,19 @@ import app.decoder.data.EntryContext;
 import app.decoder.data.Util;
 
 import com.barchart.feed.base.instrument.values.MarketInstrument;
-import com.barchart.proto.buf.MarketData2;
-import com.barchart.proto.buf.MarketDataEntry2;
+import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry;
 
 public class MarketDataProcessor {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MarketDataProcessor.class);
 
-	public void apply(final MarketData2 message, final DataConsumer consumer) {
+	public void apply(final MarketData message, final DataConsumer consumer) {
 
 		log.debug("apply message \n{}", message);
 
-		for (final MarketDataEntry2 entry : message.getEntryList()) {
+		for (final MarketDataEntry entry : message.getEntryList()) {
 
 			final boolean hasMarketId = Util.hasMarketId(message, entry);
 

@@ -49,11 +49,7 @@ enum MessageType {
 	MarketStatusType = 110;
 	//
 	HeartBeatType = 111;
-
-	// experimental
-
 	//
-	MarketData2Type = 200;
 }
 
 // forward declaration of sub types / extensions
@@ -78,11 +74,6 @@ extend Base {
 	optional MarketStatus messageMarketStatus = 110;
 	//
 	optional HeartBeat messageHeartBeat = 111;
-
-	// experimental
-
-	//
-	optional MarketData2 messageMarketData2 = 200;
 }
 
 // message base for extensions / sub types
@@ -115,28 +106,8 @@ message MarketData {
 	//
 	repeated MarketDataEntry entry = 5; // list of entries
 	//
-	optional sint32 tradeDate = 15; // base for entries; days since ISO Unix Epoch
-}
-
-// alternative data entry with flat price/size
-message MarketData2 {
-	enum Type {
-		UPDATE = 0;
-		SNAPSHOT = 1;
-		RESET_ALL = 2;
-		RESET_BOOK = 3;
-		RESET_CUVOL = 4;
-	}
-
-	optional Type type = 1;
-	optional int64 marketId = 2; // market guid; base for entries
-	optional int64 sequence = 3; // market sequence number; base for entries
-	optional int64 timeStamp = 4; // market time stamp, millisUTC; base for entries
-	//
-	repeated MarketDataEntry2 entry = 5; // list of entries
-	//
-	optional sint32 priceExponent = 6;
-	optional sint32 sizeExponent = 7;
+	optional sint32 priceExponent = 6; // ; base for entries
+	optional sint32 sizeExponent = 7; // ; base for entries
 	//
 	optional sint32 tradeDate = 15; // base for entries; days since ISO Unix Epoch
 }

@@ -3,11 +3,9 @@ package app.decoder.data;
 import java.util.Arrays;
 import java.util.List;
 
-import com.barchart.proto.buf.MarketData2;
-import com.barchart.proto.buf.MarketDataEntry2;
-import com.barchart.proto.buf.MarketDataEntry2.Action;
-import com.barchart.proto.buf.MarketDataEntry2.Descriptor;
-import com.barchart.proto.buf.MarketDataEntry2.Type;
+import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry;
+import com.barchart.proto.buf.MarketDataEntry.Descriptor;
 import com.barchart.util.values.api.PriceValue;
 import com.barchart.util.values.api.SizeValue;
 import com.barchart.util.values.api.TimeValue;
@@ -17,10 +15,10 @@ import com.barchart.util.values.api.TimeValue;
  */
 public class EntryContext {
 
-	private final MarketData2 message;
-	private final MarketDataEntry2 entry;
+	private final MarketData message;
+	private final MarketDataEntry entry;
 
-	public EntryContext(final MarketData2 message, final MarketDataEntry2 entry) {
+	public EntryContext(final MarketData message, final MarketDataEntry entry) {
 
 		this.message = message;
 		this.entry = entry;
@@ -57,7 +55,7 @@ public class EntryContext {
 
 	}
 
-	public Type getType() {
+	public MarketDataEntry.Type getType() {
 		return entry.getType();
 	}
 
@@ -69,11 +67,11 @@ public class EntryContext {
 		return entry.hasSizeMantissa();
 	}
 
-	public Action getAction() {
+	public MarketDataEntry.Action getAction() {
 		return entry.getAction();
 	}
 
-	public MarketDataEntry2 getEntry() {
+	public MarketDataEntry getEntry() {
 		return entry;
 	}
 

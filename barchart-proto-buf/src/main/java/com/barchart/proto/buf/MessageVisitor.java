@@ -1,6 +1,5 @@
 package com.barchart.proto.buf;
 
-
 /**
  * TODO more types
  * 
@@ -15,10 +14,6 @@ public interface MessageVisitor<TARGET> {
 
 	void apply(MarketNews message, TARGET target);
 
-	// experimental
-
-	void apply(MarketData2 message, TARGET target);
-
 	//
 
 	class Adaptor<TARGET> implements MessageVisitor<TARGET> {
@@ -32,10 +27,6 @@ public interface MessageVisitor<TARGET> {
 		}
 
 		//
-
-		@Override
-		public void apply(final MarketData2 message, final TARGET target) {
-		}
 
 	}
 
