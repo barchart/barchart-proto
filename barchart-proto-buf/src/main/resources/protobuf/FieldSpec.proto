@@ -108,15 +108,15 @@ message MarketDataEntry {
 	optional Type type = 1; // primary category
 	repeated Descriptor descriptor = 2 [packed = true]; // list of secondary category values
 	optional Action action = 3; // entry action
-	optional int64 marketId = 4; // override base;
-	optional int64 sequence = 5; // market-local sequence number
+	optional sint64 marketId = 4; // override base;
+	optional sint64 sequence = 5; // market-local sequence number
 	optional sint64 timeStamp = 6; // offset to base; millisUTC
 	//
 	optional sint64 priceMantissa = 7;
-	optional sint32 priceExponent = 8;
+	optional sint32 priceExponent = 8; // override to base;
 	//
 	optional sint64 sizeMantissa = 9;
-	optional sint32 sizeExponent = 10;
+	optional sint32 sizeExponent = 10; // override to base;
 	//
 	optional sint64 index = 11; // such as book level, or cuvol position, etc
 	//

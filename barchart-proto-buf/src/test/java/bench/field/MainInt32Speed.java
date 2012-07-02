@@ -8,16 +8,24 @@ import org.slf4j.LoggerFactory;
 import com.barchart.proto.buf.test.BenchInt32;
 
 /** measure message heap size */
-public class Mainint32Speed {
+public class MainInt32Speed {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(Mainint32Speed.class);
+			.getLogger(MainInt32Speed.class);
 
 	static final int COUNT = 10 * 1000 * 1000;
 
 	static final int VALUE = Integer.MAX_VALUE - 3;
 
 	public static void main(final String... args) throws Exception {
+
+		test();
+		test();
+		test();
+
+	}
+
+	static void test() throws Exception {
 
 		log.debug("init");
 

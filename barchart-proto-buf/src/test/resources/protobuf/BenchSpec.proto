@@ -24,6 +24,10 @@ message BenchInt32 {
 	optional int32 value = 1;
 }
 
+message BenchSint32 {
+	optional sint32 value = 1;
+}
+
 //
 message BenchTradeDate32 {
 	optional int32 tradeDate = 1;
@@ -43,3 +47,4 @@ message BenchEnumIndexSize {
 
 	optional Type type = 1;
 }
+
