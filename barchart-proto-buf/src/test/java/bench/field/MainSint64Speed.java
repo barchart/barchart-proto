@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import com.barchart.proto.buf.test.BenchSint32;
 
 /** measure message heap size */
-public class MainSint32Speed {
+public class MainSint64Speed {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(MainSint32Speed.class);
+			.getLogger(MainSint64Speed.class);
 
 	static final int COUNT = 10 * 1000 * 1000;
 
@@ -37,7 +37,7 @@ public class MainSint32Speed {
 			final BenchSint32 message = BenchSint32.newBuilder()
 					.setValue(VALUE).build();
 
-			log.debug("Sint32 wire size : {}", message.getSerializedSize());
+			log.debug("Sint64 wire size : {}", message.getSerializedSize());
 
 		}
 
@@ -62,7 +62,7 @@ public class MainSint32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("Sint32 build speed, nano : {}", buildSpeed);
+			log.debug("Sint64 build speed, nano : {}", buildSpeed);
 
 		}
 
@@ -100,7 +100,7 @@ public class MainSint32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("Sint32 write speed, nano : {}", buildSpeed);
+			log.debug("Sint64 write speed, nano : {}", buildSpeed);
 
 		}
 
@@ -134,7 +134,7 @@ public class MainSint32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("Sint32 parse speed, nano : {}", buildSpeed);
+			log.debug("Sint64 parse speed, nano : {}", buildSpeed);
 
 		}
 
@@ -185,7 +185,7 @@ public class MainSint32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("Sint32 build/write/parse speed, nano : {}", buildSpeed);
+			log.debug("Sint64 build/write/parse speed, nano : {}", buildSpeed);
 
 		}
 

@@ -83,14 +83,15 @@ message Base {
 	extensions 50 to 127; // message polymorph range
 	//
 	optional MessageType type = 1; // message type selector
-	optional int64 sequence = 2; // message sequence number
-	optional int64 timeStamp = 3; // message time stamp, millisUTC
+	optional sint64 sequence = 2; // message sequence number
+	optional sint64 timeStamp = 3; // message time stamp, millisUTC
 }
 
 // ##################################################
 
 // one and only market data state change message
 message MarketData {
+//
 	enum Type {
 		UPDATE = 0;
 		SNAPSHOT = 1;
@@ -100,16 +101,17 @@ message MarketData {
 	}
 
 	optional Type type = 1;
-	optional int64 marketId = 2; // market guid; base for entries
-	optional int64 sequence = 3; // market sequence number; base for entries
-	optional int64 timeStamp = 4; // market time stamp, millisUTC; base for entries
+	//
+	optional sint64 marketId = 2; // market guid; base for entries
+	optional sint64 sequence = 3; // market sequence number; base for entries
+	optional sint64 timeStamp = 4; // market time stamp, millisUTC; base for entries
 	//
 	repeated MarketDataEntry entry = 5; // list of entries
 	//
 	optional sint32 priceExponent = 6; // ; base for entries
 	optional sint32 sizeExponent = 7; // ; base for entries
 	//
-	optional sint32 tradeDate = 15; // base for entries; days since ISO Unix Epoch
+	optional sint32 tradeDate = 8; // base for entries; days since ISO Unix Epoch
 }
 
 // ##################################################

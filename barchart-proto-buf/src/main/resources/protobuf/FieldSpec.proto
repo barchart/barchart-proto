@@ -25,15 +25,15 @@ option optimize_for = SPEED;
  *
  */
 
- //
- /**
+//
+/**
   * enum rules
   *
-  * 1) index in 0...127 takes 1 byte on wire
+  * 1) note: index in 0...127 takes 1 byte on wire
   *
-  * 2) index in 128 and more takes varInt128 more bytes on wire
+  * 2) note: index in 128 and more takes varInt128 more bytes on wire
   *
-  * 3) keep most frequent first
+  * 3) keep most frequent index first
   *
   * 4) can not change name/index after published
   *
@@ -51,6 +51,7 @@ message Decimal {
 
 // universal data entry field
 message MarketDataEntry {
+//
 // primary entry category; single
 	enum Type {
 	//
@@ -69,16 +70,16 @@ message MarketDataEntry {
 		VOLUME = 8;
 		INTEREST = 9;
 		//
-		CUVOL = 10; // custom, cumulative volume
+		CUVOL = 10; // cumulative volume
 		//
-		STATUS = 11; // non price/size related change
+		STATUS = 11; // non price/size related change; such as OPEN/CLOSE event
 		//
 	}
+	//
 	// secondary entry category; multiple
 	enum Descriptor {
 	//
-		BOOK_NORMAL = 1; // bid/ask entry is for normal book
-		BOOK_IMPLIED = 2; // bid/ask entry is for implied book
+		BOOK_IMPLIED = 0; // bid/ask entry is for implied book
 		//
 		SETTLE_PRELIMINARY = 3; //
 		SETTLE_THEORETICAL = 4; //
@@ -96,6 +97,7 @@ message MarketDataEntry {
 		//
 		// XXX 128 XXX
 	}
+	//
 	// entry action
 	enum Action {
 		ADD = 0; // new, create, insert
@@ -106,8 +108,9 @@ message MarketDataEntry {
 	// keep frequent field index in 1..15 range
 	//
 	optional Type type = 1; // primary category
-	repeated Descriptor descriptor = 2 [packed = true]; // list of secondary category values
-	optional Action action = 3; // entry action
+	optional Action action = 2; // entry action
+	repeated Descriptor descriptor = 3 [packed = true]; // list of secondary category descriptors
+	//
 	optional sint64 marketId = 4; // override base;
 	optional sint64 sequence = 5; // market-local sequence number
 	optional sint64 timeStamp = 6; // offset to base; millisUTC
@@ -122,7 +125,6 @@ message MarketDataEntry {
 	//
 	optional sint32 tradeDate = 12; // offset to base; days
 	//
-	optional sint32 timeStampMicro = 15; // offset to timeStamp; microsUTC: :-)
 }
 
 message MarketNewsEntry {
@@ -131,7 +133,7 @@ message MarketNewsEntry {
 		TODO_1 = 1;
 	}
 
-	optional int64 marketId = 1;
+	optional sint64 marketId = 1;
 	optional string url = 2;
 	optional string strory = 4;
 }
