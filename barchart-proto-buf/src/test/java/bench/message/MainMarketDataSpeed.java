@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bench.message.Factory.Mode;
-import bench.zip_jdk.Util;
+import bench.zip_jdk.ZipUtil;
 
 import com.barchart.proto.buf.Base;
 import com.barchart.proto.buf.MarketData;
@@ -51,7 +51,7 @@ public class MainMarketDataSpeed {
 		message.writeTo(output);
 
 		final byte[] arrayIn = output.toByteArray();
-		final byte[] arrayOut = Util.compress(arrayIn);
+		final byte[] arrayOut = ZipUtil.compress(arrayIn);
 
 		log.debug("zip arrayIn.length  : {}", arrayIn.length);
 		log.debug("zip arrayOut.length : {}", arrayOut.length);

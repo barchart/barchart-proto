@@ -52,7 +52,7 @@ public class MainZip {
 
 			final byte[] arrayIn = dataIn;
 
-			final byte[] arrayOut = Util.compress(arrayIn);
+			final byte[] arrayOut = ZipUtil.compress(arrayIn);
 
 			pack = arrayOut;
 
@@ -64,7 +64,7 @@ public class MainZip {
 
 			final byte[] arrayOut = new byte[128];
 
-			final int sizeOut = Util.decompress(arrayIn, arrayOut);
+			final int sizeOut = ZipUtil.decompress(arrayIn, arrayOut);
 
 			dataOut = new byte[sizeOut];
 
@@ -88,7 +88,7 @@ public class MainZip {
 
 		for (int k = 0; k < COUNT_TEST; k++) {
 
-			final byte[] arrayOut = Util.compress(arrayIn);
+			final byte[] arrayOut = ZipUtil.compress(arrayIn);
 
 		}
 
