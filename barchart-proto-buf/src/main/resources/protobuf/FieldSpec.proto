@@ -14,13 +14,20 @@ option java_generate_equals_and_hash = true;
 //
 option optimize_for = SPEED;
 
+// base - entry contract
+/**
+ *
+ * actualValue = baseValue + entryOffset
+ *
+ */
+
 // price, size, percent
 message Decimal {
 	optional sint64 mantissa = 1;
 	optional sint32 exponent = 2;
 }
 
-// universal
+// universal data entry field
 message MarketDataEntry {
 	enum Type {
 	//
@@ -33,26 +40,106 @@ message MarketDataEntry {
 		HIGH = 4;
 		LOW = 5;
 		CLOSE = 6;
-		LAST = 7;
-		SETTLE = 8;
+		SETTLE = 7;
 		//
-		VOLUME = 9;
-		INTEREST = 10;
+		VOLUME = 8;
+		INTEREST = 9;
 		//
-		SETTLE_EARLY = 11;
-		//
-		CUVOL = 12;
+		CUVOL = 10;
 		//
 	}
 
+	enum Action {
+		ADD = 0; // new, create, insert
+		EDIT = 1; // merge, modify, replace, override, overlay
+		REMOVE = 2; // delete, erase, clear, reset
+	}
+	//
+	// keep frequent field index in 1..15 range
+	//
 	optional Type type = 1;
-	optional Decimal price = 2;
-	optional Decimal size = 3;
-	optional sint64 position = 4;
-	optional int64 marketId = 5;
-	optional int32 tradeDate = 6; // market date
-	optional int64 timeStamp = 7; // entry time, millis UTC
-	optional int64 sequence = 8; // market sequence number
+	optional Action action = 2;
+	optional int64 marketId = 3; // override base;
+	optional int64 sequence = 4; // market-local sequence number
+	optional sint64 timeStamp = 5; // offset to base; millisUTC
+	//
+	optional Decimal price = 6;
+	optional Decimal size = 7;
+	//
+	optional sint64 index = 8; // such as book level, cuvol position, etc
+	//
+	optional sint32 tradeDate = 9; // offset to base; days
+	//
+	optional sint32 timeStampMicro = 15; // offset to timeStamp; microsUTC: :-)
+}
+
+// alternative rendering of decimal : flat price/size
+message MarketDataEntry2 {
+// primary entry category; single
+	enum Type {
+	//
+		TRADE = 0;
+		//
+		BID = 1; // book side
+		ASK = 2; // book side
+		//
+		OPEN = 3;
+		HIGH = 4;
+		LOW = 5;
+		CLOSE = 6;
+		//
+		SETTLE = 7;
+		//
+		VOLUME = 8;
+		INTEREST = 9;
+		//
+		CUVOL = 10; // custom, cumulative volume
+		//
+	}
+	// secondary entry category; multiple
+	enum Descriptor {
+		BOOK_COMBO = 0; // default; bid/ask entry is for combined
+		BOOK_NORMAL = 1; // bid/ask entry is for normal book
+		BOOK_IMPLIED = 2; // bid/ask entry is for implied book
+		//
+		SETTLE_PRELIMINARY = 3; //
+		SETTLE_THEORETICAL = 4; //
+		//
+		FORM_T = 5; //
+		//
+		PERIOD_DAY = 6;
+		PERIOD_MONTH = 7;
+		PERIOD_YEAR = 8;
+	}
+	// entry action
+	enum Action {
+		ADD = 0; // new, create, insert
+		EDIT = 1; // merge, modify, replace, override, overlay
+		REMOVE = 2; // delete, erase, clear, reset
+	}
+	//
+	// keep frequent field index in 1..15 range
+	//
+	optional Type type = 1; // primary category
+	repeated Descriptor descriptor = 2 [packed = true]; // list of secondary category values
+	optional Action action = 3; // entry action
+	optional int64 marketId = 4; // override base;
+	optional int64 sequence = 5; // market-local sequence number
+	optional sint64 timeStamp = 6; // offset to base; millisUTC
+	//
+	// XXX
+	optional sint64 priceMantissa = 7;
+	optional sint32 priceExponent = 8;
+	//
+	// XXX
+	optional sint64 sizeMantissa = 9;
+	optional sint32 sizeExponent = 10;
+	//
+	optional sint64 index = 11; // such as book level, or cuvol position, etc
+	//
+	optional sint32 tradeDate = 12; // offset to base; days
+	//
+	optional sint32 timeStampMicro = 15; // offset to timeStamp; microsUTC: :-)
 }
 
 message MarketNewsEntry {

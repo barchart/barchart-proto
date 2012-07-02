@@ -1,22 +1,40 @@
 package com.barchart.proto.buf;
 
-/** TODO more types */
-public interface MessageVisitor {
 
-	void visit(MarketData message);
+/**
+ * TODO more types
+ * 
+ * semantics : apply( source message to message consumer )
+ * 
+ * target could be a market state or a news consumer;
+ * 
+ */
+public interface MessageVisitor<TARGET> {
 
-	void visit(MarketNews message);
+	void apply(MarketData message, TARGET target);
+
+	void apply(MarketNews message, TARGET target);
+
+	// experimental
+
+	void apply(MarketData2 message, TARGET target);
 
 	//
 
-	class Adaptor implements MessageVisitor {
+	class Adaptor<TARGET> implements MessageVisitor<TARGET> {
 
 		@Override
-		public void visit(final MarketData message) {
+		public void apply(final MarketData message, final TARGET target) {
 		}
 
 		@Override
-		public void visit(final MarketNews message) {
+		public void apply(final MarketNews message, final TARGET target) {
+		}
+
+		//
+
+		@Override
+		public void apply(final MarketData2 message, final TARGET target) {
 		}
 
 	}

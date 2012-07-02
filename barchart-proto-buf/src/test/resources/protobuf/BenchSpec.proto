@@ -1,0 +1,34 @@
+/**
+ * https://developers.google.com/protocol-buffers/docs/proto
+ */
+//
+package barchart.test; // TEST
+
+//
+option java_package = "com.barchart.proto.buf.test"; // TEST
+option java_outer_classname = "BenchSpec";
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+//
+option optimize_for = SPEED;
+
+// message options descriptor
+import "google/protobuf/descriptor.proto";
+
+//
+message BenchEmpty {
+}
+
+//
+message BenchInt32 {
+	optional int32 value = 1;
+}
+
+//
+message BenchTradeDate32 {
+	optional int32 tradeDate = 1;
+}
+
+message BenchTradeDate64 {
+	optional int64 tradeDate = 1;
+}

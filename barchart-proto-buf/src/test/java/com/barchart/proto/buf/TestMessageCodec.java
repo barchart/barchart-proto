@@ -26,16 +26,16 @@ public class TestMessageCodec {
 	private long id1;
 	private long id2;
 
-	private final MessageVisitor visitor = new MessageVisitor.Adaptor() {
+	private final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 
 		@Override
-		public void visit(final MarketData message) {
+		public void apply(final MarketData message, final Void param) {
 			log.debug("got MarketData {}", message);
 			id1 = message.getMarketId();
 		}
 
 		@Override
-		public void visit(final MarketNews message) {
+		public void apply(final MarketNews message, final Void param) {
 			log.debug("got MarketNews {}", message);
 			id2 = message.getMarketId();
 		}
@@ -50,7 +50,7 @@ public class TestMessageCodec {
 		final MarketData message = MarketData.newBuilder().setMarketId(123)
 				.build();
 
-		final Base base = MessageCodec.wrap(message);
+		final Base base = MessageCodec.encode(message);
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -58,7 +58,7 @@ public class TestMessageCodec {
 
 		final byte[] array = output.toByteArray();
 
-		MessageCodec.decode(visitor, array);
+		MessageCodec.decode(visitor, null, array);
 
 		assertEquals(id1, 123);
 
@@ -72,7 +72,7 @@ public class TestMessageCodec {
 		final MarketNews message = MarketNews.newBuilder().setMarketId(456)
 				.build();
 
-		final Base base = MessageCodec.wrap(message);
+		final Base base = MessageCodec.encode(message);
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -80,7 +80,7 @@ public class TestMessageCodec {
 
 		final byte[] array = output.toByteArray();
 
-		MessageCodec.decode(visitor, array);
+		MessageCodec.decode(visitor, null, array);
 
 		assertEquals(id2, 456);
 

@@ -1,0 +1,154 @@
+/**
+ * 
+ * http://avro.apache.org/docs/current/idl.html
+ * 
+ */
+
+@namespace("com.barchart.proto.avro")
+protocol MessageSpec {
+
+	/** fields */
+
+	enum LoginStatus {
+		NULL,
+		SUCCESS,
+		FAILURE
+	}
+
+	record Decimal {
+		long mantissa = 0;
+		int exponent = 0;
+	}
+
+	enum DataType {
+		//
+		NULL,
+		//
+		TRADE,
+		//
+		BID,
+		ASK,
+		//
+		OPEN,
+		HIGH,
+		LOW,
+		CLOSE,
+		SETTLE,
+		//
+		VOLUME,
+		INTEREST,
+		//
+		CUVOL
+		//
+	}
+
+	enum DataDescriptor {
+		//
+		NULL,
+		//
+		BOOK_COMBO, // default; bid/ask entry is for combined
+		BOOK_NORMAL, // bid/ask entry is for normal book
+		BOOK_IMPLIED, // bid/ask entry is for implied book
+		//
+		SETTLE_PRELIMINARY, //
+		SETTLE_THEORETICAL, //
+		//
+		FORM_T, //
+		//
+		PERIOD_DAY,
+		PERIOD_MONTH,
+		PERIOD_YEAR
+		//
+	}
+
+	enum DataAction {
+		NULL,
+		ADD, // new, create, insert
+		EDIT, // merge, modify, replace, override, overlay
+		REMOVE // delete, erase, clear, reset
+	}
+
+	
+	record DataEntry {
+		
+		DataType type = "NULL";
+		DataAction action = "NULL";
+		array<DataDescriptor> descList = null;
+		
+		long marketId = 0;
+		long timeStamp = 0;
+		long sequence = 0;
+		
+		long index = 0;
+		
+//		Decimal price = null;
+//		Decimal size = null;
+		
+		long priceExponent = 0;
+		long priceMantissa = 0;
+		
+		long sizeExponent = 0;
+		long sizeeMantissa = 0;
+		
+		int tradeDate = 0; 
+		
+	}
+	
+	
+	/** messages */
+	
+	record MarketData {
+		
+		long marketId = 0;
+		long timeStamp = 0;
+		long sequence = 0;
+		
+		int tradeDate = 0; 
+
+		array<DataEntry> entryList = null;
+		
+	}
+
+	record MarketNews {
+		long marketId = 0;
+	}
+
+	//
+	
+	record DataLoginRequest {
+		string username = null;
+		string password = null;
+	}
+
+	record DataLoginResponse {
+		LoginStatus status = null;
+	}
+
+	/** base */
+	
+	enum MessageType {
+		NULL,
+		MarketData, 
+		MarketNews,
+		DataLoginRequest,
+		DataLoginResponse
+	}
+
+	record Base {
+		
+		MessageType type = "NULL"; 
+		
+		long timeStamp = 0;
+		long sequence = 0;
+		
+		union { 
+			MarketData, 
+			MarketNews, 
+			DataLoginRequest,
+			DataLoginResponse,
+			null
+		} message;
+		
+	}
+
+}

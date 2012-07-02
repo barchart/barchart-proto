@@ -1,6 +1,11 @@
 package com.barchart.proto.buf;
 
+import static com.barchart.proto.buf.MessageSpec.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -82,28 +87,44 @@ public class MessageCodec {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	private static <T extends Message> T castType(final Base message,
-			final Class<T> klaz) throws Exception {
+	private static <MESSAGE extends Message> MESSAGE castType(
+			final Base base, final Class<MESSAGE> klaz) throws Exception {
 
 		final GeneratedExtension<Base, Message> extension = messageMetaMap
 				.get(klaz).extension;
 
-		return (T) message.getExtension(extension);
+		return (MESSAGE) base.getExtension(extension);
+
 	}
 
 	public static Base decode(final byte[] array) throws Exception {
 
-		return Base.newBuilder().mergeFrom(array, registry).build();
+		final Base.Builder builder = Base.newBuilder();
+
+		builder.mergeFrom(array, registry);
+
+		return builder.build();
 
 	}
 
-	/** TODO more types */
-	public static void decode(final MessageVisitor visitor, final byte[] array)
-			throws Exception {
+	public static Base decodeDelimited(final byte[] array) throws Exception {
 
-		final Base base = decode(array);
+		final ByteArrayInputStream input = new ByteArrayInputStream(array);
+
+		final Base.Builder builder = Base.newBuilder();
+
+		builder.mergeDelimitedFrom(input, registry);
+
+		return builder.build();
+
+	}
+
+	/** TODO more message types */
+	public static <MARKET> void decode(final MessageVisitor<MARKET> visitor,
+			final MARKET market, final Base base) throws Exception {
 
 		if (!base.hasType()) {
+			log.debug("missing type : {}", base);
 			return;
 		}
 
@@ -111,10 +132,16 @@ public class MessageCodec {
 
 		switch (type) {
 		case MarketDataType:
-			visitor.visit(base.getExtension(MessageSpec.messageMarketData));
+			visitor.apply(base.getExtension(messageMarketData), market);
 			break;
 		case MarketNewsType:
-			visitor.visit(base.getExtension(MessageSpec.messageMarketNews));
+			visitor.apply(base.getExtension(messageMarketNews), market);
+			break;
+
+		// experimental
+
+		case MarketData2Type:
+			visitor.apply(base.getExtension(messageMarketData2), market);
 			break;
 
 		default:
@@ -122,18 +149,66 @@ public class MessageCodec {
 			break;
 		}
 
-		return;
+	}
+
+	public static <MARKET> void decode(final MessageVisitor<MARKET> visitor,
+			final MARKET market, final byte[] array) throws Exception {
+
+		final Base base = decode(array);
+
+		decode(visitor, market, base);
 
 	}
 
-	public static <T extends Message> Base wrap(final T message) {
+	public static <MARKET> void decodeDelimited(
+			final MessageVisitor<MARKET> visitor, final MARKET market,
+			final byte[] array) throws Exception {
+
+		final Base base = decodeDelimited(array);
+
+		decode(visitor, market, base);
+
+	}
+
+	public static <MESSAGE extends Message> Base encode(final MESSAGE message) {
 
 		final Class<? extends Message> klaz = message.getClass();
 
 		final MessageMeta meta = messageMetaMap.get(klaz);
 
-		return Base.newBuilder().setType(meta.type)
-				.setExtension(meta.extension, message).build();
+		final Base.Builder builder = Base.newBuilder();
+
+		builder.setType(meta.type);
+		builder.setExtension(meta.extension, message);
+
+		return builder.build();
+
+	}
+
+	public static byte[] encode(final Base base) throws Exception {
+
+		final ByteArrayOutputStream output = new ByteArrayOutputStream(128);
+
+		base.writeTo(output);
+
+		final byte[] array = output.toByteArray();
+
+		return array;
+
+	}
+
+	public static <MESSAGE extends Message> void encodeDelimited(
+			final MESSAGE message, final ByteBuffer buffer) throws Exception {
+
+		final Base base = encode(message);
+
+		final ByteArrayOutputStream output = new ByteArrayOutputStream(128);
+
+		base.writeDelimitedTo(output);
+
+		final byte[] array = output.toByteArray();
+
+		buffer.put(array);
 
 	}
 
