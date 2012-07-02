@@ -1,4 +1,4 @@
-package bench;
+package bench.zip_jdk;
 
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
@@ -25,7 +25,7 @@ public class Util {
 
 		final Deflater zipper = zipPack.get();
 
-		// final Deflater zipper = new Deflater();
+		zipper.reset();
 
 		zipper.setInput(arrayIn);
 
@@ -59,7 +59,7 @@ public class Util {
 		}
 	};
 
-	public static int uncompress(final byte[] arrayIn, final byte[] arrayOut)
+	public static int decompress(final byte[] arrayIn, final byte[] arrayOut)
 			throws Exception {
 
 		final Inflater zipper = zipUnpack.get();

@@ -1,4 +1,4 @@
-package bench.zip;
+package bench.zip_quicklz;
 
 import static org.testng.internal.junit.ArrayAsserts.*;
 
@@ -7,12 +7,10 @@ import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bench.Util;
-
 /** measure message heap size */
-public class MainZip {
+public class MainLZ {
 
-	private static final Logger log = LoggerFactory.getLogger(MainZip.class);
+	private static final Logger log = LoggerFactory.getLogger(MainLZ.class);
 
 	static final int COUNT_TEST = 100 * 1000;
 
@@ -36,7 +34,7 @@ public class MainZip {
 
 		log.debug("test zip trip");
 
-		final byte[] dataIn = "123456789012345678901234567890".getBytes(UTF_8);
+		byte[] dataIn = "123456789012345678901234567890".getBytes(UTF_8);
 
 		byte[] pack = null;
 
@@ -46,7 +44,7 @@ public class MainZip {
 
 			final byte[] arrayIn = dataIn;
 
-			final byte[] arrayOut = Util.compress(arrayIn);
+			final byte[] arrayOut = QuickLZ.compress(arrayIn, 1);
 
 			pack = arrayOut;
 
@@ -56,13 +54,9 @@ public class MainZip {
 
 			final byte[] arrayIn = pack;
 
-			final byte[] arrayOut = new byte[128];
+			final byte[] arrayOut = QuickLZ.decompress(arrayIn);
 
-			final int sizeOut = Util.uncompress(arrayIn, arrayOut);
-
-			dataOut = new byte[sizeOut];
-
-			System.arraycopy(arrayOut, 0, dataOut, 0, sizeOut);
+			dataOut = arrayOut;
 
 		}
 
@@ -71,6 +65,8 @@ public class MainZip {
 		log.debug("zip size in   {}", dataIn.length);
 		log.debug("zip size pack {}", pack.length);
 		log.debug("zip size out  {}", dataOut.length);
+
+		dataIn = null;
 
 	}
 
@@ -82,7 +78,7 @@ public class MainZip {
 
 		for (int k = 0; k < COUNT_TEST; k++) {
 
-			final byte[] arrayOut = Util.compress(arrayIn);
+			final byte[] arrayOut = QuickLZ.compress(arrayIn, 1);
 
 		}
 
