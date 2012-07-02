@@ -32,3 +32,14 @@ message BenchTradeDate32 {
 message BenchTradeDate64 {
 	optional int64 tradeDate = 1;
 }
+
+message BenchEnumIndexSize {
+	enum Type {
+		SIZE_120 = 120;
+		SIZE_127 = 127;
+		SIZE_128 = 128;
+		SIZE_130 = 130;
+	}
+
+	optional Type type = 1;
+}

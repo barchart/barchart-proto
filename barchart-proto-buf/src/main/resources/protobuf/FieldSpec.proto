@@ -27,7 +27,6 @@ message Decimal {
 	optional sint32 exponent = 2;
 }
 
-
 // universal data entry field
 message MarketDataEntry {
 // primary entry category; single
@@ -50,21 +49,29 @@ message MarketDataEntry {
 		//
 		CUVOL = 10; // custom, cumulative volume
 		//
+		STATUS = 11; // non price/size related change
+		//
 	}
 	// secondary entry category; multiple
 	enum Descriptor {
-		BOOK_COMBO = 0; // default; bid/ask entry is for combined
+	//
 		BOOK_NORMAL = 1; // bid/ask entry is for normal book
 		BOOK_IMPLIED = 2; // bid/ask entry is for implied book
 		//
 		SETTLE_PRELIMINARY = 3; //
 		SETTLE_THEORETICAL = 4; //
 		//
-		FORM_T = 5; //
+		PERIOD_DAY = 5;
+		PERIOD_MONTH = 6;
+		PERIOD_YEAR = 7;
 		//
-		PERIOD_DAY = 6;
-		PERIOD_MONTH = 7;
-		PERIOD_YEAR = 8;
+		SESSION_OVERNIGHT = 10; // FORM-T, etc
+		//
+		STATUS_MARKET_OPEN = 101;
+		STATUS_MARKET_CLOSE = 102;
+		STATUS_MARKET_PRE_OPEN = 103;
+		STATUS_MARKET_PRE_CLOSE = 104;
+		//
 	}
 	// entry action
 	enum Action {
