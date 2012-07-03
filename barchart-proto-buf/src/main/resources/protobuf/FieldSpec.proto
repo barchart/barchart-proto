@@ -1,8 +1,18 @@
 /**
+ * Copyright (C) 2011-2012 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+//
+/**
  * https://developers.google.com/protocol-buffers/docs/proto
  *
  * factory for message fields
  */
+
 //
 package barchart; // non-java (C, C++, etc) package name space
 
@@ -24,7 +34,6 @@ option optimize_for = SPEED;
  * 2) actualValue = entryOverride over baseDefault
  *
  */
-
 //
 /**
   * enum rules
