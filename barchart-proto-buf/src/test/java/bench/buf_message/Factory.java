@@ -7,10 +7,13 @@
  */
 package bench.buf_message;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketDataEntry;
+import com.barchart.proto.buf.MarketDataEntry.Builder;
 
 class Factory {
 
@@ -53,7 +56,7 @@ class Factory {
 
 	}
 
-	public static MarketDataEntry newEntry(final Mode mode) {
+	public static MarketDataEntry.Builder newEntry(final Mode mode) {
 
 		switch (mode) {
 
@@ -76,7 +79,7 @@ class Factory {
 			// builder.setTimeStamp(123); // SHARED
 			// builder.setTradeDate(123); // SHARED
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -102,7 +105,7 @@ class Factory {
 			// XXX
 			builder.addDescriptor(MarketDataEntry.Descriptor.BOOK_IMPLIED);
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -118,6 +121,9 @@ class Factory {
 			builder.setSequence(getIntMod(100)); // OFFSET
 
 			builder.setPriceMantissa(getLongMod(1000 * 1000));
+			builder.setPriceExponent(getIntMod(100)); //
+
+			builder.setSizeMantissa(getLongMod(1000 * 1000));
 			builder.setSizeExponent(getIntMod(100)); //
 
 			builder.setIndex(getIntMod(1000));
@@ -125,7 +131,7 @@ class Factory {
 			// builder.setTimeStamp(123); // SHARED
 			// builder.setTradeDate(123); // SHARED
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -148,7 +154,7 @@ class Factory {
 			builder.setTimeStamp(getIntMod(1000)); // OFFSET
 			builder.setTradeDate(getIntMod(200)); // NOT SHARED
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -176,7 +182,7 @@ class Factory {
 			builder.addDescriptor(getDescriptorMod(7));
 			builder.addDescriptor(getDescriptorMod(7));
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -199,7 +205,7 @@ class Factory {
 			builder.setTimeStamp(getLongMod(86400000)); // // NOT SHARED
 			builder.setTradeDate(getIntMod(365)); // NOT SHARED
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -209,7 +215,7 @@ class Factory {
 
 	}
 
-	public static MarketData newMessage(final Mode mode) {
+	public static MarketData.Builder newMessage(final Mode mode) {
 
 		switch (mode) {
 
@@ -229,7 +235,7 @@ class Factory {
 				builder.addEntry(newEntry(mode));
 			}
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -248,7 +254,7 @@ class Factory {
 				builder.addEntry(newEntry(mode));
 			}
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -269,7 +275,7 @@ class Factory {
 				builder.addEntry(newEntry(mode));
 			}
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -289,7 +295,7 @@ class Factory {
 				builder.addEntry(newEntry(mode));
 			}
 
-			return builder.build();
+			return builder;
 
 		}
 
@@ -298,4 +304,18 @@ class Factory {
 		return null;
 
 	}
+
+	public static List<MarketDataEntry.Builder> newEntryList(final Mode mode) {
+
+		final List<MarketDataEntry.Builder> entryList = new ArrayList<Builder>(
+				ENTRY_COUNT);
+
+		for (int k = 0; k < ENTRY_COUNT; k++) {
+			entryList.add(newEntry(mode));
+		}
+
+		return entryList;
+
+	}
+
 }

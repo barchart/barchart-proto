@@ -12,10 +12,12 @@ import java.util.List;
 
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketDataEntry;
+import com.barchart.proto.buf.MessageRules;
 import com.barchart.proto.buf.MarketDataEntry.Descriptor;
 import com.barchart.util.values.api.PriceValue;
 import com.barchart.util.values.api.SizeValue;
 import com.barchart.util.values.api.TimeValue;
+
 
 /**
  * value object / type convertor
@@ -87,27 +89,27 @@ public class EntryContext {
 	// ///////////////////////////////
 
 	public long getMarketId() {
-		return Util.getMarketId(message, entry);
+		return MessageRules.getMarketId(message, entry);
 	}
 
 	public PriceValue getPrice() {
-		return Util.getPrice(message, entry);
+		return null; // MessageRules.getPrice(message, entry);
 	}
 
 	public SizeValue getSize() {
-		return Util.getSize(message, entry);
+		return null;// MessageRules.getSize(message, entry);
 	}
 
 	public TimeValue getTimeStamp() {
-		return Util.getTimeStamp(message, entry);
+		return null; // MessageRules.getTimeStamp(message, entry);
 	}
 
 	public TimeValue getTradeDate() {
-		return Util.getTradeDate(message, entry);
+		return null; // MessageRules.getTradeDate(message, entry);
 	}
 
 	public long getSequence() {
-		return Util.getSequence(message, entry);
+		return MessageRules.getSequence(message, entry);
 	}
 
 }

@@ -166,11 +166,11 @@ message InstrumentRequest {
 	optional sint64 marketId = 1;
 }
 
-// minimum market-state required entries
+//
 message InstrumentResponse {
 	optional sint64 marketId = 1;
-	optional Decimal priceIncrement = 2;
-	optional string marketDescriptor = 3; // complete json object
+	optional sint32 instrumentSchemaId = 2; // representation
+	optional string instrumentDescriptor = 3; // complete json object
 }
 
 // ##################################################

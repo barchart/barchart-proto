@@ -8,6 +8,7 @@
 package bench.buf_message;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import bench.zip_jdk.ZipUtil;
 
 import com.barchart.proto.buf.Base;
 import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry.Builder;
 import com.barchart.proto.buf.MessageCodec;
 import com.barchart.proto.buf.MessageVisitor;
 
@@ -35,9 +37,9 @@ public class MainMarketDataSpeed {
 
 	static Base buildBase(final Mode mode) {
 
-		final MarketData message = Factory.newMessage(mode);
+		final MarketData.Builder builder = Factory.newMessage(mode);
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(builder.build());
 
 		return base;
 	}
@@ -92,6 +94,66 @@ public class MainMarketDataSpeed {
 		final long buildSpeed = timeChange / COUNT_TEST;
 
 		log.debug("msg build speed, nano : {}", buildSpeed);
+
+	}
+
+	static void testSpeedOptimize(final Mode mode) {
+
+		/** warm up */
+		for (int index = 0; index < COUNT_TEST; index++) {
+
+			final MarketData.Builder message = Factory.newMessage(mode);
+
+			switch (mode) {
+			case SNAPSHOT_SIMPLE:
+			case SNAPSHOT_COMPLEX:
+				message.setType(MarketData.Type.SNAPSHOT);
+				break;
+			case UPDATE_SIMPLE:
+			case UPDATE_COMPLEX:
+				message.setType(MarketData.Type.UPDATE);
+				break;
+			default:
+				return;
+			}
+
+			final List<Builder> entryList = Factory.newEntryList(mode);
+
+		}
+
+		final long timeStart = System.nanoTime();
+
+		/** measure */
+		for (int index = 0; index < COUNT_TEST; index++) {
+
+			final MarketData.Builder message = Factory.newMessage(mode);
+
+			switch (mode) {
+			case SNAPSHOT_SIMPLE:
+			case SNAPSHOT_COMPLEX:
+			case SNAPSHOT_SIMPLE_DESC:
+				message.setType(MarketData.Type.SNAPSHOT);
+				break;
+			case UPDATE_SIMPLE:
+			case UPDATE_COMPLEX:
+			case UPDATE_SIMPLE_DESC:
+				message.setType(MarketData.Type.UPDATE);
+				break;
+			default:
+				return;
+			}
+
+			final List<Builder> entryList = Factory.newEntryList(mode);
+
+		}
+
+		final long timeFinish = System.nanoTime();
+
+		final long timeChange = timeFinish - timeStart;
+
+		final long buildSpeed = timeChange / COUNT_TEST;
+
+		log.debug("msg optimize speed, nano : {}", buildSpeed);
 
 	}
 
@@ -215,6 +277,8 @@ public class MainMarketDataSpeed {
 		testWireSize(mode);
 
 		testSpeedBuild(mode);
+
+		testSpeedOptimize(mode);
 
 		testSpeedWrite(mode);
 

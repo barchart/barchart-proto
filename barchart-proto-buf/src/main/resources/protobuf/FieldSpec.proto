@@ -52,12 +52,6 @@ option optimize_for = SPEED;
   *
   */
 
-// price, size, percent
-message Decimal {
-	optional sint64 mantissa = 1;
-	optional sint32 exponent = 2;
-}
-
 // universal data entry field
 message MarketDataEntry {
 //

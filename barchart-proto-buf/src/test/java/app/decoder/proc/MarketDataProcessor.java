@@ -13,11 +13,12 @@ import org.slf4j.LoggerFactory;
 import app.decoder.cons.DataConsumer;
 import app.decoder.cons.ProtoEntry;
 import app.decoder.data.EntryContext;
-import app.decoder.data.Util;
 
 import com.barchart.feed.base.instrument.values.MarketInstrument;
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketDataEntry;
+import com.barchart.proto.buf.MessageRules;
+
 
 public class MarketDataProcessor {
 
@@ -30,7 +31,7 @@ public class MarketDataProcessor {
 
 		for (final MarketDataEntry entry : message.getEntryList()) {
 
-			final boolean hasMarketId = Util.hasMarketId(message, entry);
+			final boolean hasMarketId = MessageRules.hasMarketId(message, entry);
 
 			if (!hasMarketId) {
 				log.error("no marketId \n{}", entry);
@@ -42,7 +43,7 @@ public class MarketDataProcessor {
 				continue;
 			}
 
-			final long marketId = Util.getMarketId(message, entry);
+			final long marketId = MessageRules.getMarketId(message, entry);
 
 			final MarketInstrument instrument = consumer.lookup(marketId);
 
