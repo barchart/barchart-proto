@@ -21,7 +21,7 @@ import com.google.protobuf.Message;
  */
 public class MessageCodec {
 
-	/** message sub type / extension meta data */
+	/** message sub type / extension binding meta data */
 	private static class MessageMeta {
 
 		final GeneratedExtension<Base, Message> extension;
@@ -32,6 +32,12 @@ public class MessageCodec {
 				final GeneratedExtension<Base, Message> extension) {
 			this.type = type;
 			this.extension = extension;
+		}
+
+		@Override
+		public String toString() {
+			return " type=" + type + " extension="
+					+ extension.getDescriptor().getName();
 		}
 
 	}
@@ -79,6 +85,8 @@ public class MessageCodec {
 		}
 
 		final MessageType type = base.getType();
+
+		// log.debug("type : {}", type);
 
 		/** keep high frequency types first */
 		switch (type) {
@@ -262,17 +270,23 @@ public class MessageCodec {
 
 		MessageSpec.registerAllExtensions(registry);
 
-		final String prefix = Base.getDescriptor().getOptions()
+		/** all message extensions must have this prefix */
+		final String extensionPrefix = Base.getDescriptor().getOptions()
 				.getExtension(MessageSpec.optionExtensionPrefix);
+
+		/** all message type enums must have this suffix */
+		final String enumNameSuffix = Base.getDescriptor().getOptions()
+				.getExtension(MessageSpec.optionEnumNameSuffix);
 
 		for (final Field field : MessageSpec.class.getDeclaredFields()) {
 
 			final String fieldName = field.getName();
 			final Class<?> fieldType = field.getType();
 
-			final boolean isNameMatch = fieldName.startsWith(prefix);
-			final boolean isTypeMatch = GeneratedExtension.class
-					.isAssignableFrom(fieldType);
+			final boolean isNameMatch = fieldName.startsWith(extensionPrefix);
+
+			final boolean isTypeMatch = //
+			GeneratedExtension.class.isAssignableFrom(fieldType);
 
 			final boolean isMessageExtension = isNameMatch && isTypeMatch;
 
@@ -285,20 +299,40 @@ public class MessageCodec {
 					(GeneratedExtension<Base, Message>) field.get(null);
 
 					@SuppressWarnings("unchecked")
-					final Class<Message> klaz = (Class<Message>) extension
+					final Class<Message> messageClass = (Class<Message>) extension
 							.getMessageDefaultInstance().getClass();
 
-					final int number = extension.getDescriptor().getNumber();
+					final String messageName = fieldName.replaceAll(
+							extensionPrefix, "");
 
-					final MessageType type = MessageType.valueOf(number);
+					final String enumName = messageName + enumNameSuffix;
 
-					final MessageMeta meta = new MessageMeta(type, extension);
+					final MessageType type = MessageType.valueOf(enumName);
 
-					messageMetaMap.put(klaz, meta);
+					final int enumNumber = type.getNumber();
+
+					final int messageNumber = extension.getDescriptor()
+							.getNumber();
+
+					/**
+					 * numbers must match
+					 */
+					if (enumNumber != messageNumber) {
+						throw new IllegalArgumentException(
+								"message enum/extension field number mismatch");
+					}
+
+					final MessageMeta messageMeta = new MessageMeta(type,
+							extension);
+
+					messageMetaMap.put(messageClass, messageMeta);
+
+					// log.debug("extenstion ready : {}", meta);
 
 				} catch (final Exception e) {
 
-					log.error("can not prepare message extenstion", e);
+					log.error("can not prepare message extenstion : "
+							+ fieldName, e);
 
 				}
 

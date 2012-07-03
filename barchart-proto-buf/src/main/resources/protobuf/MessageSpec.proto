@@ -49,7 +49,7 @@ enum MessageType {
 	//
 	HeartBeatType = 127;
 	//
-	// XXX 128 XXX takes 2 bytes
+	// keep under 127
 }
 
 // forward declaration of sub types / extensions
@@ -66,11 +66,11 @@ extend Base {
 	optional NewsSubscribeRequest messageNewsSubscribeRequest = 102;
 	optional NewsSubscribeResponse messageNewsSubscribeResponse = 103;
 	//
-	optional LoginRequest messageLoginRequest = 104;
-	optional LoginResponse messageLoginResponse = 105;
+	optional InstrumentRequest messageInstrumentRequest = 104;
+	optional InstrumentResponse messageInstrumentResponse = 105;
 	//
-	optional InstrumentRequest messageInstrumentRequest = 106;
-	optional InstrumentResponse messageInstrumentResponse = 107;
+	optional LoginRequest messageLoginRequest = 106;
+	optional LoginResponse messageLoginResponse = 107;
 	//
 	optional HeartBeat messageHeartBeat = 127;
 	//
