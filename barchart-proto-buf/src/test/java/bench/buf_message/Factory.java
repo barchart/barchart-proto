@@ -213,7 +213,7 @@ class Factory {
 
 			builder.setType(MarketData.Type.SNAPSHOT);
 
-			builder.setMarketId(getIntMod(100000));
+			builder.setMarketId(getIntMod(100 * 1000));
 
 			builder.setTimeStamp(getLongMod(86400000 / 10));
 			builder.setTradeDate(getIntMod(200));
