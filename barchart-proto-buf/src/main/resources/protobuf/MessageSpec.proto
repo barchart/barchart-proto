@@ -59,7 +59,7 @@ enum MessageType {
 	//
 	HeartBeatType = 127;
 	//
-	// keep under 127
+	// keep under 128
 }
 
 // forward declaration of sub types / extensions
@@ -84,6 +84,7 @@ extend Base {
 	//
 	optional HeartBeat messageHeartBeat = 127;
 	//
+	// keep under 128
 }
 
 // message base for extensions / sub types
@@ -119,8 +120,8 @@ message MarketData {
 	//
 	repeated MarketDataEntry entry = 5; // list of entries
 	//
-	optional sint32 priceExponent = 6; // ; base for entries
-	optional sint32 sizeExponent = 7; // ; base for entries
+	optional sint32 priceExponent = 6; // base for entries
+	optional sint32 sizeExponent = 7; // base for entries
 	//
 	optional sint32 tradeDate = 8; // base for entries; days since ISO Unix Epoch
 }
