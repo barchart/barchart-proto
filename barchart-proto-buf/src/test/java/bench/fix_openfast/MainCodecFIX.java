@@ -1,4 +1,6 @@
-package bench.fix;
+package bench.fix_openfast;
+
+import static org.testng.AssertJUnit.*;
 
 import java.io.File;
 
@@ -22,13 +24,6 @@ public class MainCodecFIX {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainCodecFIX.class);
-
-	static final int COUNT_TEST = 100 * 1000;
-
-	static final int COUNT_ENTRY = 20;
-
-	static final long A_LONG = Long.MAX_VALUE - 3;
-	static final int AN_INT = Integer.MAX_VALUE - 3;
 
 	public static void main(final String... args) throws Exception {
 
@@ -59,13 +54,15 @@ public class MainCodecFIX {
 		final MessageTemplate template = registry.get(1);
 
 		final Message messageOut = new Message(template);
-		messageOut.setInteger("MsgSeqNum", 1);
-		messageOut.setLong("SendingTime", 1);
 
 		final Field[] fields = new Field[] {};
 		final Sequence seq = new Sequence("MDEntries", fields, false);
 		final SequenceValue seqValue = new SequenceValue(seq);
 		messageOut.setFieldValue("MDEntries", seqValue);
+
+		messageOut.setInteger("MsgSeqNum", 123456);
+
+		messageOut.setLong("SendingTime", 100000);
 
 		final MessageEvent eventOut = new DownstreamMessageEvent(channel,
 				future, messageOut, null);
@@ -76,12 +73,21 @@ public class MainCodecFIX {
 
 		log.debug("decode");
 
-		final ChannelBuffer bufferIn = (ChannelBuffer) ctx.eventIn.getMessage();
+		final ChannelBuffer bufferIn = (ChannelBuffer) ctx.eventOut
+				.getMessage();
 
 		final MessageEvent eventIn = new UpstreamMessageEvent(channel,
 				bufferIn, null);
 
 		codec.messageReceived(ctx, eventIn);
+
+		final Message messageIn = (Message) ctx.eventIn.getMessage();
+
+		//
+
+		log.debug("verity");
+
+		assertEquals(messageOut, messageIn);
 
 		//
 

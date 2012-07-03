@@ -1,4 +1,4 @@
-package bench.fix;
+package bench.fix_openfast;
 
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelEvent;

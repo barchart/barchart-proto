@@ -1,11 +1,11 @@
-package bench.message;
+package bench.buf_message;
 
 import java.io.ByteArrayOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bench.message.Factory.Mode;
+import bench.buf_message.Factory.Mode;
 import bench.zip_jdk.ZipUtil;
 
 import com.barchart.proto.buf.Base;
@@ -129,14 +129,14 @@ public class MainMarketDataSpeed {
 
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			MessageCodec.decode(visitor, null, array);
+			MessageCodec.decode(array, visitor, null);
 		}
 
 		final long timeStart = System.nanoTime();
 
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			MessageCodec.decode(visitor, null, array);
+			MessageCodec.decode(array, visitor, null);
 		}
 
 		final long timeFinish = System.nanoTime();
@@ -164,7 +164,7 @@ public class MainMarketDataSpeed {
 
 			final byte[] array = output.toByteArray();
 
-			MessageCodec.decode(visitor, null, array);
+			MessageCodec.decode(array, visitor, null);
 
 		}
 
@@ -181,7 +181,7 @@ public class MainMarketDataSpeed {
 
 			final byte[] array = output.toByteArray();
 
-			MessageCodec.decode(visitor, null, array);
+			MessageCodec.decode(array, visitor, null);
 
 		}
 

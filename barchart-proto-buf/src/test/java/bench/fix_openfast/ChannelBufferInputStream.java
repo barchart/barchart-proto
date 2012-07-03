@@ -1,4 +1,4 @@
-package bench.fix;
+package bench.fix_openfast;
 
 import java.io.IOException;
 import java.io.InputStream;

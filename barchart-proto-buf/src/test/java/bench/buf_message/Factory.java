@@ -1,11 +1,11 @@
-package bench.message;
+package bench.buf_message;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketDataEntry;
 
-public class Factory {
+class Factory {
 
 	static final int ENTRY_COUNT = 20;
 

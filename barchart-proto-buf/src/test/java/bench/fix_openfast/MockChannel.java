@@ -1,4 +1,4 @@
-package bench.fix;
+package bench.fix_openfast;
 
 import java.net.SocketAddress;
 

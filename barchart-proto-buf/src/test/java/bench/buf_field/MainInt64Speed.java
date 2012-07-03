@@ -1,17 +1,17 @@
-package bench.field;
+package bench.buf_field;
 
 import java.io.ByteArrayOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.proto.buf.test.BenchInt32;
+import com.barchart.proto.buf.test.BenchInt64;
 
 /** measure message heap size */
-public class MainInt32Speed {
+public class MainInt64Speed {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(MainInt32Speed.class);
+			.getLogger(MainInt64Speed.class);
 
 	static final int COUNT = 10 * 1000 * 1000;
 
@@ -32,10 +32,10 @@ public class MainInt32Speed {
 		// 6 bytes
 		{
 
-			final BenchInt32 message = BenchInt32.newBuilder().setValue(VALUE)
+			final BenchInt64 message = BenchInt64.newBuilder().setValue(VALUE)
 					.build();
 
-			log.debug("int32 wire size : {}", message.getSerializedSize());
+			log.debug("int64 wire size : {}", message.getSerializedSize());
 
 		}
 
@@ -44,14 +44,14 @@ public class MainInt32Speed {
 
 			/** warm up */
 			for (int index = 0; index < COUNT; index++) {
-				BenchInt32.newBuilder().setValue(index).build();
+				BenchInt64.newBuilder().setValue(index).build();
 			}
 
 			final long timeStart = System.nanoTime();
 
 			/** measure */
 			for (int index = 0; index < COUNT; index++) {
-				BenchInt32.newBuilder().setValue(index).build();
+				BenchInt64.newBuilder().setValue(index).build();
 			}
 
 			final long timeFinish = System.nanoTime();
@@ -60,14 +60,14 @@ public class MainInt32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("int32 build speed, nano : {}", buildSpeed);
+			log.debug("int64 build speed, nano : {}", buildSpeed);
 
 		}
 
 		// 75 ns
 		{
 
-			final BenchInt32 messageOut = BenchInt32.newBuilder()
+			final BenchInt64 messageOut = BenchInt64.newBuilder()
 					.setValue(VALUE).build();
 
 			final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -98,14 +98,14 @@ public class MainInt32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("int32 write speed, nano : {}", buildSpeed);
+			log.debug("int64 write speed, nano : {}", buildSpeed);
 
 		}
 
 		// 50 ns
 		{
 
-			final BenchInt32 messageOut = BenchInt32.newBuilder()
+			final BenchInt64 messageOut = BenchInt64.newBuilder()
 					.setValue(VALUE).build();
 
 			final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -116,14 +116,14 @@ public class MainInt32Speed {
 
 			/** warm up */
 			for (int index = 0; index < COUNT; index++) {
-				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				final BenchInt64 messageIn = BenchInt64.parseFrom(array);
 			}
 
 			final long timeStart = System.nanoTime();
 
 			/** measure */
 			for (int index = 0; index < COUNT; index++) {
-				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				final BenchInt64 messageIn = BenchInt64.parseFrom(array);
 			}
 
 			final long timeFinish = System.nanoTime();
@@ -132,7 +132,7 @@ public class MainInt32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("int32 parse speed, nano : {}", buildSpeed);
+			log.debug("int64 parse speed, nano : {}", buildSpeed);
 
 		}
 
@@ -142,7 +142,7 @@ public class MainInt32Speed {
 			/** warm up */
 			for (int index = 0; index < COUNT; index++) {
 
-				final BenchInt32 messageOut = BenchInt32.newBuilder()
+				final BenchInt64 messageOut = BenchInt64.newBuilder()
 						.setValue(VALUE).build();
 
 				final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -151,7 +151,7 @@ public class MainInt32Speed {
 
 				final byte[] array = output.toByteArray();
 
-				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				final BenchInt64 messageIn = BenchInt64.parseFrom(array);
 
 				messageIn.getValue();
 
@@ -162,7 +162,7 @@ public class MainInt32Speed {
 			/** measure */
 			for (int index = 0; index < COUNT; index++) {
 
-				final BenchInt32 messageOut = BenchInt32.newBuilder()
+				final BenchInt64 messageOut = BenchInt64.newBuilder()
 						.setValue(VALUE).build();
 
 				final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -171,7 +171,7 @@ public class MainInt32Speed {
 
 				final byte[] array = output.toByteArray();
 
-				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				final BenchInt64 messageIn = BenchInt64.parseFrom(array);
 
 				messageIn.getValue();
 
@@ -183,7 +183,7 @@ public class MainInt32Speed {
 
 			final long buildSpeed = timeChange / COUNT;
 
-			log.debug("int32 build/write/parse speed, nano : {}", buildSpeed);
+			log.debug("int64 build/write/parse speed, nano : {}", buildSpeed);
 
 		}
 

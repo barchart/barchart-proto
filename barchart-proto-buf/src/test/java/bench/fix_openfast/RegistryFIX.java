@@ -1,4 +1,4 @@
-package bench.fix;
+package bench.fix_openfast;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

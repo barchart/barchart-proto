@@ -58,7 +58,7 @@ public class TestMessageCodec {
 
 		final byte[] array = output.toByteArray();
 
-		MessageCodec.decode(visitor, null, array);
+		MessageCodec.decode(array, visitor, null);
 
 		assertEquals(id1, 123);
 
@@ -80,7 +80,7 @@ public class TestMessageCodec {
 
 		final byte[] array = output.toByteArray();
 
-		MessageCodec.decode(visitor, null, array);
+		MessageCodec.decode(array, visitor, null);
 
 		assertEquals(id2, 456);
 

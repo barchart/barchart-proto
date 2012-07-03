@@ -56,7 +56,7 @@ public class MainDecoder {
 
 		final MessageTarget target = null; // XXX
 
-		MessageCodec.decode(visitor, target, array);
+		MessageCodec.decode(array, visitor, target);
 
 		//
 
