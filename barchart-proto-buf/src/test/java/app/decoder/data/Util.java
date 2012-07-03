@@ -72,6 +72,7 @@ public class Util {
 		if (entry.hasSizeMantissa()) {
 
 			final long mantissa = entry.getPriceMantissa();
+			@SuppressWarnings("unused")
 			final int exponent = getPriceExponent(message, entry); // XXX
 
 			return ValueBuilder.newSize(mantissa);

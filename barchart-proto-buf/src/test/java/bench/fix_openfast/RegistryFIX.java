@@ -12,11 +12,10 @@ import org.slf4j.LoggerFactory;
 
 public class RegistryFIX {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(RegistryFIX.class);
+	static final Logger log = LoggerFactory.getLogger(RegistryFIX.class);
 
-	public static TemplateRegistry makeTemplateRegistry(final String templateText)
-			throws Exception {
+	public static TemplateRegistry makeTemplateRegistry(
+			final String templateText) throws Exception {
 
 		final InputStream templateSource = new ByteArrayInputStream(
 				templateText.getBytes("UTF-8"));

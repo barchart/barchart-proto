@@ -7,7 +7,6 @@ import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /** measure message heap size */
 public class MainZip {
 
@@ -90,6 +89,8 @@ public class MainZip {
 
 			final byte[] arrayOut = ZipUtil.compress(arrayIn);
 
+			arrayOut.hashCode();
+
 		}
 
 		final long timeFinish = System.nanoTime();
@@ -99,5 +100,4 @@ public class MainZip {
 		log.debug("msg zip pack speed, nano : {}", speed);
 
 	}
-
 }

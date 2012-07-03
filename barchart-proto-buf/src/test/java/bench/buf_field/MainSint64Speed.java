@@ -119,6 +119,7 @@ public class MainSint64Speed {
 			/** warm up */
 			for (int index = 0; index < COUNT; index++) {
 				final BenchSint32 messageIn = BenchSint32.parseFrom(array);
+				messageIn.getValue();
 			}
 
 			final long timeStart = System.nanoTime();
@@ -126,6 +127,7 @@ public class MainSint64Speed {
 			/** measure */
 			for (int index = 0; index < COUNT; index++) {
 				final BenchSint32 messageIn = BenchSint32.parseFrom(array);
+				messageIn.getValue();
 			}
 
 			final long timeFinish = System.nanoTime();

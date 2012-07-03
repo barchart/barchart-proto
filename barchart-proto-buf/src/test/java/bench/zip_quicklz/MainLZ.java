@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** measure message heap size */
+@SuppressWarnings("all")
 public class MainLZ {
 
 	private static final Logger log = LoggerFactory.getLogger(MainLZ.class);

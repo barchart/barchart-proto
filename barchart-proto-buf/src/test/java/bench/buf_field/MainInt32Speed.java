@@ -117,6 +117,7 @@ public class MainInt32Speed {
 			/** warm up */
 			for (int index = 0; index < COUNT; index++) {
 				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				messageIn.getValue();
 			}
 
 			final long timeStart = System.nanoTime();
@@ -124,6 +125,7 @@ public class MainInt32Speed {
 			/** measure */
 			for (int index = 0; index < COUNT; index++) {
 				final BenchInt32 messageIn = BenchInt32.parseFrom(array);
+				messageIn.getValue();
 			}
 
 			final long timeFinish = System.nanoTime();

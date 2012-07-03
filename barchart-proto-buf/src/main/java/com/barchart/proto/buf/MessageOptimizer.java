@@ -24,6 +24,7 @@ public class MessageOptimizer {
 			}
 		}
 
+		@SuppressWarnings("unused")
 		long getMinimum() {
 			return minimum;
 		}
@@ -40,6 +41,7 @@ public class MessageOptimizer {
 			return isValid() && getRange() <= range;
 		}
 
+		@SuppressWarnings("unused")
 		long offset(final long value) {
 			return value - minimum;
 		}

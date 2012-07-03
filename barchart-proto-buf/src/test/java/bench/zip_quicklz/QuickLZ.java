@@ -14,6 +14,7 @@ package bench.zip_quicklz;
 //
 // Version: 1.5.0 final
 
+@SuppressWarnings("all")
 public final class QuickLZ {
 
 	// Streaming mode not supported
@@ -42,17 +43,19 @@ public final class QuickLZ {
 	}
 
 	static public long sizeDecompressed(final byte[] source) {
-		if (headerLen(source) == 9)
+		if (headerLen(source) == 9) {
 			return fast_read(source, 5, 4);
-		else
+		} else {
 			return fast_read(source, 2, 1);
+		}
 	}
 
 	static public long sizeCompressed(final byte[] source) {
-		if (headerLen(source) == 9)
+		if (headerLen(source) == 9) {
 			return fast_read(source, 1, 4);
-		else
+		} else {
 			return fast_read(source, 1, 1);
+		}
 	}
 
 	private static void write_header(final byte[] dst, final int level,
@@ -81,20 +84,24 @@ public final class QuickLZ {
 				- UNCOMPRESSED_END - 1);
 		int lits = 0;
 
-		if (level != 1 && level != 3)
+		if (level != 1 && level != 3) {
 			throw new RuntimeException(
 					"Java version only supports level 1 and 3");
+		}
 
-		if (level == 1)
+		if (level == 1) {
 			hashtable = new int[HASH_VALUES][QLZ_POINTERS_1];
-		else
+		} else {
 			hashtable = new int[HASH_VALUES][QLZ_POINTERS_3];
+		}
 
-		if (source.length == 0)
+		if (source.length == 0) {
 			return new byte[0];
+		}
 
-		if (src <= last_matchstart)
+		if (src <= last_matchstart) {
 			fetch = (int) fast_read(source, src, 3);
+		}
 
 		while (src <= last_matchstart) {
 			if ((cword_val & 1) == 1) {
@@ -148,8 +155,9 @@ public final class QuickLZ {
 							if (source[o + src - old_src] == source[src]) {
 								src++;
 								while (source[o + (src - old_src)] == source[src]
-										&& (src - old_src) < remaining)
+										&& (src - old_src) < remaining) {
 									src++;
+								}
 							}
 						}
 
@@ -202,8 +210,9 @@ public final class QuickLZ {
 							&& o < src - MINOFFSET) {
 						m = 3;
 						while (source[o + m] == source[src + m]
-								&& m < remaining)
+								&& m < remaining) {
 							m++;
+						}
 						if ((m > matchlen) || (m == matchlen && o > offset2)) {
 							offset2 = o;
 							matchlen = m;
@@ -284,15 +293,17 @@ public final class QuickLZ {
 
 	static long fast_read(final byte[] a, final int i, final int numbytes) {
 		long l = 0;
-		for (int j = 0; j < numbytes; j++)
+		for (int j = 0; j < numbytes; j++) {
 			l |= ((a[i + j] & 0xffL) << j * 8);
+		}
 		return l;
 	}
 
 	static void fast_write(final byte[] a, final int i, final long value,
 			final int numbytes) {
-		for (int j = 0; j < numbytes; j++)
+		for (int j = 0; j < numbytes; j++) {
 			a[i + j] = (byte) (value >>> (j * 8));
+		}
 	}
 
 	static public byte[] decompress(final byte[] source) {
@@ -311,9 +322,10 @@ public final class QuickLZ {
 
 		final int level = (source[0] >>> 2) & 0x3;
 
-		if (level != 1 && level != 3)
+		if (level != 1 && level != 3) {
 			throw new RuntimeException(
 					"Java version only supports level 1 and 3");
+		}
 
 		if ((source[0] & 1) != 1) {
 			final byte[] d2 = new byte[size];
@@ -326,10 +338,11 @@ public final class QuickLZ {
 				cword_val = fast_read(source, src, 4);
 				src += 4;
 				if (dst <= last_matchstart) {
-					if (level == 1)
+					if (level == 1) {
 						fetch = (int) fast_read(source, src, 3);
-					else
+					} else {
 						fetch = (int) fast_read(source, src, 4);
+					}
 				}
 			}
 

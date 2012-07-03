@@ -24,6 +24,7 @@ public class ProcBook {
 			return;
 		}
 
+		@SuppressWarnings("unused")
 		final boolean isBookImplied = context
 				.hasDescriptor(Descriptor.BOOK_IMPLIED);
 

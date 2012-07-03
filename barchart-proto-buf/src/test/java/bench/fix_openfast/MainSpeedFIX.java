@@ -95,6 +95,7 @@ public class MainSpeedFIX {
 
 	}
 
+	@SuppressWarnings("all")
 	static void testSpeedBuild(final Mode mode) {
 
 		/** warm up */

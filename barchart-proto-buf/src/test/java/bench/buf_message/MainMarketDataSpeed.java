@@ -67,6 +67,7 @@ public class MainMarketDataSpeed {
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
 			final Base message = buildBase(mode);
+			message.getType();
 		}
 
 		final long timeStart = System.nanoTime();
@@ -74,6 +75,7 @@ public class MainMarketDataSpeed {
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
 			final Base message = buildBase(mode);
+			message.getType();
 		}
 
 		final long timeFinish = System.nanoTime();
@@ -117,7 +119,7 @@ public class MainMarketDataSpeed {
 
 	static void testSpeedDecode(final Mode mode) throws Exception {
 
-		final MessageVisitor visitor = new MessageVisitor.Adaptor();
+		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>();
 
 		final Base messageOut = buildBase(mode);
 
