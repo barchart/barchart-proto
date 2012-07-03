@@ -10,7 +10,7 @@
 
 	<groupId>com.barchart.proto</groupId>
 	<artifactId>barchart-proto-buf</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
