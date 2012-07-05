@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<scope>time</scope>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
