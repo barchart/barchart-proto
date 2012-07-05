@@ -113,11 +113,11 @@ message MarketDataEntry {
 		//
 		// keep under 128
 		//
-		SIDE_FIRM = 200; // OPRA
-		SIDE_CUSTOMER = 200; // OPRA
+		SIDE_FIRM = 110; // OPRA
+		SIDE_CUSTOMER = 111; // OPRA
 		//
-		INDEX_ON_TRADE = 300; // OPRA
-		INDEX_ON_BOOK = 300; // OPRA
+		INDEX_ON_TRADE = 112; // OPRA
+		INDEX_ON_BOOK = 113; // OPRA
 		//
 	}
 	//
