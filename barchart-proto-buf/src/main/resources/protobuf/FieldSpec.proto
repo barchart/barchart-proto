@@ -24,6 +24,14 @@ option java_generate_equals_and_hash = true;
 //
 option optimize_for = SPEED;
 
+// message options descriptor
+import "google/protobuf/descriptor.proto";
+
+// define static message fields for meta data
+extend google.protobuf.MessageOptions {
+	optional string optionNone = 50001; //
+}
+
 //
 /**
  *
@@ -53,8 +61,10 @@ option optimize_for = SPEED;
 // universal data entry field
 // note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
 message MarketDataEntry {
-//
-// primary entry category; single
+	option (optionNone) = ""; // TODO
+	//
+	// primary entry category; single
+	// keep most frequent first
 	enum Type {
 	//
 		TRADE = 0; // a.k.a last sale; price & size (size mostly present)
@@ -62,26 +72,26 @@ message MarketDataEntry {
 		BID = 1; // book side
 		ASK = 2; // book side
 		//
-		OPEN = 3;
-		HIGH = 4;
-		LOW = 5;
-		CLOSE = 6; // a.k.a last sale; price; (size mostly absent)
+		CHANGE = 3; // such as price change from previous day
 		//
-		SETTLE = 7;
+		UNDERLYING = 4; // such as option/spread underlying price
 		//
-		VOLUME = 8;
+		VOLUME = 5;
 		//
-		INTEREST = 9;
+		OPEN = 6;
+		HIGH = 7;
+		LOW = 8;
+		CLOSE = 9; // a.k.a last sale, before close; price; (size mostly absent)
 		//
-		CUVOL = 10; // cumulative volume
+		SETTLE = 10;
 		//
-		STATUS = 11; // non price/size change; such as OPEN/CLOSE event
+		INTEREST = 11;
 		//
-		SEQUENCE = 12; //such as snapshot+update sequence synchronization index
+		CUVOL = 12; // cumulative volume
 		//
-		UNDERLYING = 13; // such as option underlying price
+		STATUS = 13; // non price/size change; such as OPEN/CLOSE event
 		//
-		CHANGE = 14; // such as price change from previous day
+		SEQUENCE = 14; //such as snapshot & update sequence synchronization index
 		//
 		// keep under 128
 	}
@@ -117,6 +127,7 @@ message MarketDataEntry {
 		INDEX_ON_TRADE = 112; // OPRA
 		INDEX_ON_BOOK = 113; // OPRA
 		//
+		// keep under 128
 	}
 	//
 	// entry action
@@ -125,8 +136,6 @@ message MarketDataEntry {
 		EDIT = 1; // merge, modify, replace, override, overlay
 		REMOVE = 2; // delete, erase, clear, reset
 	}
-	//
-	// keep frequent field index in 1..15 range
 	//
 	optional Type type = 1; // primary category
 	optional Action action = 2; // entry action

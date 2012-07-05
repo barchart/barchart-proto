@@ -65,6 +65,7 @@ public class MainBaseHeaderSpeed {
 
 	}
 
+	@SuppressWarnings("unused")
 	static void testHeaderDebug(final Mode mode) throws Exception {
 
 		final Base base = buildBase(mode);

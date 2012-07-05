@@ -88,7 +88,8 @@ public class WrapEntry extends WrapBase {
 	public PriceValue getPrice() {
 		if (hasPrice()) {
 			final long mantissa = entry.getPriceMantissa();
-			final int exponent = MessageRules.getPriceExponent(getMessage(), entry);
+			final int exponent = MessageRules.getPriceExponent(getMessage(),
+					entry);
 			return ValueBuilder.newPrice(mantissa, exponent);
 		} else {
 			return ValueConst.NULL_PRICE;
@@ -96,10 +97,12 @@ public class WrapEntry extends WrapBase {
 	}
 
 	/** XXX size exponent */
+	@SuppressWarnings("unused")
 	public SizeValue getSize() {
 		if (hasSize()) {
 			final long mantissa = entry.getSizeMantissa();
-			final int exponent = MessageRules.getSizeExponent(getMessage(), entry);
+			final int exponent = MessageRules.getSizeExponent(getMessage(),
+					entry);
 			return ValueBuilder.newSize(mantissa);
 		} else {
 			return ValueConst.NULL_SIZE;
