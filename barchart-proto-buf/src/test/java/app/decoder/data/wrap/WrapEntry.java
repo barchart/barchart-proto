@@ -43,10 +43,6 @@ public class WrapEntry extends WrapBase {
 
 		final List<Descriptor> list = entry.getDescriptorList();
 
-		if (list.isEmpty()) {
-			return false;
-		}
-
 		return list.contains(descriptor);
 
 	}
@@ -54,10 +50,6 @@ public class WrapEntry extends WrapBase {
 	public boolean hasDescriptorAll(final Descriptor... descriptor) {
 
 		final List<Descriptor> list = entry.getDescriptorList();
-
-		if (list.isEmpty()) {
-			return false;
-		}
 
 		final List<Descriptor> searchList = Arrays.asList(descriptor);
 

@@ -5,23 +5,10 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package vendor.ice;
-
-/**
- * 
- * ICE feed model
- * 
- * rules:
- * 
- * ICE MarketType is essentially sub-exchange
- * 
- */
+package vendor;
 
 /**
  *
- * ICE -> proto.buf marketId mapping:
- * 
- * ICE.marketId -> BUF.marketId via auto-need
- * 
+ * vendor models are mock ups of vendor messages in proto.buf format
  * 
  */
