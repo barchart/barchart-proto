@@ -10,8 +10,8 @@ package app.decoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import app.decoder.consumer.MessageTarget;
 import app.decoder.process.MarketProcessor;
-import app.decoder.target.MessageTarget;
 
 import com.barchart.proto.buf.Base;
 import com.barchart.proto.buf.MarketData;

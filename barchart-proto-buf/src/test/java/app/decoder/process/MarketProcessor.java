@@ -7,9 +7,9 @@
  */
 package app.decoder.process;
 
+import app.decoder.consumer.MessageTarget;
 import app.decoder.data.DataMaker;
 import app.decoder.news.NewsMaker;
-import app.decoder.target.MessageTarget;
 
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketNews;
