@@ -131,7 +131,7 @@ message MarketDataEntry {
 	//
 	optional sint64 index = 11; // such as book level, cuvol position, snpashot+update sequence, etc
 	//
-	optional sint32 tradeDate = 12; // offset to base; days in "fix format" 2012-07-04 -> 20120704
+	optional sint32 tradeDate = 12; // offset to base; date in "fix format" 2012-07-04 -> 20120704
 	//
 }
 

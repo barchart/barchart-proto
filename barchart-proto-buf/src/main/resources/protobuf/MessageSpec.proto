@@ -139,7 +139,7 @@ message MarketData {
 	optional sint32 priceExponent = 6; // base for entries
 	optional sint32 sizeExponent = 7; // base for entries
 	//
-	optional sint32 tradeDate = 8; // base for entries; days in "fix format" 2012-07-04 -> 20120704
+	optional sint32 tradeDate = 8; // base for entries; date in "fix format" 2012-07-04 -> 20120704
 	//
 }
 
