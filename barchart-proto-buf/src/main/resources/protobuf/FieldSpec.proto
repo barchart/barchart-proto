@@ -48,8 +48,6 @@ option optimize_for = SPEED;
   *
   * 5) can add more new name/index
   *
-  * 6) can add more name for same index
-  *
   */
 
 // universal data entry field
