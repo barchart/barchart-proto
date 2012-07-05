@@ -59,7 +59,7 @@ message MarketDataEntry {
 // primary entry category; single
 	enum Type {
 	//
-		TRADE = 0;
+		TRADE = 0; // a.k.a last sale; price & size (size mostly present)
 		//
 		BID = 1; // book side
 		ASK = 2; // book side
@@ -67,18 +67,23 @@ message MarketDataEntry {
 		OPEN = 3;
 		HIGH = 4;
 		LOW = 5;
-		CLOSE = 6;
+		CLOSE = 6; // a.k.a last sale; price; (size mostly absent)
 		//
 		SETTLE = 7;
 		//
 		VOLUME = 8;
+		//
 		INTEREST = 9;
 		//
 		CUVOL = 10; // cumulative volume
 		//
 		STATUS = 11; // non price/size change; such as OPEN/CLOSE event
 		//
-		SEQUENCE = 12; //such as snapshot+update sequence synchronization
+		SEQUENCE = 12; //such as snapshot+update sequence synchronization index
+		//
+		UNDERLYING = 13; // such as option underlying price
+		//
+		CHANGE = 14; // such as price change from previous day
 		//
 		// keep under 128
 	}
@@ -103,7 +108,17 @@ message MarketDataEntry {
 		STATUS_MARKET_PRE_OPEN = 102;
 		STATUS_MARKET_PRE_CLOSE = 103;
 		//
+		STATUS_TRADING_PAUSE = 104;
+		STATUS_TRADING_RESUME = 105;
+		//
 		// keep under 128
+		//
+		SIDE_FIRM = 200; // OPRA
+		SIDE_CUSTOMER = 200; // OPRA
+		//
+		INDEX_ON_TRADE = 300; // OPRA
+		INDEX_ON_BOOK = 300; // OPRA
+		//
 	}
 	//
 	// entry action
@@ -129,9 +144,11 @@ message MarketDataEntry {
 	optional sint64 sizeMantissa = 9;
 	optional sint32 sizeExponent = 10; // override to base;
 	//
-	optional sint64 index = 11; // such as book level, cuvol position, snpashot+update sequence, etc
+	// such as book level, cuvol position, snpashot & update sequence, etc
+	optional sint64 index = 11;
 	//
-	optional sint32 tradeDate = 12; // offset to base; date in "fix format" 2012-07-04 -> 20120704
+	// date in "fix format" 2012-07-04 -> 20120704
+	optional sint32 tradeDate = 12; // offset to base;
 	//
 }
 
