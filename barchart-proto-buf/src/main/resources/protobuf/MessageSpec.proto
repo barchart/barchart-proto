@@ -186,8 +186,10 @@ message InstrumentRequest {
 //
 message InstrumentResponse {
 	optional sint64 marketId = 1;
-	optional sint32 instrumentSchemaId = 2; // representation
-	optional string instrumentDescriptor = 3; // complete json object
+	// representation version
+	optional sint32 instrumentSchemaId = 2; //
+	// 	complete json object or embedded proto.buf for instrument, etc
+	optional bytes instrumentDescriptor = 3; //
 }
 
 // ##################################################

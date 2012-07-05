@@ -141,7 +141,7 @@ message MarketDataEntry {
 		TRADE_BLOCK = 125; // ICE
 		//
 		TRADE_CANCELED = 126; // ICE
-		TRADE_INVESTIGATED = 126; // ICE
+		TRADE_INVESTIGATED = 127; // ICE
 		//
 		// keep under 128
 	}
