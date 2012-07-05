@@ -5,11 +5,11 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package app.decoder.proc;
+package app.decoder.process;
 
-import app.decoder.cons.DataConsumer;
-import app.decoder.cons.MessageTarget;
-import app.decoder.cons.NewsConsumer;
+import app.decoder.data.DataMaker;
+import app.decoder.news.NewsMaker;
+import app.decoder.target.MessageTarget;
 
 import com.barchart.proto.buf.MarketData;
 import com.barchart.proto.buf.MarketNews;
@@ -25,7 +25,7 @@ public class MarketProcessor extends MessageVisitor.Adaptor<MessageTarget> {
 	@Override
 	public void apply(final MarketData message, final MessageTarget target) {
 
-		final DataConsumer consumer = target.getDataConsumer();
+		final DataMaker consumer = target.getDataMaker();
 
 		procData.apply(message, consumer);
 
@@ -34,7 +34,7 @@ public class MarketProcessor extends MessageVisitor.Adaptor<MessageTarget> {
 	@Override
 	public void apply(final MarketNews message, final MessageTarget target) {
 
-		final NewsConsumer consumer = target.getNewsConsumer();
+		final NewsMaker consumer = target.getNewsMaker();
 
 		procNews.apply(message, consumer);
 

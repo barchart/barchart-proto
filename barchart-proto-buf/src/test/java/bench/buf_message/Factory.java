@@ -23,6 +23,7 @@ class Factory {
 	static final int AN_INT = Integer.MAX_VALUE - 3;
 
 	static final long RANGE = 1234567890;
+
 	static final AtomicLong RANDOM = new AtomicLong(RANGE);
 
 	static int getIntMod(final int size) {
@@ -69,7 +70,7 @@ class Factory {
 			builder.setAction(MarketDataEntry.Action.ADD);
 
 			// builder.setMarketId(AN_INT); // SHARED
-			builder.setSequence(getIntMod(10)); // OFFSET
+			// builder.setSequence(getIntMod(10)); // NONE
 
 			builder.setPriceMantissa(getLongMod(50 * 1000));
 			// builder.setSizeExponent(123); // SHARED
@@ -92,7 +93,7 @@ class Factory {
 			builder.setAction(MarketDataEntry.Action.ADD);
 
 			// builder.setMarketId(AN_INT); // SHARED
-			builder.setSequence(getIntMod(10)); // OFFSET
+			// builder.setSequence(getIntMod(10)); // NONE
 
 			builder.setPriceMantissa(getLongMod(50 * 1000));
 			// builder.setSizeExponent(123); // SHARED
@@ -117,19 +118,18 @@ class Factory {
 			builder.setType(MarketDataEntry.Type.BID);
 			builder.setAction(MarketDataEntry.Action.ADD);
 
-			// builder.setMarketId(AN_INT); // SHARED
-			builder.setSequence(getIntMod(100)); // OFFSET
+			// builder.setSequence(getIntMod(100)); // NONE
 
 			builder.setPriceMantissa(getLongMod(1000 * 1000));
-			builder.setPriceExponent(getIntMod(100)); //
+			builder.setPriceExponent(-3); //
 
 			builder.setSizeMantissa(getLongMod(1000 * 1000));
-			builder.setSizeExponent(getIntMod(100)); //
+			builder.setSizeExponent(-2); //
 
 			builder.setIndex(getIntMod(1000));
 
-			// builder.setTimeStamp(123); // SHARED
-			// builder.setTradeDate(123); // SHARED
+			builder.setTimeStamp(100 * 1000 * 1000); //
+			builder.setTradeDate(15625); //
 
 			return builder;
 

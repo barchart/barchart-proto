@@ -7,8 +7,8 @@
  */
 package bench.buf_field;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +41,16 @@ public class MainTradeDate {
 			final BenchTradeDate32 message = BenchTradeDate32.newBuilder()
 					.setTradeDate(value).build();
 
-			log.debug("trade date '1' size : {}", message.getSerializedSize());
+			final int size = message.getSerializedSize();
+
+			log.debug(" '1' value : {} size : {}", value, size);
 
 		}
 
 		{
 
-			final DateTime dateOne = new DateTime(0);
-			final DateTime dateTwo = new DateTime();
+			final LocalDate dateOne = new LocalDate(1970, 1, 1);
+			final LocalDate dateTwo = new LocalDate();
 			// log.debug("date range : {} {} ", dateOne, dateTwo);
 
 			final Days daysRange = Days.daysBetween(dateOne, dateTwo);
@@ -58,8 +60,9 @@ public class MainTradeDate {
 			final BenchTradeDate32 message = BenchTradeDate32.newBuilder()
 					.setTradeDate(value).build();
 
-			log.debug("trade date 'since' size : {}",
-					message.getSerializedSize());
+			final int size = message.getSerializedSize();
+
+			log.debug(" 'since' value : {} size : {}", value, size);
 
 		}
 
@@ -70,8 +73,9 @@ public class MainTradeDate {
 			final BenchTradeDate32 message = BenchTradeDate32.newBuilder()
 					.setTradeDate(value).build();
 
-			log.debug("trade date 'fix days' size : {}",
-					message.getSerializedSize());
+			final int size = message.getSerializedSize();
+
+			log.debug(" 'fix days' value : {} size : {}", value, size);
 
 		}
 
@@ -82,8 +86,9 @@ public class MainTradeDate {
 			final BenchTradeDate64 message = BenchTradeDate64.newBuilder()
 					.setTradeDate(value).build();
 
-			log.debug("trade date 'millisUTC' size : {}",
-					message.getSerializedSize());
+			final int size = message.getSerializedSize();
+
+			log.debug(" 'millisUTC' value : {} size : {}", value, size);
 
 		}
 
@@ -94,8 +99,38 @@ public class MainTradeDate {
 			final BenchTradeDate64 message = BenchTradeDate64.newBuilder()
 					.setTradeDate(value).build();
 
-			log.debug("trade date 'fix millis' size : {}",
-					message.getSerializedSize());
+			final int size = message.getSerializedSize();
+
+			log.debug(" 'fix millis' value : {} size : {}", value, size);
+
+		}
+
+		{
+
+			log.debug("############################");
+
+			final int yearBase = 1970;
+
+			log.debug(" base : {}", yearBase);
+
+			for (int yearThis = 2010; yearThis < 2020; yearThis++) {
+
+				final LocalDate dateOne = new LocalDate(yearBase, 1, 1);
+				final LocalDate dateTwo = new LocalDate(yearThis, 1, 1);
+				// log.debug("date range : {} {} ", dateOne, dateTwo);
+
+				final Days daysRange = Days.daysBetween(dateOne, dateTwo);
+
+				final int value = daysRange.getDays();
+
+				final BenchTradeDate32 message = BenchTradeDate32.newBuilder()
+						.setTradeDate(value).build();
+
+				final int size = message.getSerializedSize();
+
+				log.debug(" this : {} ; size : {} ;", yearThis, size);
+
+			}
 
 		}
 

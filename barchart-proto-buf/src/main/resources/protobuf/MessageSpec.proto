@@ -32,9 +32,8 @@ import "FieldSpec.proto";
 
 // define static message fields for meta data
 extend google.protobuf.MessageOptions {
-	optional sint32 optionTypeIndex = 50001; // message type index
-	optional string optionExtensionPrefix = 50002; // message type name prefix
-	optional string optionEnumNameSuffix = 50003; // message enum name suffix
+	optional string optionEnumNameSuffix = 50001; // message type enum name suffix
+	optional string optionExtensionPrefix = 50002; // message extension name prefix
 }
 
 // message type
@@ -42,8 +41,8 @@ extend google.protobuf.MessageOptions {
 // note: must use suffix due to global scope
 enum MessageType {
 //
-	MarketDataType = 50;
-	MarketNewsType = 51;
+	MarketDataType = 10;
+	MarketNewsType = 70;
 	//
 	DataSubscribeRequestType = 100;
 	DataSubscribeResponseType = 101;
@@ -63,12 +62,13 @@ enum MessageType {
 }
 
 // forward declaration of sub types / extensions
-// note: keep in sync with enum
 // note: must use prefix due to global scope
+// note: keep in sync with message type enum
+// note: index must be inside base extensions range
 extend Base {
 //
-	optional MarketData messageMarketData = 50;
-	optional MarketNews messageMarketNews = 51;
+	optional MarketData messageMarketData = 10; // should be repeated?
+	optional MarketNews messageMarketNews = 70; // should be repeated?
 	//
 	optional DataSubscribeRequest messageDataSubscribeRequest = 100;
 	optional DataSubscribeResponse messageDataSubscribeResponse = 101;
@@ -87,15 +87,31 @@ extend Base {
 	// keep under 128
 }
 
-// message base for extensions / sub types
+// message base for extensions / sub types; represents a packet : header + body
+// note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
 message Base {
-	option (optionEnumNameSuffix) = "Type"; // rule for enum names
-	option (optionExtensionPrefix) = "message"; // rule for extension names
-	extensions 50 to 127; // message polymorph range
+	option (optionEnumNameSuffix) = "Type"; // msg type enum names must use suffix
+	option (optionExtensionPrefix) = "message"; // msg extension names must use prefix
 	//
-	optional MessageType type = 1; // message type selector
-	optional sint64 sequence = 2; // message sequence number
+	optional sint32 channel = 1; // message channel number
+	optional sint64 sequence = 2; // message sequence number inside the channel
 	optional sint64 timeStamp = 3; // message time stamp, millisUTC
+	//
+	optional MessageType type = 4; // sub type selector
+	//
+	//	optional Field name = 5;
+	//	...
+	//	optional Field name = 9;
+	//
+	extensions 10 to 15; // sub type index range for frequent messages
+	//
+	//	optional Field name = 16;
+	//	...
+	//	optional Field name = 63;
+	//
+	extensions 64 to 127; // sub type index range for infrequent messages
+	//
+	// keep under 128
 }
 
 // ##################################################
@@ -106,9 +122,9 @@ message MarketData {
 	enum Type {
 		UPDATE = 0;
 		SNAPSHOT = 1;
-		RESET_ALL = 2;
-		RESET_BOOK = 3;
-		RESET_CUVOL = 4;
+		//		RESET_ALL = 2;
+		//		RESET_BOOK = 3;
+		//		RESET_CUVOL = 4;
 	}
 
 	//
@@ -123,7 +139,8 @@ message MarketData {
 	optional sint32 priceExponent = 6; // base for entries
 	optional sint32 sizeExponent = 7; // base for entries
 	//
-	optional sint32 tradeDate = 8; // base for entries; days since ISO Unix Epoch
+	optional sint32 tradeDate = 8; // base for entries; days in "fix format" 2012-07-04 -> 20120704
+	//
 }
 
 // ##################################################

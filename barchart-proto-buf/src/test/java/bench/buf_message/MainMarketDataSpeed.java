@@ -8,6 +8,7 @@
 package bench.buf_message;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,8 +19,10 @@ import bench.zip_jdk.ZipUtil;
 
 import com.barchart.proto.buf.Base;
 import com.barchart.proto.buf.MarketData;
+import com.barchart.proto.buf.MarketDataEntry;
 import com.barchart.proto.buf.MarketDataEntry.Builder;
 import com.barchart.proto.buf.MessageCodec;
+import com.barchart.proto.buf.MessageOptimizer;
 import com.barchart.proto.buf.MessageVisitor;
 
 /** measure message heap size */
@@ -39,9 +42,13 @@ public class MainMarketDataSpeed {
 
 		final MarketData.Builder builder = Factory.newMessage(mode);
 
-		final Base base = MessageCodec.encode(builder.build());
+		final Base.Builder base = MessageCodec.encode(builder.build());
 
-		return base;
+		base.setChannel(123);
+		base.setSequence(100 * 1000);
+		base.setTimeStamp(1000 * 1000);
+
+		return base.build();
 	}
 
 	static void testWireSize(final Mode mode) throws Exception {
@@ -68,6 +75,86 @@ public class MainMarketDataSpeed {
 		final float ratio = 1.0F * arrayIn.length / arrayOut.length;
 
 		log.debug("zip ratio : {}", ratio);
+
+	}
+
+	static void testOptimizeSize(final Mode mode) throws Exception {
+
+		final MarketData.Builder message = MarketData.newBuilder();
+
+		switch (mode) {
+		case SNAPSHOT_SIMPLE_DESC:
+		case SNAPSHOT_SIMPLE:
+		case SNAPSHOT_COMPLEX:
+			message.setType(MarketData.Type.SNAPSHOT);
+			break;
+		case UPDATE_SIMPLE_DESC:
+		case UPDATE_SIMPLE:
+		case UPDATE_COMPLEX:
+			message.setType(MarketData.Type.UPDATE);
+			break;
+		default:
+			return;
+		}
+
+		//
+
+		final List<MarketDataEntry.Builder> entryList = Factory
+				.newEntryList(mode);
+
+		final List<MarketDataEntry.Builder> entryListOne = new ArrayList<Builder>();
+		final List<MarketDataEntry.Builder> entryListTwo = new ArrayList<Builder>();
+
+		for (final MarketDataEntry.Builder entry : entryList) {
+			entryListOne.add(entry.clone());
+			entryListTwo.add(entry.clone());
+		}
+
+		//
+
+		final MarketData.Builder messageOne = message.clone();
+		final MarketData.Builder messageTwo = message.clone();
+
+		//
+
+		for (final MarketDataEntry.Builder entry : entryListOne) {
+			messageOne.addEntry(entry);
+		}
+
+		final MarketData dataOne = messageOne.build();
+
+		//
+
+		MessageOptimizer.pack(messageTwo, entryListTwo);
+
+		for (final MarketDataEntry.Builder entry : entryListTwo) {
+			messageTwo.addEntry(entry);
+		}
+
+		final MarketData dataTwo = messageTwo.build();
+
+		//
+
+		final int wireSizeOne = dataOne.getSerializedSize();
+		final int wireSizeTwo = dataTwo.getSerializedSize();
+
+		log.debug("opt wireSizeOne, total, byte : {}", wireSizeOne);
+		log.debug("opt wireSizeTwo, total, byte : {}", wireSizeTwo);
+
+		//
+
+		// final ByteArrayOutputStream output = new ByteArrayOutputStream();
+		// message.writeTo(output);
+
+		// final byte[] arrayIn = output.toByteArray();
+		// final byte[] arrayOut = ZipUtil.compress(arrayIn);
+
+		// log.debug("zip arrayIn.length  : {}", arrayIn.length);
+		// log.debug("zip arrayOut.length : {}", arrayOut.length);
+
+		// final float ratio = 1.0F * arrayIn.length / arrayOut.length;
+
+		// log.debug("zip ratio : {}", ratio);
 
 	}
 
@@ -99,25 +186,29 @@ public class MainMarketDataSpeed {
 
 	static void testSpeedOptimize(final Mode mode) {
 
+		final MarketData.Builder message = MarketData.newBuilder();
+
+		switch (mode) {
+		case SNAPSHOT_SIMPLE_DESC:
+		case SNAPSHOT_SIMPLE:
+		case SNAPSHOT_COMPLEX:
+			message.setType(MarketData.Type.SNAPSHOT);
+			break;
+		case UPDATE_SIMPLE_DESC:
+		case UPDATE_SIMPLE:
+		case UPDATE_COMPLEX:
+			message.setType(MarketData.Type.UPDATE);
+			break;
+		default:
+			return;
+		}
+
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
 
-			final MarketData.Builder message = Factory.newMessage(mode);
-
-			switch (mode) {
-			case SNAPSHOT_SIMPLE:
-			case SNAPSHOT_COMPLEX:
-				message.setType(MarketData.Type.SNAPSHOT);
-				break;
-			case UPDATE_SIMPLE:
-			case UPDATE_COMPLEX:
-				message.setType(MarketData.Type.UPDATE);
-				break;
-			default:
-				return;
-			}
-
 			final List<Builder> entryList = Factory.newEntryList(mode);
+
+			MessageOptimizer.pack(message, entryList);
 
 		}
 
@@ -126,24 +217,9 @@ public class MainMarketDataSpeed {
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
 
-			final MarketData.Builder message = Factory.newMessage(mode);
-
-			switch (mode) {
-			case SNAPSHOT_SIMPLE:
-			case SNAPSHOT_COMPLEX:
-			case SNAPSHOT_SIMPLE_DESC:
-				message.setType(MarketData.Type.SNAPSHOT);
-				break;
-			case UPDATE_SIMPLE:
-			case UPDATE_COMPLEX:
-			case UPDATE_SIMPLE_DESC:
-				message.setType(MarketData.Type.UPDATE);
-				break;
-			default:
-				return;
-			}
-
 			final List<Builder> entryList = Factory.newEntryList(mode);
+
+			MessageOptimizer.pack(message, entryList);
 
 		}
 
@@ -275,6 +351,8 @@ public class MainMarketDataSpeed {
 		log.debug("COUNT_TEST  : {}", COUNT_TEST);
 
 		testWireSize(mode);
+
+		testOptimizeSize(mode);
 
 		testSpeedBuild(mode);
 

@@ -53,6 +53,7 @@ option optimize_for = SPEED;
   */
 
 // universal data entry field
+// note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
 message MarketDataEntry {
 //
 // primary entry category; single
@@ -75,11 +76,15 @@ message MarketDataEntry {
 		//
 		CUVOL = 10; // cumulative volume
 		//
-		STATUS = 11; // non price/size related change; such as OPEN/CLOSE event
+		STATUS = 11; // non price/size change; such as OPEN/CLOSE event
 		//
+		SEQUENCE = 12; //such as snapshot+update sequence synchronization
+		//
+		// keep under 128
 	}
 	//
 	// secondary entry category; multiple
+	// keep in name space like format
 	enum Descriptor {
 	//
 		BOOK_IMPLIED = 0; // bid/ask entry is for implied book
@@ -87,18 +92,18 @@ message MarketDataEntry {
 		SETTLE_PRELIMINARY = 3; //
 		SETTLE_THEORETICAL = 4; //
 		//
-		PERIOD_DAY = 5;
-		PERIOD_MONTH = 6;
-		PERIOD_YEAR = 7;
+		PERIOD_DAY = 10;
+		PERIOD_MONTH = 11;
+		PERIOD_YEAR = 12;
 		//
-		SESSION_OVERNIGHT = 51; // such as FORM-T
+		SESSION_OVERNIGHT = 50; // such as FORM-T
 		//
-		STATUS_MARKET_OPEN = 101;
-		STATUS_MARKET_CLOSE = 102;
-		STATUS_MARKET_PRE_OPEN = 103;
-		STATUS_MARKET_PRE_CLOSE = 104;
+		STATUS_MARKET_OPEN = 100;
+		STATUS_MARKET_CLOSE = 101;
+		STATUS_MARKET_PRE_OPEN = 102;
+		STATUS_MARKET_PRE_CLOSE = 103;
 		//
-		// XXX 128 XXX
+		// keep under 128
 	}
 	//
 	// entry action
@@ -124,9 +129,9 @@ message MarketDataEntry {
 	optional sint64 sizeMantissa = 9;
 	optional sint32 sizeExponent = 10; // override to base;
 	//
-	optional sint64 index = 11; // such as book level, or cuvol position, etc
+	optional sint64 index = 11; // such as book level, cuvol position, snpashot+update sequence, etc
 	//
-	optional sint32 tradeDate = 12; // offset to base; days since ISO Unix Epoch
+	optional sint32 tradeDate = 12; // offset to base; days in "fix format" 2012-07-04 -> 20120704
 	//
 }
 

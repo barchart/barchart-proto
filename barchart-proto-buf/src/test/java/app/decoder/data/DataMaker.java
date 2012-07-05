@@ -5,12 +5,14 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package app.decoder.cons;
+package app.decoder.data;
+
+import app.decoder.data.wrap.WrapBase;
 
 import com.barchart.feed.base.instrument.values.MarketInstrument;
 import com.barchart.feed.base.market.api.MarketMakerProvider;
 
-public interface DataConsumer extends MarketMakerProvider<ProtoEntry> {
+public interface DataMaker extends MarketMakerProvider<WrapBase> {
 
 	MarketInstrument lookup(long marketId);
 

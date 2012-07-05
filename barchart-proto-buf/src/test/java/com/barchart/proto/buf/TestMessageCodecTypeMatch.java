@@ -72,7 +72,7 @@ public class TestMessageCodecTypeMatch {
 
 		final MarketData message = MarketData.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -99,7 +99,7 @@ public class TestMessageCodecTypeMatch {
 
 		final MarketNews message = MarketNews.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -126,7 +126,7 @@ public class TestMessageCodecTypeMatch {
 
 		final HeartBeat message = HeartBeat.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -153,7 +153,7 @@ public class TestMessageCodecTypeMatch {
 
 		final LoginRequest message = LoginRequest.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -180,7 +180,7 @@ public class TestMessageCodecTypeMatch {
 
 		final LoginResponse message = LoginResponse.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -208,7 +208,7 @@ public class TestMessageCodecTypeMatch {
 		final InstrumentRequest message = InstrumentRequest.newBuilder()
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -236,7 +236,7 @@ public class TestMessageCodecTypeMatch {
 		final InstrumentResponse message = InstrumentResponse.newBuilder()
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -264,7 +264,7 @@ public class TestMessageCodecTypeMatch {
 		final DataSubscribeRequest message = DataSubscribeRequest.newBuilder()
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -293,7 +293,7 @@ public class TestMessageCodecTypeMatch {
 		final DataSubscribeResponse message = DataSubscribeResponse
 				.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -322,7 +322,7 @@ public class TestMessageCodecTypeMatch {
 		final NewsSubscribeRequest message = NewsSubscribeRequest.newBuilder()
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override
@@ -351,7 +351,7 @@ public class TestMessageCodecTypeMatch {
 		final NewsSubscribeResponse message = NewsSubscribeResponse
 				.newBuilder().build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final MessageVisitor<Void> visitor = new MessageVisitor.Adaptor<Void>() {
 			@Override

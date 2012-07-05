@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package util;
+package com.barchart.proto.buf.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +24,10 @@ import com.barchart.proto.buf.NewsSubscribeRequest;
 import com.barchart.proto.buf.NewsSubscribeResponse;
 import com.google.protobuf.Message;
 
-public class MessageVisitorLogger implements MessageVisitor<Void> {
+public class LoggingVisitor implements MessageVisitor<Void> {
 
 	protected static final Logger log = LoggerFactory
-			.getLogger(MessageVisitorLogger.class);
+			.getLogger(LoggingVisitor.class);
 
 	protected void log(final Message message) {
 		log.debug("message \n{}", message);

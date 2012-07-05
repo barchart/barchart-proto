@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package app.decoder.cons;
+package app.decoder.data;
 
 import com.barchart.feed.base.bar.api.MarketDoBar;
 import com.barchart.feed.base.bar.enums.MarketBarType;

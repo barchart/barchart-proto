@@ -12,59 +12,18 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.proto.buf.MarketDataEntry.Builder;
-
 /**
- * 
+ * does message compression per {@link MessageRules}
  **/
-public class MessageOptimizer {
+public final class MessageOptimizer {
 
-	static final Logger log = LoggerFactory.getLogger(MessageOptimizer.class);
-
-	private static final class CalcLong {
-
-		private long lo = Long.MAX_VALUE;
-		private long hi = Long.MIN_VALUE;
-
-		void apply(final long value) {
-			if (value > hi) {
-				hi = value;
-			}
-			if (value < lo) {
-				lo = value;
-			}
-		}
-
-		long getLo() {
-			return lo;
-		}
-
-		long getHi() {
-			return hi;
-		}
-
-		long getRange() {
-			return hi - lo;
-		}
-
-		boolean isValid() {
-			return lo <= hi;
-		}
-
-		boolean shouldCompress(final long range) {
-			return isValid() && getRange() <= range;
-		}
-
-		long offset(final long value) {
-			return value - lo;
-		}
-
+	private MessageOptimizer() {
 	}
 
 	private static final class CalcInt {
 
-		private int lo = Integer.MAX_VALUE;
 		private int hi = Integer.MIN_VALUE;
+		private int lo = Integer.MAX_VALUE;
 
 		void apply(final int value) {
 			if (value > hi) {
@@ -75,12 +34,13 @@ public class MessageOptimizer {
 			}
 		}
 
-		int getLo() {
-			return lo;
-		}
-
+		@SuppressWarnings("unused")
 		int getHi() {
 			return hi;
+		}
+
+		int getLo() {
+			return lo;
 		}
 
 		int getRange() {
@@ -91,18 +51,61 @@ public class MessageOptimizer {
 			return lo <= hi;
 		}
 
+		int offLo(final int value) {
+			return value - lo;
+		}
+
 		boolean shouldCompress(final int range) {
 			return isValid() && getRange() <= range;
 		}
 
-		int offset(final int value) {
+	}
+
+	private static final class CalcLong {
+
+		private long hi = Long.MIN_VALUE;
+		private long lo = Long.MAX_VALUE;
+
+		void apply(final long value) {
+			if (value > hi) {
+				hi = value;
+			}
+			if (value < lo) {
+				lo = value;
+			}
+		}
+
+		@SuppressWarnings("unused")
+		long getHi() {
+			return hi;
+		}
+
+		long getLo() {
+			return lo;
+		}
+
+		long getRange() {
+			return hi - lo;
+		}
+
+		boolean isValid() {
+			return lo <= hi;
+		}
+
+		long offLo(final long value) {
 			return value - lo;
+		}
+
+		boolean shouldCompress(final long range) {
+			return isValid() && getRange() <= range;
 		}
 
 	}
 
+	static final Logger log = LoggerFactory.getLogger(MessageOptimizer.class);
+
 	public static void pack(final MarketData.Builder message,
-			final List<Builder> entryList) {
+			final List<MarketDataEntry.Builder> entryList) {
 
 		if (!message.hasType()) {
 			return;
@@ -118,11 +121,6 @@ public class MessageOptimizer {
 		default:
 			return;
 		}
-
-	}
-
-	private static void packUpdate(final MarketData.Builder message,
-			final List<Builder> entryList) {
 
 	}
 
@@ -158,8 +156,13 @@ public class MessageOptimizer {
 
 	}
 
+	/**
+	 * snapshots have same : market id, trade date, time stamp
+	 * 
+	 * snapshots should have similar : price, size
+	 */
 	private static void packSnapshot(final MarketData.Builder message,
-			final List<Builder> entryList) {
+			final List<MarketDataEntry.Builder> entryList) {
 
 		final CalcInt calcPriceExp = new CalcInt();
 		final CalcInt calcSizeExp = new CalcInt();
@@ -204,37 +207,40 @@ public class MessageOptimizer {
 
 	}
 
-	static void packXXX(final MarketData.Builder message) {
+	/**
+	 * updates have different : market id, price, size
+	 * 
+	 * updates should have similar : trade date, time stamp
+	 */
+	private static void packUpdate(final MarketData.Builder message,
+			final List<MarketDataEntry.Builder> entryList) {
 
-		final CalcLong calcMarketId = new CalcLong();
 		final CalcInt calcTradeDate = new CalcInt();
-
-		final List<MarketDataEntry.Builder> entryList = message
-				.getEntryBuilderList();
+		final CalcLong calcTimeStamp = new CalcLong();
 
 		for (final MarketDataEntry.Builder entry : entryList) {
-
-			if (entry.hasMarketId()) {
-				calcMarketId.apply(entry.getMarketId());
-			}
 
 			if (entry.hasTradeDate()) {
 				calcTradeDate.apply(entry.getTradeDate());
 			}
 
+			if (entry.hasTimeStamp()) {
+				calcTimeStamp.apply(entry.getTimeStamp());
+			}
+
 		}
 
-		final boolean doMarketId = calcMarketId.shouldCompress(0);
-		final boolean doTradeDate = calcTradeDate.shouldCompress(100);
+		final boolean doTradeDate = calcTradeDate.shouldCompress(100); // days
+		final boolean doTimeStamp = calcTimeStamp.shouldCompress(1000); // millis
 
 		for (final MarketDataEntry.Builder entry : entryList) {
 
-			if (doMarketId && entry.hasMarketId()) {
-				entry.clearMarketId();
+			if (doTradeDate && entry.hasTradeDate()) {
+				entry.setTradeDate(calcTradeDate.offLo(entry.getTradeDate()));
 			}
 
-			if (doTradeDate && entry.hasTradeDate()) {
-				entry.setTradeDate(calcTradeDate.offset(entry.getTradeDate()));
+			if (doTimeStamp && entry.hasTimeStamp()) {
+				entry.setTimeStamp(calcTimeStamp.offLo(entry.getTimeStamp()));
 			}
 
 		}
@@ -243,39 +249,8 @@ public class MessageOptimizer {
 			message.setTradeDate(calcTradeDate.getLo());
 		}
 
-	}
-
-	public static void unpack(final MarketData.Builder message) {
-
-		final List<MarketDataEntry.Builder> entryList = message
-				.getEntryBuilderList();
-
-		final boolean doMarketId = message.hasMarketId();
-		final long marketId = message.getMarketId();
-
-		final boolean doTradeDate = message.hasTradeDate()
-				&& message.getTradeDate() != 0;
-
-		final int msgTradeDate = message.getTradeDate();
-
-		for (final MarketDataEntry.Builder entry : entryList) {
-
-			if (doMarketId && !entry.hasMarketId()) {
-				entry.setMarketId(marketId);
-			}
-
-			if (doTradeDate && entry.hasTradeDate()) {
-				entry.setTradeDate(msgTradeDate + entry.getTradeDate());
-			}
-
-		}
-
-		if (doMarketId) {
-			message.clearMarketId();
-		}
-
-		if (doTradeDate) {
-			message.clearTradeDate();
+		if (doTimeStamp) {
+			message.setTimeStamp(calcTimeStamp.getLo());
 		}
 
 	}

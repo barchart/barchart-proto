@@ -57,7 +57,7 @@ public class TestMessageCodec {
 		final MarketData message = MarketData.newBuilder().setMarketId(123)
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -79,7 +79,7 @@ public class TestMessageCodec {
 		final MarketNews message = MarketNews.newBuilder().setMarketId(456)
 				.build();
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
 

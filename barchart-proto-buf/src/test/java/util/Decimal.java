@@ -1,6 +1,6 @@
-package com.barchart.proto.buf;
+package util;
 
-public class Decimal {
+class Decimal {
 
 	public static Decimal NULL = new Decimal(0, 0);
 

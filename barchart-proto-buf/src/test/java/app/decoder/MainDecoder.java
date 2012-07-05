@@ -10,8 +10,8 @@ package app.decoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import app.decoder.cons.MessageTarget;
-import app.decoder.proc.MarketProcessor;
+import app.decoder.process.MarketProcessor;
+import app.decoder.target.MessageTarget;
 
 import com.barchart.proto.buf.Base;
 import com.barchart.proto.buf.MarketData;
@@ -53,7 +53,7 @@ public class MainDecoder {
 
 		//
 
-		final Base base = MessageCodec.encode(message);
+		final Base base = MessageCodec.encode(message).build();
 
 		final byte[] array = MessageCodec.encode(base);
 

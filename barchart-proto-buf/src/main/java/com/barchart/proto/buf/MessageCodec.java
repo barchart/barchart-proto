@@ -26,7 +26,10 @@ import com.google.protobuf.Message;
 /**
  * encode/decode proto.buf messages
  */
-public class MessageCodec {
+public final class MessageCodec {
+
+	private MessageCodec() {
+	}
 
 	/** message sub type / extension binding meta data */
 	private static class MessageMeta {
@@ -161,8 +164,8 @@ public class MessageCodec {
 		//
 
 		default:
-			log.warn("missing message type",
-					new IllegalStateException(type.name()));
+			log.warn("unsupported message type",
+					new UnsupportedOperationException(type.name()));
 			break;
 		}
 
@@ -214,22 +217,22 @@ public class MessageCodec {
 
 	public static byte[] encode(final Base base) throws Exception {
 
-		final ByteArrayOutputStream output = new ByteArrayOutputStream(128);
+		// final ByteArrayOutputStream output = new ByteArrayOutputStream(128);
+		// base.writeTo(output);
+		// final byte[] array = output.toByteArray();
+		// return array;
 
-		base.writeTo(output);
-
-		final byte[] array = output.toByteArray();
-
-		return array;
+		return base.toByteArray();
 
 	}
 
 	/** embed sub type message into a base */
-	public static <MESSAGE extends Message> Base encode(final MESSAGE message) {
+	public static <MESSAGE extends Message> Base.Builder encode(
+			final MESSAGE message) {
 
 		if (message == null) {
 			log.warn("missing message", new NullPointerException());
-			return Base.getDefaultInstance();
+			return Base.newBuilder();
 		}
 
 		final Class<? extends Message> klaz = message.getClass();
@@ -237,9 +240,9 @@ public class MessageCodec {
 		final MessageMeta meta = messageMetaMap.get(klaz);
 
 		if (meta == null) {
-			log.warn("unknown message type",
-					new IllegalArgumentException(klaz.getName()));
-			return Base.getDefaultInstance();
+			log.warn("unsupported message type",
+					new UnsupportedOperationException(klaz.getName()));
+			return Base.newBuilder();
 		}
 
 		final Base.Builder builder = Base.newBuilder();
@@ -247,15 +250,13 @@ public class MessageCodec {
 		builder.setType(meta.type);
 		builder.setExtension(meta.extension, message);
 
-		return builder.build();
+		return builder;
 
 	}
 
 	/** encode with length-prefix before raw array */
-	public static <MESSAGE extends Message> void encodeDelimited(
-			final MESSAGE message, final ByteBuffer buffer) throws Exception {
-
-		final Base base = encode(message);
+	public static void encodeDelimited(final Base base, final ByteBuffer buffer)
+			throws Exception {
 
 		final ByteArrayOutputStream output = new ByteArrayOutputStream(128);
 
@@ -334,7 +335,7 @@ public class MessageCodec {
 
 					messageMetaMap.put(messageClass, messageMeta);
 
-					// log.debug("extenstion ready : {}", meta);
+					// log.debug("extension ready : {}", meta);
 
 				} catch (final Exception e) {
 
