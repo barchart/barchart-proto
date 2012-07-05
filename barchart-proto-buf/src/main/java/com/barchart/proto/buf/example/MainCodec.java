@@ -43,13 +43,7 @@ public class MainCodec {
 		final int month = date.get(Calendar.MONTH) + 1;
 		final int day = date.get(Calendar.DAY_OF_MONTH);
 
-		int tradeDate = year;
-		tradeDate *= 100;
-		tradeDate += month;
-		tradeDate *= 100;
-		tradeDate += day;
-
-		return tradeDate;
+		return ((year * 100) + month) * 100 + day;
 
 	}
 
@@ -72,13 +66,18 @@ public class MainCodec {
 
 		log.debug("########################## ENCODE ########################## ");
 
+		/** make a message builder */
 		final MarketData.Builder message = MarketData.newBuilder();
+
+		/** specify snapshot vs update distinction */
 		message.setType(MarketData.Type.UPDATE);
 
+		/** make a market state change entry */
 		{
 			final MarketDataEntry.Builder entry = MarketDataEntry.newBuilder();
 
-			entry.setMarketId(123);
+			entry.setMarketId(123321);
+			entry.setSequence(1001);
 
 			entry.setType(MarketDataEntry.Type.STATUS);
 			entry.setAction(Action.EDIT);
@@ -93,10 +92,12 @@ public class MainCodec {
 
 		}
 
+		/** add a new trade entry */
 		{
 			final MarketDataEntry.Builder entry = MarketDataEntry.newBuilder();
 
-			entry.setMarketId(123);
+			entry.setMarketId(123321);
+			entry.setSequence(1002);
 
 			entry.setType(MarketDataEntry.Type.TRADE);
 			entry.setAction(Action.ADD);
@@ -113,18 +114,20 @@ public class MainCodec {
 
 		}
 
-		//
-
+		/** make a packet wrapper */
 		final Base.Builder base = MessageCodec.encode(message.build());
 
+		/** setup packet header */
 		base.setChannel(101);
 		base.setSequence(1234567);
 		base.setTimeStamp(getTimeStamp());
 
+		/** produce a packet */
 		final Base packet = base.build();
 
 		log.debug("packet : \n{}", packet);
 
+		/** produce packet wire representation */
 		final byte[] array = MessageCodec.encode(packet);
 
 		log.debug("array size : {}", array.length);
@@ -138,10 +141,17 @@ public class MainCodec {
 
 		log.debug("########################## DECODE ########################## ");
 
+		/**
+		 * peek header fields for message routing and channel arbitrage
+		 */
 		final BaseHeader header = BaseHeader.from(array);
 
-		log.debug("header : \n\t{}", header);
+		log.debug("header : {}", header);
 
+		/**
+		 * process message via type-save distributor; logging visitor prints
+		 * message for individula message type
+		 */
 		MessageCodec.decode(array, visitor, null);
 
 		//
@@ -149,4 +159,5 @@ public class MainCodec {
 		log.debug("done");
 
 	}
+
 }
