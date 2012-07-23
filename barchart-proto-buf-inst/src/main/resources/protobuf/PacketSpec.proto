@@ -1,0 +1,46 @@
+/**
+ * Copyright (C) 2011-2012 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+//
+/**
+ * https://developers.google.com/protocol-buffers/docs/proto
+ *
+ * factory for packets
+ */
+
+//
+package barchart; // non-java (C, C++, etc) package name space
+
+//
+option java_package = "com.barchart.proto.buf.inst";
+option java_outer_classname = "PacketSpec";
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+//
+option optimize_for = SPEED;
+
+//
+import "MessageSpec.proto";
+
+// market data packet
+message InstrumentPacket {
+//
+	enum Type {
+		UNKNOWN = 0;
+		INSTRUMENT = 2;
+	}
+	//
+	optional sint32 channel = 1; // packet channel number
+	optional sint64 sequence = 2; // packet sequence number inside the channel
+	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
+	optional Type type = 4; // packet type selector
+	//
+	repeated Instrument message = 5; // list of messages
+	//
+}
+
