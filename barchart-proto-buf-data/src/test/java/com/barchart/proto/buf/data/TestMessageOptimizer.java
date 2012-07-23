@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf;
+package com.barchart.proto.buf.data;
 
 import static org.junit.Assert.*;
 
@@ -15,9 +15,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.barchart.proto.buf.data.MarketEntry;
-import com.barchart.proto.buf.data.MarketMessage;
 
 public class TestMessageOptimizer {
 

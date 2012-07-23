@@ -1,4 +1,4 @@
-package com.barchart.proto.buf;
+package com.barchart.proto.buf.data;
 
 import com.barchart.proto.buf.data.MarketPacket;
 import com.google.protobuf.CodedInputStream;

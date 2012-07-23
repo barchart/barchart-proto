@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
 import bench.buf_message.Factory.Mode;
 import bench.zip_jdk.ZipUtil;
 
-import com.barchart.proto.buf.MessageOptimizer;
 import com.barchart.proto.buf.data.MarketEntry;
 import com.barchart.proto.buf.data.MarketEntry.Builder;
 import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketPacket;
+import com.barchart.proto.buf.data.MessageOptimizer;
 
 /** measure message heap size */
 public class MainMarketMessageSpeed {

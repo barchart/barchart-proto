@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf.example;
+package com.barchart.proto.buf.data.example;
 
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -13,12 +13,12 @@ import java.util.Calendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.proto.buf.PacketHeader;
 import com.barchart.proto.buf.data.MarketEntry;
 import com.barchart.proto.buf.data.MarketEntry.Action;
 import com.barchart.proto.buf.data.MarketEntry.Descriptor;
 import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketPacket;
+import com.barchart.proto.buf.data.PacketHeader;
 
 public class MainCodec {
 

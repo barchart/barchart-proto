@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import bench.buf_message.Factory.Mode;
 import bench.zip_jdk.ZipUtil;
 
-import com.barchart.proto.buf.PacketHeader;
 import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketPacket;
+import com.barchart.proto.buf.data.PacketHeader;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.WireFormat;
 

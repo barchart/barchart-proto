@@ -5,10 +5,15 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf;
+package com.barchart.proto.buf.data;
+
 
 /**
- *
- * public api for management of proto.buf messages
- * 
+ * encode/decode proto.buf messages
  */
+public final class DataCodec {
+
+	private DataCodec() {
+	}
+
+}

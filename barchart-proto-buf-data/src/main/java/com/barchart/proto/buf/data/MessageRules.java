@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf;
+package com.barchart.proto.buf.data;
 
 import com.barchart.proto.buf.data.MarketEntryOrBuilder;
 import com.barchart.proto.buf.data.MarketMessageOrBuilder;
