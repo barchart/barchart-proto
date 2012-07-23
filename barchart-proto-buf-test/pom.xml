@@ -10,7 +10,7 @@
 	</parent>
 
 	<groupId>com.barchart.proto</groupId>
-	<artifactId>barchart-proto-buf</artifactId>
+	<artifactId>barchart-proto-buf-test</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
