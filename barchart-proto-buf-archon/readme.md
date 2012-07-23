@@ -9,4 +9,4 @@
 -->
 ### info
 
-native barchart protocol based on protobuf
+parent for protobuf related projects
