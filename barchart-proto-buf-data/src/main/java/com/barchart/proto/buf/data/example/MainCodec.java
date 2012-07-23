@@ -18,6 +18,7 @@ import com.barchart.proto.buf.data.MarketEntry.Action;
 import com.barchart.proto.buf.data.MarketEntry.Descriptor;
 import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketPacket;
+import com.barchart.proto.buf.data.MarketPacket.Type;
 import com.barchart.proto.buf.data.PacketHeader;
 
 public class MainCodec {
@@ -119,6 +120,8 @@ public class MainCodec {
 			packet.setChannel(101);
 			packet.setSequence(1234567);
 			packet.setTimeStamp(getTimeStamp());
+
+			packet.setType(Type.DATA);
 
 			packet.addMessage(message);
 
