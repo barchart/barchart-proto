@@ -12,14 +12,27 @@
 	</parent>
 
 	<groupId>com.barchart.proto</groupId>
-	<artifactId>barchart-proto-xform</artifactId>
+	<artifactId>barchart-proto-xform-archon</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
-	<packaging>bundle</packaging>
+	<packaging>pom</packaging>
 
 	<properties>
 
 		<barchartJavaVersion>1.6</barchartJavaVersion>
 
+		<googleProtobufVersion>2.4.1</googleProtobufVersion>
+		<barchartProtobufVersion>1.0.1-SNAPSHOT</barchartProtobufVersion>
+		<barchartTemplateVersion>1.0.1-SNAPSHOT</barchartTemplateVersion>
+
+		<!-- provided xml source -->
+		<protoMainSource>src/main/resources/xdoc</protoMainSource>
+		<protoTestSource>src/test/resources/xdoc</protoTestSource>
+
+		<!-- extracted transform -->
+		<protoXformDir>target/template</protoXformDir>
+		<protoXformFile>${protoXformDir}/xform/protocol.xsl</protoXformFile>
+
+		<!-- generated java soruce -->
 		<protoMainTarget>target/main/xresult</protoMainTarget>
 		<protoTestTarget>target/test/xresult</protoTestTarget>
 
@@ -41,26 +54,64 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- TEST -->
-
-		<dependency>
-			<groupId>com.barchart.proto</groupId>
-			<artifactId>barchart-proto-buf-data</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>2.4.1</version>
-			<scope>test</scope>
+			<version>${googleProtobufVersion}</version>
+			<scope>provided</scope>
 		</dependency>
+
+		<!-- xform template & library -->
+		<dependency>
+			<groupId>com.barchart.proto</groupId>
+			<artifactId>barchart-proto-xform</artifactId>
+			<version>${barchartTemplateVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- market message -->
+		<dependency>
+			<groupId>com.barchart.proto</groupId>
+			<artifactId>barchart-proto-buf-data</artifactId>
+			<version>${barchartProtobufVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- TEST -->
 
 	</dependencies>
 
 	<build>
 		<plugins>
+
+			<!-- unpack xform template -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-xform</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.barchart.proto</groupId>
+									<artifactId>barchart-proto-xform</artifactId>
+									<version>${barchartTemplateVersion}</version>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${protoXformDir}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- apply xform and generate java source -->
 			<plugin>
@@ -84,14 +135,14 @@
 						<configuration>
 							<transformationSets>
 								<transformationSet>
+									<dir>${protoMainSource}</dir>
+									<stylesheet>${protoXformFile}</stylesheet>
 									<parameters>
 										<parameter>
 											<name>java_target</name>
 											<value>${protoMainTarget}</value>
 										</parameter>
 									</parameters>
-									<dir>src/main/resources/xdoc</dir>
-									<stylesheet>src/main/resources/xform/protocol.xsl</stylesheet>
 								</transformationSet>
 							</transformationSets>
 						</configuration>
@@ -105,14 +156,14 @@
 						<configuration>
 							<transformationSets>
 								<transformationSet>
+									<dir>${protoTestSource}</dir>
+									<stylesheet>${protoXformFile}</stylesheet>
 									<parameters>
 										<parameter>
 											<name>java_target</name>
 											<value>${protoTestTarget}</value>
 										</parameter>
 									</parameters>
-									<dir>src/test/resources/xdoc</dir>
-									<stylesheet>src/main/resources/xform/protocol.xsl</stylesheet>
 								</transformationSet>
 							</transformationSets>
 						</configuration>
@@ -201,8 +252,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.mojo</groupId>
 										<artifactId>xml-maven-plugin</artifactId>
-										<versionRange>[0,)
-										</versionRange>
+										<versionRange>[0,)</versionRange>
 										<goals>
 											<goal>transform</goal>
 										</goals>
