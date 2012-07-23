@@ -9,4 +9,4 @@
 -->
 ### info
 
-native barchart protocol based on protobuf
+barchart protobuf protocol for market news messages
