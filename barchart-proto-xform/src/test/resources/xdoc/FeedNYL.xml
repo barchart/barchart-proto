@@ -61,7 +61,7 @@
 
 	</record>
 
-	<enum name="PacketType" codec="number" size="2">
+	<enum name="PacketType" codec="number">
 
 		<value name="PG_799" code="799" info="Generic Derivatives Message" />
 
@@ -98,8 +98,7 @@
 
 	</record>
 
-	<enum name="MessageType" codec="number" size="2"
-		info="Numeric message type identifier">
+	<enum name="MessageType" codec="number" info="Numeric message type identifier">
 
 		<value name="Market_Update_701" code="701" info="Market Update v1" />
 
