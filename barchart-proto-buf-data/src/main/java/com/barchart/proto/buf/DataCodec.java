@@ -11,9 +11,9 @@ package com.barchart.proto.buf;
 /**
  * encode/decode proto.buf messages
  */
-public final class MessageCodec {
+public final class DataCodec {
 
-	private MessageCodec() {
+	private DataCodec() {
 	}
 
 }

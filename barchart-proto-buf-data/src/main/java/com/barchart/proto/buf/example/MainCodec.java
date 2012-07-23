@@ -52,9 +52,6 @@ public class MainCodec {
 
 	}
 
-	/** message processor that does only logging */
-	// static final MessageVisitor<Void> visitor = new LoggingVisitor();
-
 	/**
 	 * emulate encoder/decoder life cycle
 	 */
@@ -112,21 +109,25 @@ public class MainCodec {
 
 		}
 
-		/** make a packet wrapper */
-		final MarketPacket.Builder base = null; // MessageCodec.encode(message.build());
+		final byte[] array;
+		{
 
-		/** setup packet header */
-		base.setChannel(101);
-		base.setSequence(1234567);
-		base.setTimeStamp(getTimeStamp());
+			/** make a packet */
+			final MarketPacket.Builder packet = MarketPacket.newBuilder();
 
-		/** produce a packet */
-		final MarketPacket packet = base.build();
+			/** setup packet header */
+			packet.setChannel(101);
+			packet.setSequence(1234567);
+			packet.setTimeStamp(getTimeStamp());
 
-		log.debug("packet : \n{}", packet);
+			packet.addMessage(message);
 
-		/** produce packet wire representation */
-		final byte[] array = null;// MessageCodec.encode(packet);
+			log.debug("packet : \n{}", packet);
+
+			/** produce packet wire representation */
+			array = packet.build().toByteArray();
+
+		}
 
 		log.debug("array size : {}", array.length);
 		log.debug("array as hex: \n{}", toHexString(array));
@@ -142,15 +143,18 @@ public class MainCodec {
 		/**
 		 * peek header fields for message routing and channel arbitrage
 		 */
-		final PacketHeader header = PacketHeader.from(array);
-
-		log.debug("header : {}", header);
+		{
+			final PacketHeader header = PacketHeader.from(array);
+			log.debug("header : {}", header);
+		}
 
 		/**
-		 * process message via type-save distributor; logging visitor prints
-		 * message for individual message type
+		 * process messages
 		 */
-		// MessageCodec.decode(array, visitor, null);
+		{
+			final MarketPacket packet = MarketPacket.parseFrom(array);
+			log.debug("packet : \n{}", packet);
+		}
 
 		//
 
