@@ -1,0 +1,18 @@
+<protocol>
+
+	<config info="common protocl enums">
+		<main class="com.barchart.proto.xform.enums.ENUM" />
+		<codec class="com.barchart.proto.xform.enums.CodecENUM" />
+		<converter class="com.barchart.proto.xform.enums.ConverterENUM" />
+	</config>
+
+	<enum name="Example" codec="string" info="example enum">
+
+		<value name="ONE" code="one" info="default value for error condition" />
+		<value name="TWO" code="two" info="default value for error condition" />
+
+		<value name="UNKNOWN" code="?" info="default value for error condition" />
+
+	</enum>
+
+</protocol>
