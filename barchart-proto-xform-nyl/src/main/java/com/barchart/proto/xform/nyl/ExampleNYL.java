@@ -12,7 +12,7 @@ public class ExampleNYL {
 		/** decode form native protocol */
 		final Packet source = NYL.Packet.from(buffer, null);
 
-		/** barchart representation */
+		/** make barchart representation */
 		final MarketPacket.Builder target = MarketPacket.newBuilder();
 
 		/** convert into barchart protocol */
