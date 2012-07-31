@@ -27,20 +27,26 @@ option optimize_for = SPEED;
 //
 import "MessageSpec.proto";
 
+//
+enum PacketType {
+	UNKNOWN = 0;
+	DATA = 1;
+}
+
 // market data packet
 message MarketPacket {
 //
-	enum Type {
-		UNKNOWN = 0;
-		DATA = 1;
-	}
-	//
 	optional sint32 channel = 1; // packet channel number
 	optional sint64 sequence = 2; // packet sequence number inside the channel
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
-	optional Type type = 4; // packet type selector
+	optional PacketType type = 4; // packet type selector
 	//
 	repeated MarketMessage message = 5; // list of messages
 	//
 }
 
+message MarketMessageCodec {
+//
+	repeated MarketMessage message = 5; // list of messages
+	//
+}

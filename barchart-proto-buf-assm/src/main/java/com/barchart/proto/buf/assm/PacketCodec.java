@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.barchart.proto.buf.data.MarketMessage;
+import com.barchart.proto.buf.data.MarketMessageCodec;
 import com.barchart.proto.buf.inst.Instrument;
 import com.barchart.proto.buf.inst.InstrumentCodec;
 import com.google.protobuf.ByteString;
@@ -60,23 +62,30 @@ public final class PacketCodec {
 			return;
 		}
 
+		/** packet type determines interpretation of the packet body */
 		final PacketType type = packet.getType();
 
-		// log.debug("type : {}", type);
-
-		final ByteString a = packet.getBody();
+		/** packet body is just a byte array at this point */
+		final ByteString body = packet.getBody();
 
 		switch (type) {
 
 		case MarketData: {
-			final MarketMessage message = null; // MarketDataCodec.decode(null);
-			visitor.apply(message, target);
+
+			final List<MarketMessage> messasgeList = //
+			MarketMessageCodec.parseFrom(body).getMessageList();
+
+			visitor.apply(messasgeList, target);
+
 			break;
 		}
 
 		case Instrument: {
-			final Instrument message = InstrumentCodec.decode(null);
+
+			final Instrument message = InstrumentCodec.decode(body);
+
 			visitor.apply(message, target);
+
 			break;
 		}
 
@@ -105,9 +114,9 @@ public final class PacketCodec {
 			final PacketVisitor<TARGET> visitor, final TARGET target)
 			throws Exception {
 
-		final Packet base = decode(array);
+		final Packet packet = decode(array);
 
-		decode(base, visitor, target);
+		decode(packet, visitor, target);
 
 	}
 
@@ -128,9 +137,9 @@ public final class PacketCodec {
 			final PacketVisitor<TARGET> visitor, final TARGET target)
 			throws Exception {
 
-		final Packet base = decodeDelimited(array);
+		final Packet packet = decodeDelimited(array);
 
-		decode(base, visitor, target);
+		decode(packet, visitor, target);
 
 	}
 

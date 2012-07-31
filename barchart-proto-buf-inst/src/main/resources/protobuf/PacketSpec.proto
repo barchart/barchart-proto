@@ -40,7 +40,7 @@ message InstrumentPacket {
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
 	optional Type type = 4; // packet type selector
 	//
-	repeated Instrument message = 5; // list of messages
+	optional Instrument message = 5; // list of messages
 	//
 }
 

@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import util.EnumUtil;
 
-import com.barchart.proto.buf.data.MarketPacket;
+import com.barchart.proto.buf.data.PacketType;
 
 public class TestMarketPacket {
 
 	@Test
 	public void testType() throws Exception {
 
-		EnumUtil.testUnique(MarketPacket.Type.class);
+		EnumUtil.testUnique(PacketType.class);
 
 	}
 

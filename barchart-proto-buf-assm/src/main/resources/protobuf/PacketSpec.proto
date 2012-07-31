@@ -27,6 +27,8 @@ option optimize_for = SPEED;
 //
 enum PacketType {
 //
+	Unknown = 0;
+	//
 	MarketData = 1;
 	MarketNews = 2;
 	Instrument = 3;
