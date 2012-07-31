@@ -27,20 +27,19 @@ option optimize_for = SPEED;
 //
 import "MessageSpec.proto";
 
-// market data packet
+//
+enum PacketType {
+	INSTRUMENT = 3;
+}
+
+// instrument packet (packet body contains single message)
 message InstrumentPacket {
 //
-	enum Type {
-		UNKNOWN = 0;
-		INSTRUMENT = 2;
-	}
-	//
 	optional sint32 channel = 1; // packet channel number
 	optional sint64 sequence = 2; // packet sequence number inside the channel
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
-	optional Type type = 4; // packet type selector
+	optional PacketType type = 4; // packet type selector
 	//
-	optional Instrument message = 5; // list of messages
+	optional Instrument message = 5; // instrument definition message
 	//
 }
-

@@ -27,8 +27,6 @@ option optimize_for = SPEED;
 //
 enum PacketType {
 //
-	Unknown = 0;
-	//
 	MarketData = 1;
 	MarketNews = 2;
 	Instrument = 3;
@@ -55,7 +53,7 @@ message Packet {
 	optional sint32 channel = 1; // packet channel number
 	optional sint64 sequence = 2; // packet sequence number inside the channel
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
-	optional PacketType type = 4; // packet type selector
+	optional PacketType type = 4; // packet body type selector
 	//
 	optional bytes body = 5; // opaque byte array
 	//

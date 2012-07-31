@@ -29,11 +29,10 @@ import "MessageSpec.proto";
 
 //
 enum PacketType {
-	UNKNOWN = 0;
 	DATA = 1;
 }
 
-// market data packet
+// market data packet (knows that packet body is a message list)
 message MarketPacket {
 //
 	optional sint32 channel = 1; // packet channel number
@@ -45,7 +44,7 @@ message MarketPacket {
 	//
 }
 
-// decode message list w/o only w/o head fields
+// decode message list with no header fields
 message MarketMessageCodec {
 //
 	repeated MarketMessage message = 5; // list of messages
