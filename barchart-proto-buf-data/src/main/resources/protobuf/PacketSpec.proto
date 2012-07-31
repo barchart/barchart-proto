@@ -45,6 +45,7 @@ message MarketPacket {
 	//
 }
 
+// decode message list w/o only w/o head fields
 message MarketMessageCodec {
 //
 	repeated MarketMessage message = 5; // list of messages
