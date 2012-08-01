@@ -108,6 +108,8 @@ public final class ProtoUtil {
 	 * 
 	 * 2012.07.04
 	 * 
+	 * size = 4 bytes
+	 * 
 	 */
 	public static DateOnlyValue fromDecimalDateOnly(int value) {
 
