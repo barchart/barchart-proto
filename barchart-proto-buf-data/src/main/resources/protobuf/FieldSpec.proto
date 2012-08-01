@@ -10,7 +10,7 @@
 /**
  * https://developers.google.com/protocol-buffers/docs/proto
  *
- * factory for message fields
+ * factory for entries
  */
 
 //
@@ -27,36 +27,43 @@ option optimize_for = SPEED;
 //
 /**
  *
- * base - entry contracts:
+ * head/entry contracts:
  *
- * 1) actualValue = baseValue + entryOffset
- *
- * 2) actualValue = entryOverride over baseDefault
+ * actualValue = headValue + entryOffset
+ * or
+ * actualValue = entryOverride over headDefault
  *
  */
 //
 /**
-  * enum rules
+  * enum value wire size rules
   *
-  * 1) note: index in 0...127 takes 1 byte on wire
+  * note: value in 0...127 takes 1 byte on wire
   *
-  * 2) note: index in 128 and more takes varInt128 more bytes on wire
+  * note: value in 128.... takes varInt128 more bytes on wire
   *
-  * 3) keep most frequent index first
-  *
-  * 4) can not change name/index after published
-  *
-  * 5) can add more new name/index
+  * keep most frequent values first
   *
   */
-// note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
-
+//
+/**
+ * field tag wire size rules
+ *
+ * note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
+ */
 
 // market data entry
 message MarketEntry {
 //
-// primary entry category; single
-// keep most frequent first
+// entry action
+	enum Action {
+		ADD = 0; // new, create, insert
+		EDIT = 1; // merge, modify, replace, override, overlay
+		REMOVE = 2; // delete, erase, clear, reset
+	}
+	//
+	// primary entry category
+	// keep most frequent first
 	enum Type {
 	//
 		TRADE = 0; // a.k.a last sale; price & size (size mostly present)
@@ -88,8 +95,8 @@ message MarketEntry {
 		// keep under 128
 	}
 	//
-	// secondary entry category; multiple; entry annotation;
-	// keep in name space like format
+	// secondary entry category a.k.a entry annotation;
+	// keep in "name-space-like" format
 	enum Descriptor {
 	//
 		BOOK_IMPLIED = 0; // ICE, CME
@@ -138,33 +145,25 @@ message MarketEntry {
 		// keep under 128
 	}
 	//
-	// entry action
-	enum Action {
-		ADD = 0; // new, create, insert
-		EDIT = 1; // merge, modify, replace, override, overlay
-		REMOVE = 2; // delete, erase, clear, reset
-	}
+	optional Action action = 1; // entry action
+	optional Type type = 2; // primary category
+	repeated Descriptor descriptor = 3 [packed = true]; // list of secondary category
 	//
-	optional Type type = 1; // primary category
-	optional Action action = 2; // entry action
-	repeated Descriptor descriptor = 3 [packed = true]; // list of secondary category descriptors
+	optional sint64 marketId = 4; // override to head;
+	optional sint64 sequence = 5; // offset to head;
+	optional sint64 timeStamp = 6; // offset to head;
+	optional sint32 tradeDate = 7; // offset to head;
 	//
-	optional sint64 marketId = 4; // override to base;
-	optional sint64 sequence = 5; // offset to base; market-local sequence number
-	optional sint64 timeStamp = 6; // offset to base; millisUTC
+	optional sint64 priceMantissa = 8;
+	optional sint32 priceExponent = 9; // override to head;
 	//
-	optional sint64 priceMantissa = 7;
-	optional sint32 priceExponent = 8; // override to base;
+	optional sint64 sizeMantissa = 10;
+	optional sint32 sizeExponent = 11; // override to head;
 	//
-	optional sint64 sizeMantissa = 9;
-	optional sint32 sizeExponent = 10; // override to base;
+	// such as book level, cuvol position, snapshot & update sequence, etc
+	optional sint64 index = 12;
 	//
-	// such as book level, cuvol position, snpashot & update sequence, etc
-	optional sint64 index = 11;
 	//
-	// date in "fix format" 2012-07-04 -> 20120704
-	optional sint32 tradeDate = 12; // offset to base;
-	//
-	optional sint64 orderId = 13; // XXX
+	optional sint64 orderId = 13; // TODO review
 	//
 }

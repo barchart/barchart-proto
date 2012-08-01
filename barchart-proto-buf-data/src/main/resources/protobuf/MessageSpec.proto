@@ -40,8 +40,8 @@ message MarketMessage {
 	//
 	optional sint64 marketId = 2; // market guid; base for entries
 	optional sint64 sequence = 3; // market sequence number; base for entries
-	optional sint64 timeStamp = 4; // market time stamp, millisUTC; base for entries
-	optional sint32 tradeDate = 5; // base for entries; date in "fix format" 2012-07-04 -> 20120704
+	optional sint64 timeStamp = 4; // base for entries; time in format 2012-12-31T23:59:59.123 UTC -> 20121231235959123
+	optional sint32 tradeDate = 5; // base for entries; date in format 2012-07-04 -> 20120704
 	//
 	repeated MarketEntry entry = 6; // list of entries
 	//
