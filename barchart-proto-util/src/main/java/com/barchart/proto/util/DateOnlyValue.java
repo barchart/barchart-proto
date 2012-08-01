@@ -28,4 +28,24 @@ public class DateOnlyValue {
 		return day;
 	}
 
+	@Override
+	public int hashCode() {
+		return year + month + day;
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (other instanceof DateOnlyValue) {
+			final DateOnlyValue that = (DateOnlyValue) other;
+			return this.year == that.year && this.month == that.month
+					&& this.day == that.day;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%04d-%02d-%02d", year, month, day);
+	}
+
 }

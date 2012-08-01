@@ -39,4 +39,26 @@ public class DateTimeValue extends DateOnlyValue {
 		return millis;
 	}
 
+	@Override
+	public int hashCode() {
+		return super.hashCode() + hour + minute + second + millis;
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (other instanceof DateTimeValue) {
+			final DateTimeValue that = (DateTimeValue) other;
+			return super.equals(that) && this.hour == that.hour
+					&& this.minute == that.minute && this.second == that.second
+					&& this.millis == that.millis;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%sT%02d:%02d:%02d.%03d", super.toString(), hour,
+				minute, second, millis);
+	}
+
 }
