@@ -38,15 +38,18 @@ public class MainMarketMessageSpeed {
 
 	static MarketPacket buildBase(final Mode mode) {
 
-		final MarketMessage.Builder builder = Factory.newMessage(mode);
+		final MarketMessage.Builder message = Factory.newMessage(mode);
 
-		final MarketPacket.Builder base = null; // MessageCodec.encode(builder.build());
+		final MarketPacket.Builder packet = MarketPacket.newBuilder();
 
-		base.setChannel(123);
-		base.setSequence(100 * 1000);
-		base.setTimeStamp(1000 * 1000);
+		packet.setChannel(123);
+		packet.setSequence(100 * 1000);
+		packet.setTimeStamp(1000 * 1000);
 
-		return base.build();
+		packet.addMessage(message);
+
+		return packet.build();
+
 	}
 
 	static void testWireSize(final Mode mode) throws Exception {

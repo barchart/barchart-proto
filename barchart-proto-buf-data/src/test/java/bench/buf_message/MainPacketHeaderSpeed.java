@@ -33,13 +33,15 @@ public class MainPacketHeaderSpeed {
 
 		final MarketMessage.Builder message = Factory.newMessage(mode);
 
-		final MarketPacket.Builder base = null; // MessageCodec.encode(message.build());
+		final MarketPacket.Builder packet = MarketPacket.newBuilder();
 
-		base.setChannel(123);
-		base.setSequence(100 * 1000);
-		base.setTimeStamp(1000 * 1000);
+		packet.setChannel(123);
+		packet.setSequence(100 * 1000);
+		packet.setTimeStamp(1000 * 1000);
 
-		return base.build();
+		packet.addMessage(message);
+
+		return packet.build();
 	}
 
 	static void testWireSize(final Mode mode) throws Exception {
@@ -123,7 +125,7 @@ public class MainPacketHeaderSpeed {
 
 		/** warm up */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			final MarketPacket base = null; // MessageCodec.decode(array);
+			final MarketPacket base = MarketPacket.parseFrom(array);
 			base.getChannel();
 			base.getSequence();
 			base.getTimeStamp();
@@ -133,7 +135,7 @@ public class MainPacketHeaderSpeed {
 
 		/** measure */
 		for (int index = 0; index < COUNT_TEST; index++) {
-			final MarketPacket base = null; // MessageCodec.decode(array);
+			final MarketPacket base = MarketPacket.parseFrom(array);
 			base.getChannel();
 			base.getSequence();
 			base.getTimeStamp();
