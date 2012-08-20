@@ -8,41 +8,36 @@ import com.barchart.proto.xform.nyl.NYL.SnapshotFlag;
 public class ConverterNYL extends ConverterAdapter {
 
 	public boolean isKnown(final int type) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public void applyType(final int type, final MarketMessage.Builder message,
 			final MarketEntry.Builder entry) {
-		// TODO Auto-generated method stub
-
+		entry.setType(MarketEntry.Type.BID);
 	}
 
 	public void applyPrice(final int price,
 			final MarketMessage.Builder message, final MarketEntry.Builder entry) {
-		// TODO Auto-generated method stub
-
+		entry.setPriceMantissa(price);
+		entry.setPriceExponent(0);
 	}
 
 	public void applySize(final int size, final MarketMessage.Builder message,
 			final MarketEntry.Builder entry) {
-		// TODO Auto-generated method stub
-
+		entry.setSizeMantissa(size);
+		entry.setSizeExponent(0);
 	}
 
 	public MarketMessage.Type dataType(final SnapshotFlag snapshotFlagEnum) {
-		// TODO Auto-generated method stub
-		return null;
+		return MarketMessage.Type.SNAPSHOT;
 	}
 
 	public Long targetId(final byte sourceId, final String securityId) {
-		// TODO Auto-generated method stub
-		return null;
+		return 1234L;
 	}
 
 	public long timeStamp(final long timeStamp) {
-		// TODO Auto-generated method stub
-		return 0;
+		return timeStamp;
 	}
 
 }
