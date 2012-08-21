@@ -2,6 +2,9 @@ package com.barchart.translator.cfn;
 
 import java.nio.ByteBuffer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.barchart.proto.buf.data.MarketPacket;
 import com.barchart.proto.xform.cfn.CFN;
 import com.barchart.proto.xform.cfn.CFN.BodyFutureBookTop;
@@ -26,76 +29,36 @@ public class CFNTranslator implements Translator {
 		CFN.bind(new CodecCFN());
 		CFN.bind(new ConverterCFN());
 	}
+
+	private static final Logger logger = LoggerFactory.getLogger(CFNTranslator.class);
 	
 	@Override
 	public MarketPacket translate(ByteBuffer byteBuffer) {
-		try {
-			Packet iceSource = CFN.Packet.from(byteBuffer, null);
-//			MarketPacket.Builder packetBuilder = MarketPacket.newBuilder();
+			
+//			byte b = byteBuffer.get();
+//			assert(b==0x01);
+//			byte c = byteBuffer.get();
+//			System.out.println(Character.toString((char)c));
+//			printByteBuffer(byteBuffer);
+			try {
+				Packet source = CFN.Packet.from(byteBuffer, null);
+				MarketPacket.Builder packetBuilder = MarketPacket.newBuilder();
+				source.into(packetBuilder);
+				logger.info(source.toString());
+			} catch (Exception e) {
+				throw new TranslatorException(e);
+			}
 //			iceSource.into(packetBuilder);
 //			MarketPacket packet = packetBuilder.build();
 //			return packet;
-			
-			ExampleCFN.decode(byteBuffer, new CFN.Body.Visitor<String>() {
-
-				@Override
-				public void apply(BodyFutureTrade arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void apply(BodyOptionTrade arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void apply(BodyFutureBookTop arg0, String arg1) {
-					
-				}
-
-				@Override
-				public void apply(BodyOptionBookTop arg0, String arg1) {
-					
-				}
-
-				@Override
-				public void apply(BodyFutureInterest arg0, String arg1) {
-					
-				}
-
-				@Override
-				public void apply(BodyUnderlyingTrade arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void apply(BodyUnderlyingBookTop arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void apply(BodyFutureEndOfDay arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void apply(BodyFutureSettlement arg0, String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-			
 			return null;
-		} catch (Exception e) {
-			throw new TranslatorException(e);
-		}
 
+	}
+
+	private void printByteBuffer(ByteBuffer byteBuffer) {
+		String s = new String(byteBuffer.array());
+		System.out.println(s);
+		
 	}
 
 }

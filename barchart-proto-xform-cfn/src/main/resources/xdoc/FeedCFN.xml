@@ -16,6 +16,12 @@
 
 		<field name="separator2" type="byte" codec="number" size="1" />
 
+		<convert type="MarketPacket.Builder" name="packet">
+			<into>
+				<visit name="packet" />
+			</into>
+		</convert>
+		
 	</record>
 
 	<record name="Message">
@@ -25,6 +31,12 @@
 		<field name="body" type="Body" union="true"
 			code="new String( new byte[]{ head.category(), head.type() })" />
 
+		<convert type="MarketPacket.Builder" name="packet">
+			<into>
+				<visit name="packet" />
+			</into>
+		</convert>
+		
 	</record>
 
 	<record name="Head"
@@ -54,6 +66,15 @@
 			Time that a transaction is disseminated. For Retransmissions, the Time will contain the
 			original Time that the transaction was disseminated." />
 
+		
+		<convert type="MarketPacket.Builder" name="packet">
+			<into>
+				packet.setSequence(sequence);
+				packet.setTimeStamp(converter.timeStamp(timestamp));
+			</into>
+		</convert>
+		
+		
 	</record>
 
 	<record name="InstIndex" info="index instrument;" size="6">

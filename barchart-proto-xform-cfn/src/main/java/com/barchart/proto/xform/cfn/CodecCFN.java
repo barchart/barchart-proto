@@ -96,4 +96,13 @@ public final class CodecCFN extends CodecAdaptor {
 
 	}
 
+	@Override
+	public byte string_byte(ByteBuffer buffer, int size) throws Exception {
+		byte b = buffer.get();
+		return b;
+	}
+
+
+	
+	
 }
