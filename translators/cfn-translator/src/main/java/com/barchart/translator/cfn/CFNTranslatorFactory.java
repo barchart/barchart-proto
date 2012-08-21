@@ -1,4 +1,4 @@
-package com.barchart.translator.ice;
+package com.barchart.translator.cfn;
 
 import com.barchart.translator.common.Translator;
 import com.barchart.translator.common.TranslatorFactory;

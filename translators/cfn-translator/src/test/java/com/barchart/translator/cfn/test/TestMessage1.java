@@ -1,4 +1,4 @@
-package com.barchart.translator.ice.test;
+package com.barchart.translator.cfn.test;
 
 import java.io.IOException;
 

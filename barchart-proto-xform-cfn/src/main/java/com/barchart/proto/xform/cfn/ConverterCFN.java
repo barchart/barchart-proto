@@ -4,4 +4,6 @@ import com.barchart.proto.xform.ConverterAdapter;
 
 public class ConverterCFN extends ConverterAdapter {
 
+
+	
 }

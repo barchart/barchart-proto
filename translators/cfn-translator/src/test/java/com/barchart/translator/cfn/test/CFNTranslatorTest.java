@@ -1,4 +1,4 @@
-package com.barchart.translator.ice.test;
+package com.barchart.translator.cfn.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,8 +14,8 @@ import com.barchart.proto.buf.data.MarketPacket;
 import com.barchart.proto.xform.cfn.CFN;
 import com.barchart.proto.xform.cfn.CodecCFN;
 import com.barchart.proto.xform.cfn.ConverterCFN;
+import com.barchart.translator.cfn.CFNTranslator;
 import com.barchart.translator.common.Translator;
-import com.barchart.translator.ice.CFNTranslator;
 
 public abstract class CFNTranslatorTest {
 
