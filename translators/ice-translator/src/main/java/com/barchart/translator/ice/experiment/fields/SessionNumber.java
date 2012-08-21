@@ -8,7 +8,6 @@ import com.barchart.translator.ice.experiment.common.ShortField;
 
 public class SessionNumber extends ShortField {
 
-	@Override
 	public void visit(ByteBuffer bytes, ICEVisitor visitor) {
 		visitor.visitSessionNumber(getValue(bytes));
 	}

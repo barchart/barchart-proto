@@ -8,4 +8,10 @@ public abstract class Field {
 		visitor.visit(this);
 	}
 
+	public void visit(ByteBuffer bytes, Visitor visitor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
+

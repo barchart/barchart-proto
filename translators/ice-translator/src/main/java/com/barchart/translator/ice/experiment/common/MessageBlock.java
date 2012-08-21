@@ -21,7 +21,6 @@ public class MessageBlock extends CharField {
 		}
 	};
 	
-	@Override
 	public void visit(ByteBuffer bytes, ICEVisitor visitor) {
 		char value = getValue(bytes);
 		FieldBlock fieldBlock = lookup.lookup(value);

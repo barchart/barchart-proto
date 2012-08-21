@@ -7,7 +7,6 @@ import com.barchart.translator.ice.experiment.common.IntegerField;
 
 public class SequenceNumber extends IntegerField {
 
-	@Override
 	public void visit(ByteBuffer bytes, ICEVisitor visitor) {
 		visitor.visitSequenceNumber(getValue(bytes));
 	}
