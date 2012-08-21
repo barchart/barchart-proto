@@ -1,0 +1,10 @@
+{
+
+	"description" : "Includes external production network, but internal test network",
+
+	"include" : [
+		"LocalTest.json",
+		"BarchartTestNetwork.json"
+	]
+
+}

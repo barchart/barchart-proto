@@ -1,0 +1,13 @@
+{
+	"description" : "These are translation channels",
+	
+	"channels" : [
+		{
+			"channel" : 6,
+			"sources" : ["Barchart_Test_Input"],
+			"destinations" : ["Barchart_Test_Universal"]
+		}
+	]
+
+
+}

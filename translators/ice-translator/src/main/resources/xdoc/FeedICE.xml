@@ -1,10 +1,10 @@
 <protocol>
 
 	<config info="protocol for ICE feed">
-		<main class="com.barchart.proto.xform.ice.ICE" />
-		<codec class="com.barchart.proto.xform.ice.CodecICE" />
-		<converter class="com.barchart.proto.xform.ice.ConverterICE" />
-		<import>com.barchart.proto.buf.data.*</import>
+		<main class="com.barchart.translator.ice.xform.XFormICE" />
+		<codec class="com.barchart.translator.ice.xform.CodecICE" />
+		<converter class="com.barchart.translator.ice.xform.ConverterICE" />
+		<import>com.barchart.proto.buf.*</import>
 	</config>
 
 	<record name="ICEPacket">
@@ -12,7 +12,7 @@
 		<field name="messageList" type="Message" list="true"
 			counter="head.numberOfMessages()" />
 
-		<convert type="MarketPacket.Builder" name="packet">
+		<convert type="Packet.Builder" name="packet">
 			<into>
 				<visit name="packet" />
 			</into>
@@ -37,7 +37,7 @@ subsequent messages in the block." />
 		<field name="sentDateTime" type="long" codec="number" size="8"
 			info="" />
 			
-		<convert type="MarketPacket.Builder" name="packet">
+		<convert type="Packet.Builder" name="packet">
 			<into>
 				packet.setSequence(sequenceNumber);
 				packet.setTimeStamp(converter.timeStamp(sentDateTime));
@@ -49,14 +49,6 @@ subsequent messages in the block." />
 	<record name="Message">
 		<field name="messageType" type="String" codec="string" size="1" />
 		<field name="messageBodyLength" type="int" codec="number" size="2" /> 
-		
-		<into>
-			MarketMessage.Builder message = MarketMessage.newBuilder();
-			<visit name="message" />
-			
-		</into>
 	</record>
-	
-	<enum name="MessageType" codec="string" info=""></enum>
 
 </protocol>

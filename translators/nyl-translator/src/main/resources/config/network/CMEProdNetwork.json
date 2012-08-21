@@ -1,0 +1,50 @@
+{
+	"description" : "CME Production Data",
+	"readonly" : true,
+	"environment" : "prod",
+	"binding" : "cmelan",
+
+	"networkPoints" : [
+	 	{
+	 		"description" : "CME Volatility Quoted Options Update A",
+	 		"id" : "CME_006_A_Update",
+	 		"address" : "224.0.26.56:10026"
+	 	},
+	 	{
+	 		"description" : "CME Volatility Quoted Options Update B",
+	 		"id" : "CME_006_B_Update",
+	 		"address" : "224.0.27.55:10026"
+	 	},
+	 	{
+	 		"description" : "CME Volatility Quoted Options Snapshot",
+	 		"id" : "CME_006_A_Snapshot",
+	 		"address" : "224.0.26.57:11026"
+	 	},
+	 	{
+	 		"description" : "CME Volatility Quoted Options Definitions",
+	 		"id" : "CME_006_A_Definition", 
+	 	 	"address" : "224.0.26.58:12026"
+	 	},
+	 	
+	 	{
+	 		"description" : "CME Globex Equity Futures Update A",
+	 		"id" : "CME_007_A_Update",
+	 		"address" : "224.0.26.1:10001"
+	 	},
+	 	{
+	 		"description" : "CME Globex Equity Futures Update B",
+	 		"id" : "CME_007_B_Update",
+	 		"address" : "224.0.27.1:10001"
+	 	},
+	 	{
+	 		"description" : "CME Globex Equity Futures Snapshot",
+	 		"id" : "CME_007_A_Snapshot",
+	 		"address" : "224.0.26.19:11001"
+	 	},
+	 	{
+	 		"description" : "CME Globex Equity Futures Definitions",
+	 		"id" : "CME_007_A_Definition", 
+	 	 	"address" : "224.0.26.37:12001"
+	 	}
+ 	]
+}

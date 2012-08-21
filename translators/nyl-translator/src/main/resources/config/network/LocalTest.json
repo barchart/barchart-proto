@@ -1,0 +1,14 @@
+{
+	"description" : "Local test address",
+	"readonly" : false,
+	"environment" : "test",
+	"binding" : "testlan",
+
+	"networkPoints" : [
+	 	{
+	 		"id" : "Barchart_Test_Input",
+	 		"address" : "233.156.208.4:20004",
+	 		"description" : "Universal Destination for testing"
+	 	}
+ 	]
+}

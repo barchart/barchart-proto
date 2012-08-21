@@ -1,0 +1,43 @@
+{
+  "sources" : {
+  
+  	"cme globex fx futures" : {
+  		"category" : "update",
+		"address" : "224.0.26.5",
+		"port" : 10005  		
+  	},
+  	
+  	"unknown source" : {
+  		"category" : "update",
+  		"address" : "2.2.2.2",
+  		"port" : 10006
+  	}  
+  
+  },
+  
+  
+  "sinks" : {
+  	"Sink1" : {
+		"address" : "11.1.1.1",
+		"port" : 9999 	
+  	}
+  },
+  
+  "translators" : {
+  	"cme update" : "com.barchart.feed.cme.buf.CMEUpdateTranslator"
+  	"cme snapshot" : "com.barchart.feed.cme.buf.CMESnapshotTranslator"
+  }
+  
+  
+  "translations" : [
+  	{
+  		"source" : "cme globex fx futures",
+  		"sink" : "sink1",
+  		"translator" : "cme update"
+  	}
+  
+  ]
+  
+  
+
+}
