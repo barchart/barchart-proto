@@ -101,6 +101,7 @@
 	<enum name="MessageType" codec="number" info="Numeric message type identifier">
 
 		<value name="Market_Update_701" code="701" info="Market Update v1" />
+		
 
 		<value name="UNKNOWN" code="-1" info="default value for error condition" />
 
@@ -152,7 +153,8 @@
 		</convert>
 
 	</record>
-
+	
+	
 	<record name="MarketID" size="16">
 
 		<field name="sourceId" type="byte" codec="number" size="1"
@@ -182,7 +184,7 @@
 		<field name="type" type="int" codec="number" size="2" enum="UpdateType"
 			info="Type of update" />
 
-		<field name="reserved1" type="byte" codec="skip" size="1" info="" />
+		<field name="reserved100" type="byte" codec="skip" size="2" info="" />
 
 		<field name="price" type="int" codec="number" size="4" info="" />
 		<field name="size" type="int" codec="number" size="4" info="" />

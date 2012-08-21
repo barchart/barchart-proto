@@ -33,7 +33,6 @@ public class NYLTranslator implements Translator {
 			nylSource.into(packetBuilder);
 			packetBuilder.setChannel(channelID);
 			MarketPacket packet = packetBuilder.build();
-			logger.info("Translated packet: " + packet);
 			return packet;
 		} catch (Exception e) {
 			throw new TranslatorException("While parsing NYL Packet", e);
