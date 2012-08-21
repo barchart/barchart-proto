@@ -30,7 +30,7 @@ public class CFNTranslator implements Translator {
 	@Override
 	public MarketPacket translate(ByteBuffer byteBuffer) {
 		try {
-//			Packet iceSource = CFN.Packet.from(byteBuffer, null);
+			Packet iceSource = CFN.Packet.from(byteBuffer, null);
 //			MarketPacket.Builder packetBuilder = MarketPacket.newBuilder();
 //			iceSource.into(packetBuilder);
 //			MarketPacket packet = packetBuilder.build();
@@ -52,19 +52,16 @@ public class CFNTranslator implements Translator {
 
 				@Override
 				public void apply(BodyFutureBookTop arg0, String arg1) {
-					// TODO Auto-generated method stub
 					
 				}
 
 				@Override
 				public void apply(BodyOptionBookTop arg0, String arg1) {
-					// TODO Auto-generated method stub
 					
 				}
 
 				@Override
 				public void apply(BodyFutureInterest arg0, String arg1) {
-					// TODO Auto-generated method stub
 					
 				}
 

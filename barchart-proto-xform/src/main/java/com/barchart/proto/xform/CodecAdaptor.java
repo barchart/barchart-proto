@@ -11,6 +11,7 @@ public class CodecAdaptor implements Codec {
 
 	private void logTODO() {
 		log.debug("TODO", new UnsupportedOperationException());
+		throw new UnsupportedOperationException("Codec method not implemented.");
 	}
 
 	@Override
@@ -121,5 +122,7 @@ public class CodecAdaptor implements Codec {
 			final int size) {
 		logTODO();
 	}
+	
+	
 
 }
