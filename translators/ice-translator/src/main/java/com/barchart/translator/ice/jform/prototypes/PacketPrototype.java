@@ -2,9 +2,9 @@ package com.barchart.translator.ice.jform.prototypes;
 
 import java.nio.ByteBuffer;
 
-import com.barchart.translator.ice.experiment.common.Field;
-import com.barchart.translator.ice.experiment.common.JFormField;
-import com.barchart.translator.ice.experiment.common.MessageBlock;
+import com.barchart.translator.common.jform.Field;
+import com.barchart.translator.common.jform.JFormField;
+import com.barchart.translator.common.jform.MessageBlock;
 import com.barchart.translator.ice.experiment.fields.NumberOfMsgs;
 import com.barchart.translator.ice.experiment.fields.SentDateTime;
 import com.barchart.translator.ice.experiment.fields.SequenceNumber;

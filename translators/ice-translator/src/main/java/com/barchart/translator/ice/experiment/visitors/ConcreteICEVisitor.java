@@ -2,8 +2,8 @@ package com.barchart.translator.ice.experiment.visitors;
 
 import java.nio.ByteBuffer;
 
+import com.barchart.translator.common.jform.Field;
 import com.barchart.translator.ice.experiment.ICEVisitor;
-import com.barchart.translator.ice.experiment.common.Field;
 
 public class ConcreteICEVisitor implements ICEVisitor {
 

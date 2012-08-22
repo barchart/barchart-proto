@@ -1,7 +1,7 @@
 package com.barchart.translator.ice.experiment.messages;
 
-import com.barchart.translator.ice.experiment.common.Field;
-import com.barchart.translator.ice.experiment.common.FieldBlock;
+import com.barchart.translator.common.jform.Field;
+import com.barchart.translator.common.jform.FieldBlock;
 import com.barchart.translator.ice.experiment.fields.MarketID;
 import com.barchart.translator.ice.experiment.fields.MessageBodyLength;
 import com.barchart.translator.ice.experiment.fields.OrderID;

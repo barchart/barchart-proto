@@ -2,7 +2,7 @@ package com.barchart.translator.ice.jform.prototypes;
 
 import java.util.List;
 
-import com.barchart.translator.ice.experiment.common.Field;
+import com.barchart.translator.common.jform.Field;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;

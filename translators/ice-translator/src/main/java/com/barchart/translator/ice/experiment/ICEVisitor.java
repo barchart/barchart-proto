@@ -1,6 +1,6 @@
 package com.barchart.translator.ice.experiment;
 
-import com.barchart.translator.ice.experiment.common.FieldVisitor;
+import com.barchart.translator.common.jform.FieldVisitor;
 
 public interface ICEVisitor extends FieldVisitor {
 
