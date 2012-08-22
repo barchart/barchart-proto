@@ -8,8 +8,10 @@ import com.barchart.proto.buf.data.MarketPacket;
 import com.barchart.proto.buf.data.PacketType;
 import com.barchart.translator.common.Translator;
 import com.barchart.translator.common.exception.TranslatorException;
-import com.barchart.translator.nyl.data.MarketUpdate;
-import com.barchart.translator.nyl.data.PacketHeader;
+import com.barchart.translator.nyl.data.NYLMarketUpdate;
+import com.barchart.translator.nyl.data.NYLMarketUpdate.Entry;
+import com.barchart.translator.nyl.data.NYLPacketHeader;
+import com.barchart.translator.nyl.data.NYLValueAddedParameters;
 import com.barchart.translator.nyl.data.parse.NYLPacketParser;
 import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
@@ -20,24 +22,22 @@ public class NYLTranslator implements Translator {
 	public NYLTranslator() {
 		parser = new NYLPacketParser();
 	}
-	
+
 	@Override
 	public MarketPacket translate(ByteBuffer byteBuffer) {
 		BUFBuilder bufBuilder = new BUFBuilder();
 		parser.parse(byteBuffer, bufBuilder);
 		return bufBuilder.getBUFPacket();
 	}
-	
+
 	private static class BUFBuilder implements NYLPacketVisitor {
 
 		private MarketPacket.Builder packetBuilder;
-		private MarketMessage.Builder messageBuilder;
 
 		BUFBuilder() {
 			this.packetBuilder = null;
 		}
-		
-		
+
 		public MarketPacket getBUFPacket() {
 			if (packetBuilder == null) {
 				throw new TranslatorException("No packet to decode");
@@ -47,7 +47,7 @@ public class NYLTranslator implements Translator {
 		}
 
 		@Override
-		public void visit(PacketHeader header) {
+		public void visit(NYLPacketHeader header) {
 			if (packetBuilder != null) {
 				throw new TranslatorException("Multiple packet headers are ilelgal");
 			}
@@ -58,9 +58,10 @@ public class NYLTranslator implements Translator {
 		}
 
 		@Override
-		public void visit(MarketUpdate marketUpdate) {
-			messageBuilder = packetBuilder.addMessageBuilder();
-			
+		public void visit(NYLMarketUpdate marketUpdate, NYLMarketUpdate.Entry... entries) {
+
+			MarketMessage.Builder messageBuilder = packetBuilder.addMessageBuilder();
+
 			switch (marketUpdate.getSnapshotFlag()) {
 			case 0:
 				messageBuilder.setType(MarketMessage.Type.UPDATE);
@@ -68,23 +69,30 @@ public class NYLTranslator implements Translator {
 			case 1:
 				messageBuilder.setType(MarketMessage.Type.SNAPSHOT);
 			}
+
+			for (NYLMarketUpdate.Entry entry : entries) {
+				MarketEntry.Builder entryBuilder = messageBuilder.addEntryBuilder();
+				switch (entry.getUpdateType()) {
+				case BID:
+					entryBuilder.setType(MarketEntry.Type.BID);
+					break;
+				case OFFER:
+					entryBuilder.setType(MarketEntry.Type.ASK);
+				}
+
+				entryBuilder.setPriceMantissa(entry.getPrice());
+				entryBuilder.setPriceExponent(0);
+
+				entryBuilder.setSizeMantissa(entry.getVolume());
+				entryBuilder.setSizeExponent(0);
+			}
 		}
 
 		@Override
-		public void visit(MarketUpdate.Entry entry) {
-			if (messageBuilder == null) {
-				throw new TranslatorException("No message for MarketUpdate Entry");
-			}
-			MarketEntry.Builder entryBuilder = messageBuilder.addEntryBuilder();
-			switch (entry.getUpdateType()) {
-			case BID:
-				entryBuilder.setType(MarketEntry.Type.BID);
-				break;
-			case OFFER:
-				entryBuilder.setType(MarketEntry.Type.ASK);
-			}
+		public void visit(NYLValueAddedParameters message, NYLValueAddedParameters.Entry... entries) {
+			// TODO
 		}
-		
+
 	}
 
 }

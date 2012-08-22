@@ -1,19 +1,16 @@
 package com.barchart.translator.nyl.data.impl;
 
 import com.barchart.translator.common.data.ByteFacade;
-import com.barchart.translator.nyl.data.PacketHeader;
+import com.barchart.translator.common.data.OffsetByteReader;
+import com.barchart.translator.nyl.data.NYLPacketHeader;
 import com.barchart.translator.nyl.data.enums.NYLPacketType;
-import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
+public class NYLPacketHeaderImpl extends OffsetByteReader implements NYLPacketHeader {
 
-public class NYLPacketHeaderImpl implements PacketHeader {
-
-	private final ByteFacade bytes;
-	private final int baseOffset;
+	public static final int HEADER_SIZE = 16;
 
 	public NYLPacketHeaderImpl(int baseOffset, ByteFacade bytes) {
-		this.baseOffset = baseOffset;
-		this.bytes = bytes;
+		super(0, bytes);
 	}
 
 	@Override
@@ -52,22 +49,11 @@ public class NYLPacketHeaderImpl implements PacketHeader {
 		return bytes.unsignedByte(offset(15));
 	}
 
-
-	private int offset(int offset) {
-		return baseOffset + offset;
-	}
-
-	public void accept(NYLPacketVisitor visitor) {
-		visitor.visit(this);
-	}
-
 	@Override
 	public String toString() {
 		return "NYLPacketHeaderImpl [getMsgSize()=" + getPacketLength() + ", getMsgType()=" + getPacketType() + ", getPacketSeqNum()=" + getPacketSeqNum()
 				+ ", getSendTime()=" + getSendTime() + ", getServiceID()=" + getServiceID() + ", getDeliveryFlag()=" + getDeliveryFlag()
 				+ ", getNumberMsgEntries()=" + getNumberMsgEntries() + "]";
 	}
-	
-	
 
 }

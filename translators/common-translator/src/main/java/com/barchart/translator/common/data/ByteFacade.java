@@ -47,5 +47,10 @@ public class ByteFacade {
 	public int length() {
 		return bytes.length;
 	}
+
+
+	public <T extends Enum<?>> T enumeration(int offset, Class<T> clazz) {
+		return null;
+	}
 	
 }

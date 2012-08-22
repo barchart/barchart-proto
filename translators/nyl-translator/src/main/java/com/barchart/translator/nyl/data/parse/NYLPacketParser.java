@@ -1,17 +1,25 @@
 package com.barchart.translator.nyl.data.parse;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.barchart.translator.common.data.ByteFacade;
 import com.barchart.translator.common.data.OffsetByteReader;
-import com.barchart.translator.nyl.data.MarketUpdate;
-import com.barchart.translator.nyl.data.impl.MarketUpdateImpl;
+import com.barchart.translator.nyl.data.NYLMarketUpdate;
+import com.barchart.translator.nyl.data.NYLPacketHeader;
+import com.barchart.translator.nyl.data.NYLValueAddedParameters;
+import com.barchart.translator.nyl.data.enums.NYLMessageType;
+import com.barchart.translator.nyl.data.impl.NYLMarketUpdateImpl;
 import com.barchart.translator.nyl.data.impl.NYLPacketHeaderImpl;
+import com.barchart.translator.nyl.data.impl.NYLValueAddedParametersImpl;
 
 public class NYLPacketParser {
+
+	private static final Logger logger = LoggerFactory.getLogger(NYLPacketParser.class);
 
 	public NYLPacketParser() {
 
@@ -23,7 +31,6 @@ public class NYLPacketParser {
 	}
 
 	private static class Packet extends OffsetByteReader {
-		private static final Logger logger = LoggerFactory.getLogger(Packet.class);
 
 		private final NYLPacketVisitor visitor;
 
@@ -35,51 +42,56 @@ public class NYLPacketParser {
 		}
 
 		public void accept(NYLPacketVisitor visitor) {
-			NYLPacketHeaderImpl header = new NYLPacketHeaderImpl(offset, bytes);
-			header.accept(visitor);
-
-			offset = 16;
-
+			NYLPacketHeader header = new NYLPacketHeaderImpl(offset, bytes);
+			visitor.visit(header);
+			offset = NYLPacketHeaderImpl.HEADER_SIZE;
 			while (offset < bytes.length()) {
-				MessageDescriptor messageDescriptor = new MessageDescriptor(offset, bytes);
-				switch (messageDescriptor.getMsgType()) {
-				case 701:
-					handleMarketUpdate();
-					break;
-				default:
-					logger.error("Unknown message type: " + messageDescriptor.getMsgType());
-					// throw new IllegalStateException();
-				}
-				offset += messageDescriptor.getMsgLength() + 2;
+				int bytesConsumed = handleMessage(getNextSubMessageType());
+				offset += bytesConsumed;
+			}
+		}
+
+		private NYLMessageType getNextSubMessageType() {
+			int code = bytes.unsignedShort(offset + 2);
+			return NYLMessageType.fromCode(code);
+		}
+
+		private int handleMessage(NYLMessageType messageType) {
+			switch (messageType) {
+			case MARKET_UPDATE_V1:
+				return handleMarketUpdate();
+			case VALUE_ADDED_PARAMETERS:
+				return handleValueAddedParameters();
+			default:
+				throw new IllegalStateException("Unsupported message type: " + messageType);
 			}
 
 		}
 
-		private void handleMarketUpdate() {
-			MarketUpdate marketUpdate = new MarketUpdateImpl(offset, bytes);
-			visitor.visit(marketUpdate);
-			int entryOffset = offset + 32;
-			for (int i = 0; i < marketUpdate.getUpdateCount(); i++) {
-				MarketUpdate.Entry entry = new MarketUpdateImpl.EntryImpl(entryOffset, bytes);
-				visitor.visit(entry);
+		private int handleValueAddedParameters() {
+			NYLValueAddedParameters message = new NYLValueAddedParametersImpl(offset, bytes);
+			int entryOffset = offset + 28;
+			NYLValueAddedParameters.Entry[] entries = new NYLValueAddedParameters.Entry[message.getUpdateCount()];
+			for (int i = 0; i < message.getUpdateCount(); i++) {
+				NYLValueAddedParameters.Entry entry = new NYLValueAddedParametersImpl.EntryImpl(entryOffset, bytes);
+				entries[i] = entry;
 				entryOffset += 12;
 			}
+			visitor.visit(message, entries);
+			return message.getMsgSize() + 2;
 		}
 
-	}
-
-	private static class MessageDescriptor extends OffsetByteReader {
-
-		protected MessageDescriptor(int baseOffset, ByteFacade bytes) {
-			super(baseOffset, bytes);
-		}
-
-		public int getMsgLength() {
-			return bytes.unsignedShort(offset(0));
-		}
-
-		public int getMsgType() {
-			return bytes.unsignedShort(offset(2));
+		private int handleMarketUpdate() {
+			NYLMarketUpdate message = new NYLMarketUpdateImpl(offset, bytes);
+			int entryOffset = offset + 32;
+			NYLMarketUpdate.Entry[] entries = new NYLMarketUpdate.Entry[message.getUpdateCount()];
+			for (int i = 0; i < message.getUpdateCount(); i++) {
+				NYLMarketUpdate.Entry entry = new NYLMarketUpdateImpl.EntryImpl(entryOffset, bytes);
+				entries[i] = entry;
+				entryOffset += 12;
+			}
+			visitor.visit(message, entries);
+			return message.getMsgSize() + 2;
 		}
 
 	}

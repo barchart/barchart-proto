@@ -2,13 +2,13 @@ package com.barchart.translator.nyl.data.impl;
 
 import com.barchart.translator.common.data.ByteFacade;
 import com.barchart.translator.common.data.OffsetByteReader;
-import com.barchart.translator.nyl.data.MarketUpdate;
-import com.barchart.translator.nyl.data.enums.UpdateType;
+import com.barchart.translator.nyl.data.NYLMarketUpdate;
+import com.barchart.translator.nyl.data.enums.NYLUpdateType;
 import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
-public final class MarketUpdateImpl extends OffsetByteReader implements MarketUpdate {
+public final class NYLMarketUpdateImpl extends OffsetByteReader implements NYLMarketUpdate {
 
-	public MarketUpdateImpl(int baseOffset, ByteFacade bytes) {
+	public NYLMarketUpdateImpl(int baseOffset, ByteFacade bytes) {
 		super(baseOffset, bytes);
 	}
 
@@ -52,16 +52,16 @@ public final class MarketUpdateImpl extends OffsetByteReader implements MarketUp
 		return bytes.unsignedShort(offset(30));
 	}
 
-	public static class EntryImpl extends OffsetByteReader implements MarketUpdate.Entry {
+	public static class EntryImpl extends OffsetByteReader implements NYLMarketUpdate.Entry {
 
 		public EntryImpl(int baseOffset, ByteFacade bytes) {
 			super(baseOffset, bytes);
 		}
 
 		@Override
-		public UpdateType getUpdateType() {
+		public NYLUpdateType getUpdateType() {
 			int code = bytes.unsignedShort(offset(0));
-			return UpdateType.fromCode(code);
+			return NYLUpdateType.fromCode(code);
 		}
 
 		@Override
@@ -83,16 +83,6 @@ public final class MarketUpdateImpl extends OffsetByteReader implements MarketUp
 
 	}
 
-	public int accept(NYLPacketVisitor visitor) {
-		visitor.visit(this);
-		int entryOffset = 32;
-		for (int i = 0; i < getUpdateCount(); i++) {
-			EntryImpl entry = new EntryImpl(entryOffset, bytes);
-			visitor.visit(entry);
-			entryOffset += 12;
-		}
-		return getMsgSize();
-	}
 
 	@Override
 	public String toString() {

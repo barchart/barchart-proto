@@ -1,8 +1,8 @@
 package com.barchart.translator.nyl.data;
 
-import com.barchart.translator.nyl.data.enums.UpdateType;
+import com.barchart.translator.nyl.data.enums.NYLUpdateType;
 
-public interface MarketUpdate {
+public interface NYLMarketUpdate {
 
 	public int getMsgSize();
 
@@ -22,7 +22,7 @@ public interface MarketUpdate {
 
 	public interface Entry {
 		
-		public UpdateType getUpdateType();
+		public NYLUpdateType getUpdateType();
 
 		public long getPrice();
 

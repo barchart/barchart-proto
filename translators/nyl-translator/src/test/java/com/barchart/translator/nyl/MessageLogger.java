@@ -11,10 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.barchart.proto.buf.data.MarketPacket;
 import com.barchart.proto.xform.nyl.NYL.Body.Visitor;
-import com.barchart.translator.nyl.data.MarketUpdate;
-import com.barchart.translator.nyl.data.PacketHeader;
-import com.barchart.translator.nyl.data.MarketUpdate.Entry;
+import com.barchart.translator.nyl.data.NYLMarketUpdate;
+import com.barchart.translator.nyl.data.NYLPacketHeader;
+import com.barchart.translator.nyl.data.NYLMarketUpdate.Entry;
+import com.barchart.translator.nyl.data.NYLValueAddedParameters;
 import com.barchart.translator.nyl.data.parse.NYLPacketParser;
 import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
@@ -29,9 +31,14 @@ public class MessageLogger {
 		Replayer replayer = new Replayer(bis);
 		NYLPacketParser parser = new NYLPacketParser();
 		byte[] array;
+		NYLTranslator translator = new NYLTranslator();
+
 		while ((array = replayer.nextPayload()) != null) {
 			PacketVisitor visitor = new PacketVisitor();
 			parser.parse(ByteBuffer.wrap(array), visitor);
+
+			MarketPacket translate = translator.translate(ByteBuffer.wrap(array));
+			 System.out.println(translate);
 			System.out.println(visitor.toString());
 		}
 	}
@@ -45,7 +52,7 @@ public class MessageLogger {
 		}
 
 		@Override
-		public void visit(PacketHeader header) {
+		public void visit(NYLPacketHeader header) {
 			append("PacketLength", header.getPacketLength());
 			append("PacketType", header.getPacketType());
 			append("PacketSeqNum", header.getPacketSeqNum());
@@ -56,31 +63,10 @@ public class MessageLogger {
 		}
 
 		@Override
-		public void visit(MarketUpdate marketUpdate) {
-			append("-- MsgSize", marketUpdate.getMsgSize());
-			append("-- MsgType", marketUpdate.getMsgType());
-			append("-- SourceTime", marketUpdate.getSourceTime());
-			append("-- SeriesSeqNum", marketUpdate.getSereiesSequenceNumber());
-			append("-- SecurityIDSource", marketUpdate.getSecurityIDSource());
-			append("-- SnapshotFlag", marketUpdate.getSnapshotFlag());
-			append("-- UpdateCount", marketUpdate.getUpdateCount());
-			
-		}
-
-		@Override
-		public void visit(Entry entry) {
-			append("----* UpdateType", entry.getUpdateType());
-			append("----* Price", entry.getPrice());
-			append("----* Volume", entry.getVolume());
-			builder.append("\n");
-		}
-
-		@Override
 		public String toString() {
 			return builder.toString();
 		}
 
-		
 		private void append(String fieldName, int value) {
 			append(fieldName, Integer.valueOf(value));
 		}
@@ -92,6 +78,32 @@ public class MessageLogger {
 		private void append(String fieldName, Object value) {
 			builder.append(fieldName + "\t\t" + value + "\n");
 		}
+
+		@Override
+		public void visit(NYLMarketUpdate marketUpdate, NYLMarketUpdate.Entry... entries) {
+			append("-- MsgSize", marketUpdate.getMsgSize());
+			append("-- MsgType", marketUpdate.getMsgType());
+			append("-- SourceTime", marketUpdate.getSourceTime());
+			append("-- SeriesSeqNum", marketUpdate.getSereiesSequenceNumber());
+			append("-- SecurityIDSource", marketUpdate.getSecurityIDSource());
+			append("-- SnapshotFlag", marketUpdate.getSnapshotFlag());
+			append("-- UpdateCount", marketUpdate.getUpdateCount());
+
+			for (NYLMarketUpdate.Entry entry : entries) {
+				append("----* UpdateType", entry.getUpdateType());
+				append("----* Price", entry.getPrice());
+				append("----* Volume", entry.getVolume());
+				builder.append("\n");
+			}
+
+		}
+
+		@Override
+		public void visit(NYLValueAddedParameters message, com.barchart.translator.nyl.data.NYLValueAddedParameters.Entry... entries) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.barchart.translator.nyl.data.enums;
 
 
-public enum UpdateType {
+public enum NYLUpdateType {
 	BEST_BID(1),
 	BEST_OFFER(2),
 	BID(3),
@@ -24,7 +24,7 @@ public enum UpdateType {
 	
 	private final int code;
 	
-	UpdateType(int code) {
+	NYLUpdateType(int code) {
 		this.code = code;
 	}
 	
@@ -32,8 +32,8 @@ public enum UpdateType {
 		return code;
 	}
 	
-	public static UpdateType fromCode(int code) {
-		for (UpdateType updateType : values()) {
+	public static NYLUpdateType fromCode(int code) {
+		for (NYLUpdateType updateType : values()) {
 			if (updateType.getCode() == code) {
 				return updateType;
 			}
