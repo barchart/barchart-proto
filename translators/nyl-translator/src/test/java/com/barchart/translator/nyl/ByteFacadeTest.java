@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.barchart.translator.nyl.jform.facade.ByteFacade;
+import com.barchart.translator.common.data.ByteFacade;
 
 public class ByteFacadeTest {
 

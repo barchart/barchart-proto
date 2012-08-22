@@ -1,4 +1,4 @@
-package com.barchart.translator.nyl.jform.facade;
+package com.barchart.translator.common.data;
 
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Shorts;

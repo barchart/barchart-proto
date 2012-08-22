@@ -11,30 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.translator.nyl.jform.facade.MarketUpdate;
-import com.barchart.translator.nyl.jform.facade.MarketUpdate.Entry;
-import com.barchart.translator.nyl.jform.facade.NYLPacketHeader;
-import com.barchart.translator.nyl.jform.facade.NYLPacketParser;
-import com.barchart.translator.nyl.jform.facade.NYLPacketVisitor;
-import com.barchart.translator.nyl.jform.visit.NYLField;
-import com.barchart.translator.nyl.jform.visit.NYLField.DeliveryFlag;
-import com.barchart.translator.nyl.jform.visit.NYLField.Filler;
-import com.barchart.translator.nyl.jform.visit.NYLField.MsgSize;
-import com.barchart.translator.nyl.jform.visit.NYLField.MsgType;
-import com.barchart.translator.nyl.jform.visit.NYLField.NumberMsgEntries;
-import com.barchart.translator.nyl.jform.visit.NYLField.PacketLength;
-import com.barchart.translator.nyl.jform.visit.NYLField.PacketSeqNum;
-import com.barchart.translator.nyl.jform.visit.NYLField.PacketType;
-import com.barchart.translator.nyl.jform.visit.NYLField.SecurityID;
-import com.barchart.translator.nyl.jform.visit.NYLField.SecurityIDSource;
-import com.barchart.translator.nyl.jform.visit.NYLField.SendTime;
-import com.barchart.translator.nyl.jform.visit.NYLField.SeriesSequenceNumber;
-import com.barchart.translator.nyl.jform.visit.NYLField.ServiceID;
-import com.barchart.translator.nyl.jform.visit.NYLField.SnapshotFlag;
-import com.barchart.translator.nyl.jform.visit.NYLField.SourceTime;
-import com.barchart.translator.nyl.jform.visit.NYLField.UpdateCount;
-import com.barchart.translator.nyl.jform.visit.NYLFieldVisitor;
-import com.barchart.translator.nyl.jform.visit.NYLPacket;
+import com.barchart.proto.xform.nyl.NYL.Body.Visitor;
+import com.barchart.translator.nyl.data.MarketUpdate;
+import com.barchart.translator.nyl.data.PacketHeader;
+import com.barchart.translator.nyl.data.MarketUpdate.Entry;
+import com.barchart.translator.nyl.data.parse.NYLPacketParser;
+import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
 public class MessageLogger {
 
@@ -45,186 +27,71 @@ public class MessageLogger {
 		File file = new File("/home/joel/buf/nyl-metals-l2-a.packets");
 		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 		Replayer replayer = new Replayer(bis);
-		byte[] array;
-		NYLPacket nylPacket = new NYLPacket();
-		
 		NYLPacketParser parser = new NYLPacketParser();
+		byte[] array;
 		while ((array = replayer.nextPayload()) != null) {
-			
-			
-			
-			parser.parse(ByteBuffer.wrap(array), new PacketVisitor());
-			
-			
-//			NYLPrint nylPrint = new NYLPrint(ByteBuffer.wrap(array));
-//			nylPacket.readFields(nylPrint);
+			PacketVisitor visitor = new PacketVisitor();
+			parser.parse(ByteBuffer.wrap(array), visitor);
+			System.out.println(visitor.toString());
 		}
 	}
 
-	
 	private static class PacketVisitor implements NYLPacketVisitor {
 
-		@Override
-		public void visitPacketHeader(NYLPacketHeader header) {
-			logger.info(header.toString());
+		private StringBuilder builder;
+
+		public PacketVisitor() {
+			this.builder = new StringBuilder();
 		}
 
 		@Override
-		public void visitMarketUpdate(MarketUpdate marketUpdate) {
-			logger.info(marketUpdate.toString());
+		public void visit(PacketHeader header) {
+			append("PacketLength", header.getPacketLength());
+			append("PacketType", header.getPacketType());
+			append("PacketSeqNum", header.getPacketSeqNum());
+			append("SendTime", header.getSendTime());
+			append("ServiceID", header.getServiceID());
+			append("DeliveryFlag", header.getDeliveryFlag());
+			append("NumMsgEntries", header.getNumberMsgEntries());
 		}
 
 		@Override
-		public void visitMarketUpdateEntry(Entry entry) {
-			logger.info(entry.toString());			
+		public void visit(MarketUpdate marketUpdate) {
+			append("-- MsgSize", marketUpdate.getMsgSize());
+			append("-- MsgType", marketUpdate.getMsgType());
+			append("-- SourceTime", marketUpdate.getSourceTime());
+			append("-- SeriesSeqNum", marketUpdate.getSereiesSequenceNumber());
+			append("-- SecurityIDSource", marketUpdate.getSecurityIDSource());
+			append("-- SnapshotFlag", marketUpdate.getSnapshotFlag());
+			append("-- UpdateCount", marketUpdate.getUpdateCount());
+			
 		}
+
+		@Override
+		public void visit(Entry entry) {
+			append("----* UpdateType", entry.getUpdateType());
+			append("----* Price", entry.getPrice());
+			append("----* Volume", entry.getVolume());
+			builder.append("\n");
+		}
+
+		@Override
+		public String toString() {
+			return builder.toString();
+		}
+
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private static class NYLPrint implements NYLFieldVisitor {
-
-		private final ByteBuffer buffer;
-
-		public NYLPrint(ByteBuffer buffer) {
-			this.buffer = buffer;
+		private void append(String fieldName, int value) {
+			append(fieldName, Integer.valueOf(value));
 		}
 
-		@Override
-		public NYLFieldVisitor visit(PacketLength field) {
-			print(field, field.getValue(buffer));
-			return this;
+		private void append(String fieldName, long value) {
+			append(fieldName, Long.valueOf(value));
 		}
 
-		@Override
-		public NYLFieldVisitor visit(PacketType field) {
-//			print(field, field.getValue(buffer));
-			return this;
+		private void append(String fieldName, Object value) {
+			builder.append(fieldName + "\t\t" + value + "\n");
 		}
-
-		@Override
-		public NYLFieldVisitor visit(PacketSeqNum field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SendTime field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(ServiceID field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(DeliveryFlag field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(NumberMsgEntries field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(MsgSize field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(MsgType field) {
-			
-			
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SourceTime field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SeriesSequenceNumber field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SecurityIDSource field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SecurityID field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(SnapshotFlag field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(Filler field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		@Override
-		public NYLFieldVisitor visit(UpdateCount field) {
-			print(field, field.getValue(buffer));
-			return this;
-		}
-
-		private void print(NYLField field, byte value) {
-			System.out.println(field.toString() + " = " + value);
-		}
-
-		private void print(NYLField field, int value) {
-			System.out.println(field.toString() + " = " + value);
-		}
-
-		private void print(NYLField field, short value) {
-			System.out.println(field.toString() + " = " + value);
-		}
-
-		private void print(NYLField field, long value) {
-			System.out.println(field.toString() + " = " + value);
-		}
-
-		private void print(SecurityID field, String value) {
-			System.out.println(field.toString() + " = " + value);
-		}
-
 	}
 
 }

@@ -1,7 +1,12 @@
-package com.barchart.translator.nyl.jform.facade;
+package com.barchart.translator.nyl.data.impl;
+
+import com.barchart.translator.common.data.ByteFacade;
+import com.barchart.translator.nyl.data.PacketHeader;
+import com.barchart.translator.nyl.data.enums.NYLPacketType;
+import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
 
-public class NYLPacketHeaderImpl implements NYLPacketHeader {
+public class NYLPacketHeaderImpl implements PacketHeader {
 
 	private final ByteFacade bytes;
 	private final int baseOffset;
@@ -12,13 +17,14 @@ public class NYLPacketHeaderImpl implements NYLPacketHeader {
 	}
 
 	@Override
-	public int getMsgSize() {
+	public int getPacketLength() {
 		return bytes.unsignedShort(offset(0));
 	}
 
 	@Override
-	public int getMsgType() {
-		return bytes.unsignedShort(offset(2));
+	public NYLPacketType getPacketType() {
+		int code = bytes.unsignedShort(offset(2));
+		return NYLPacketType.fromCode(code);
 	}
 
 	@Override
@@ -52,12 +58,12 @@ public class NYLPacketHeaderImpl implements NYLPacketHeader {
 	}
 
 	public void accept(NYLPacketVisitor visitor) {
-		visitor.visitPacketHeader(this);
+		visitor.visit(this);
 	}
 
 	@Override
 	public String toString() {
-		return "NYLPacketHeaderImpl [getMsgSize()=" + getMsgSize() + ", getMsgType()=" + getMsgType() + ", getPacketSeqNum()=" + getPacketSeqNum()
+		return "NYLPacketHeaderImpl [getMsgSize()=" + getPacketLength() + ", getMsgType()=" + getPacketType() + ", getPacketSeqNum()=" + getPacketSeqNum()
 				+ ", getSendTime()=" + getSendTime() + ", getServiceID()=" + getServiceID() + ", getDeliveryFlag()=" + getDeliveryFlag()
 				+ ", getNumberMsgEntries()=" + getNumberMsgEntries() + "]";
 	}

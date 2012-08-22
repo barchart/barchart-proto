@@ -1,4 +1,10 @@
-package com.barchart.translator.nyl.jform.facade;
+package com.barchart.translator.nyl.data.impl;
+
+import com.barchart.translator.common.data.ByteFacade;
+import com.barchart.translator.common.data.OffsetByteReader;
+import com.barchart.translator.nyl.data.MarketUpdate;
+import com.barchart.translator.nyl.data.enums.UpdateType;
+import com.barchart.translator.nyl.data.parse.NYLPacketVisitor;
 
 public final class MarketUpdateImpl extends OffsetByteReader implements MarketUpdate {
 
@@ -55,8 +61,7 @@ public final class MarketUpdateImpl extends OffsetByteReader implements MarketUp
 		@Override
 		public UpdateType getUpdateType() {
 			int code = bytes.unsignedShort(offset(0));
-			return UpdateType.BASIS_TRADE;
-//			return UpdateType.fromCode(code);
+			return UpdateType.fromCode(code);
 		}
 
 		@Override
@@ -79,11 +84,11 @@ public final class MarketUpdateImpl extends OffsetByteReader implements MarketUp
 	}
 
 	public int accept(NYLPacketVisitor visitor) {
-		visitor.visitMarketUpdate(this);
+		visitor.visit(this);
 		int entryOffset = 32;
 		for (int i = 0; i < getUpdateCount(); i++) {
 			EntryImpl entry = new EntryImpl(entryOffset, bytes);
-			visitor.visitMarketUpdateEntry(entry);
+			visitor.visit(entry);
 			entryOffset += 12;
 		}
 		return getMsgSize();

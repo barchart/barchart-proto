@@ -1,4 +1,5 @@
-package com.barchart.translator.nyl.jform.facade;
+package com.barchart.translator.common.data;
+
 
 public abstract class OffsetByteReader {
 

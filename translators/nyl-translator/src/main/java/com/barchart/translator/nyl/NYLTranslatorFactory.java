@@ -15,7 +15,7 @@ public class NYLTranslatorFactory extends TranslatorFactory {
 
 	@Override
 	public Translator createTranslator(TranslationChannel translationChannel) {
-		return new NYLTranslator(translationChannel.getChannelID());
+		return new NYLTranslatorXForm(translationChannel.getChannelID());
 	}
 	
 	

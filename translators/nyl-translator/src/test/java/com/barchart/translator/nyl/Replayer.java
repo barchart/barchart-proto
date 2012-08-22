@@ -39,7 +39,7 @@ public class Replayer {
 		
 		byte[] array;
 		
-		NYLTranslator nylTranslator = new NYLTranslator(13);
+		NYLTranslatorXForm nylTranslator = new NYLTranslatorXForm(13);
 		int good = 0;
 		int bad = 0;
 		while ( (array= replayer.nextPayload()) != null) {
@@ -58,7 +58,7 @@ public class Replayer {
 		System.out.println("Good: " + good + ", bad: " + bad);
 	}
 	
-	private static void doItForever(NYLTranslator nylTranslator, byte[] array) {
+	private static void doItForever(NYLTranslatorXForm nylTranslator, byte[] array) {
 		while (true) {
 			try {
 				nylTranslator.translate(ByteBuffer.wrap(array));
