@@ -89,23 +89,20 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.karaf.tooling</groupId>
-				<artifactId>karaf-maven-plugin</artifactId>
-				<version>3.0.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<id>package</id>
-						<goals>
-							<goal>features-generate-descriptor</goal>
-							<goal>features-create-kar</goal>
-						</goals>
-						<configuration>
-							<featuresFile>target/feature/feature.xml</featuresFile>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>features-generate-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
 
 		</plugins>

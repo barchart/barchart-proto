@@ -43,9 +43,9 @@
 							com.barchart.translator.common*,
 							org.osgi.framework;version="1.4",
 							org.osgi.service.log,
-							com.barchart.proto.*;
-							org.jboss.netty.*;
-							org.slf4j
+							com.barchart.proto.*,
+							org.slf4j,
+							com.google.common.primitives;
 						</Import-Package>
 						<Embed-Dependency>
 						</Embed-Dependency>
