@@ -16,8 +16,6 @@
 
 		<field name="separator2" type="byte" codec="number" size="1" />
 
-
-		
 	</record>
 
 	<record name="Message">
@@ -33,7 +31,7 @@
 		info="4.0 MESSAGE HEADER The Message Header supplied on each message contains 
 		a total of 18 Bytes and conforms in all cases to the following data fields:">
 
-		<field name="exchange" type="string" codec="string" size="1"
+		<field name="exchange" type="byte" codec="number" size="1"
 			info="The Exchange ID field is a 1 Byte, 
 			Alphabetic character that identifies the CFE 
 			as the initiator of the message" />
