@@ -36,27 +36,31 @@ subsequent messages in the block." />
 
 		<field name="sentDateTime" type="long" codec="number" size="8"
 			info="" />
-			
+
 		<convert type="MarketPacket.Builder" name="packet">
 			<into>
 				packet.setSequence(sequenceNumber);
 				packet.setTimeStamp(converter.timeStamp(sentDateTime));
 			</into>
-		</convert>	
+		</convert>
 	</record>
-	
-	
+
+
 	<record name="Message">
 		<field name="messageType" type="String" codec="string" size="1" />
-		<field name="messageBodyLength" type="int" codec="number" size="2" /> 
-		
+		<field name="messageBodyLength" type="int" codec="number" size="2" />
+
 		<into>
 			MarketMessage.Builder message = MarketMessage.newBuilder();
 			<visit name="message" />
-			
+
 		</into>
 	</record>
-	
-	<enum name="MessageType" codec="string" info=""></enum>
+
+	<enum name="MessageType" codec="string" info="">
+
+		<value name="UNKNOWN" code="?" info="default value for error condition" />
+
+	</enum>
 
 </protocol>
