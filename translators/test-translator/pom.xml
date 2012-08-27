@@ -9,13 +9,26 @@
 	<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.barchart.translator</groupId>
 	<artifactId>test-translator</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<dependencies>
-
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>cme-translator</artifactId>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>nyl-translator</artifactId>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>cfn-translator</artifactId>
+			</dependency>
+			
 	</dependencies>
 
 	<build>

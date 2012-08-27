@@ -10,19 +10,16 @@
 //import org.osgi.service.component.annotations.Activate;
 //import org.osgi.service.component.annotations.Component;
 //import org.osgi.service.component.annotations.Deactivate;
-//import org.osgi.service.component.annotations.Property;
 //import org.osgi.service.component.annotations.Reference;
-//import org.osgi.service.event.Event;
-//import org.osgi.service.event.EventConstants;
-//import org.osgi.service.event.EventHandler;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 //
-//import com.barchart.conf.event.ConfigEvent;
-//import com.barchart.conf.repo.api.ConfigService;
-//import com.barchart.conf.sync.api.ConfigManager;
 //import com.barchart.translator.cme.fest.FESTMessageDecoder;
 //import com.barchart.translator.cme.symbols.FakeCMEGUIDLookup;
+//import com.barchart.translator.common.TranslatorFactory;
+//import com.barchart.translator.common.api.TranslatorService;
+//import com.barchart.translator.common.config2.TranslationConfig;
+//import com.barchart.translator.common.config2.TranslatorConfig;
 //import com.cme.fest.protocol.fast.DecoderStrategy;
 //import com.cme.fest.protocol.fast.DefaultTemplateManager;
 //import com.cme.fest.protocol.fast.FastTemplateIdDecoderStrategy;
@@ -30,22 +27,25 @@
 //import com.cme.fest.protocol.fast.transcoder.template.Template;
 //import com.cme.fest.protocol.fast.transcoder.template.builder.TemplateBuilder;
 //import com.cme.fest.protocol.fast.transcoder.template.builder.TemplateParsingException;
-//import com.typesafe.config.Config;
+//
 //
 //@Component(immediate = true)
-//public class CMEStart implements EventHandler { 
+//public class CMEFactoryService {
 //
-//	private static final Logger logger = LoggerFactory.getLogger(CMEStart.class);
+//	private static final String TRANSLATOR_NAME = "CME";
 //
-//	@Property(name = EventConstants.EVENT_TOPIC)
-//	static final String TOPIC = ConfigEvent.CONFIG_CHANGE;
+//	private static final Logger logger = LoggerFactory.getLogger(CMEFactoryService.class);
 //
-//	private ConfigManager configManager;
+//	private TranslatorService translatorService;
 //
+//	
 //	@Activate
 //	protected void activate() {
 //		logger.info("Activate CME");
-//		setup();
+//		TranslatorConfig config = translatorService.getConfig();
+//		TranslationConfig translatorConfig = config.getTranslatorConfig(TRANSLATOR_NAME);
+//		TranslatorFactory factory = createTranslatorFactory(null);
+//		translatorService.setTranslatorFactory(TRANSLATOR_NAME, factory);
 //	}
 //
 //	@Deactivate
@@ -54,33 +54,22 @@
 //	}
 //
 //	@Reference
-//	public void bind(ConfigManager configManager) {
-//		logger.info("Got config manager");
-//		this.configManager = configManager;
+//	public void bind(TranslatorService translatorService) {
+//		this.translatorService = translatorService;
+//		
 //	}
 //	
-//	public void unbind(ConfigManager configManager) {
-//		this.configManager = null;
+//	public void unbind(TranslatorService translatorService) {
+//		this.translatorService = null;
 //	}
 //	
-//	
-//	
-//	@Override
-//	public void handleEvent(final Event event) {
-//		logger.info("Configuration changed.  Setting up CME Translator.");
-//		setup();
-//	}
-//	
-//	private void setup() {
-//		Config config = configManager.getConfig();
-//		logger.info("Got config: " + config);
-//	}
 //	
 //	private CMETranslatorFactory createTranslatorFactory(File templateFile) {
 //		FESTMessageDecoder festMessageDecoder = new FESTMessageDecoder(getDecoderStategy(templateFile));
 //		CMETranslatorFactory cmeTranslatorFactory = new CMETranslatorFactory(new FakeCMEGUIDLookup(), festMessageDecoder );
 //		return cmeTranslatorFactory;
 //	}
+//	
 //	
 //	private DecoderStrategy getDecoderStategy(File templateFile) {
 //		try {
@@ -107,7 +96,4 @@
 //		return templateManager;
 //	}
 //	
-//
-//
-//
 //}

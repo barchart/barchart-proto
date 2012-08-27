@@ -1,9 +1,12 @@
 package com.barchart.translator.common;
 
+import org.osgi.service.component.annotations.Component;
+
 import com.barchart.translator.common.config.TranslationChannel;
 
-public abstract class TranslatorFactory {
+@Component(immediate = true)
+public interface TranslatorFactory {
 
-	public abstract Translator createTranslator(TranslationChannel translationChannel);
+	public Translator createTranslator(TranslationChannel translationChannel);
 	
 }

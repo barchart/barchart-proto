@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.barchart.base</groupId>
 		<artifactId>barchart-archon</artifactId>
-		<version>2.1.2</version>
+		<version>2.2.0</version>
 	</parent>
 
 
@@ -111,6 +111,32 @@
 		<dependencies>
 
 			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>common-translator</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>cme-translator</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>nyl-translator</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.barchart.translator</groupId>
+				<artifactId>cfn-translator</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			
+
+
+			<dependency>
 				<groupId>com.barchart.conf</groupId>
 				<artifactId>barchart-conf-event</artifactId>
 				<version>1.0.4</version>
@@ -138,12 +164,6 @@
 				<groupId>com.google.protobuf</groupId>
 				<artifactId>protobuf-java</artifactId>
 				<version>${googleProtobufVersion}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.barchart.translator</groupId>
-				<artifactId>common-translator</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
@@ -215,5 +235,16 @@
 
 		</dependencies>
 	</dependencyManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
