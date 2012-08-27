@@ -67,14 +67,18 @@
 							com.barchart.proto.buf.data*,
 							org.slf4j,
 							org.codehaus.jackson.annotate,
-							org.jboss.netty*,
-							org.codehaus.jackson*
+							org.codehaus.jackson*,
+							com.google.common*,
+							org.jboss.netty*;
 						</Import-Package>
 						<Embed-Dependency>
 						</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
+			
+
+			
 		</plugins>
 	</build>
 </project>

@@ -1,0 +1,8 @@
+"EventNumber","EventName","TimeZone","EventStart","EventFinish","Comment"
+1,"Monday","America/Chicago",04:30:00 PM,04:29:59 PM,"business open from midnight of today till midnight of tomorrow"
+2,"Tuesday","America/Chicago",04:30:00 PM,04:29:59 PM,"business open from midnight of today till midnight of tomorrow"
+3,"Wednesday","America/Chicago",04:30:00 PM,04:29:59 PM,"business open from midnight of today till midnight of tomorrow"
+4,"Thursday","America/Chicago",04:30:00 PM,04:29:59 PM,"business open from midnight of today till midnight of tomorrow"
+5,"Friday","America/Chicago",04:30:00 PM,04:29:59 PM,"business open form midnight of today till 9:00 PM of today and then business is closed"
+6,"Saturday","America/Chicago",04:30:00 PM,04:29:59 PM,"closed for business"
+7,"Sunday","America/Chicago",04:30:00 PM,04:29:59 PM,"business is closed and then business is open from 6:00 pm of today till midnight of today "

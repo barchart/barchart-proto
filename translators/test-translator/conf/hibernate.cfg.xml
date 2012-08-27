@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!--
+			drop and create the database schema on startup overridden in code
+			<property name="hbm2ddl.auto">create</property>
+		-->
+
+		<property name="hibernate.connection.url">jdbc:h2:tcp://localhost:16000/cme_data</property>
+		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.H2DialectNew</property>
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password"></property>
+
+		<!--
+			<property
+			name="hibernate.connection.url">jdbc:mysql://localhost/feed_cme_data</property>
+			<property
+			name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+			<property
+			name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+			<property name="hibernate.connection.username">feed-cme</property>
+			<property name="hibernate.connection.password">barchart</property>
+		-->
+
+		<property name="hibernate.show_sql">false</property>
+
+		<property name="hibernate.generate_statistics">true</property>
+
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="hibernate.cache.provider_configuration">./conf/ehcache.cfg.xml</property>
+		<property name="hibernate.cache.use_query_cache">false</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+
+
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+
+
+		<property name="hibernate.jdbc.batch_size">100</property>
+		<property name="hibernate.default_batch_fetch_size">100</property>
+
+
+		<!-- Mapping for entities -->
+
+		<!-- ALL -->
+		<mapping class="com.barchart.ddf.codec.persist.node.Property" />
+
+		<!-- FIX -->
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.SecurityGUID" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.Instrument" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.InstrumentFuture" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.InstrumentOption" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.InstrumentStrategy" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.StrategyLeg" />
+		<mapping class="com.barchart.ddf.codec.persist.node.fix.Attribute" />
+
+		<!-- DDF -->
+		<mapping class="com.barchart.ddf.codec.persist.node.ddf.InstrumentDDF" />
+
+		<!-- CME -->
+		<!--
+			<mapping
+			class="com.barchart.cme.codec.persist.node.InstrumentFutureCME" />
+			<mapping
+			class="com.barchart.cme.codec.persist.node.InstrumentOptionCME" />
+			<mapping
+			class="com.barchart.cme.codec.persist.node.InstrumentStrategyCME" />
+		-->
+
+
+	</session-factory>
+
+</hibernate-configuration>
