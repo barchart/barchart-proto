@@ -23,6 +23,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+                <!-- config manager -->
+                <dependency>
+                        <groupId>com.barchart.conf</groupId>
+                        <artifactId>barchart-conf-sync</artifactId>
+                        <version>1.0.5</version>
+                        <scope>provided</scope>
+                </dependency>
+
+
 		<dependency>
 			<groupId>com.carrotgarden.osgi</groupId>
 			<artifactId>carrot-osgi-anno-scr-core</artifactId>

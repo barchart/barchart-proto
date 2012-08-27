@@ -22,13 +22,13 @@ public class CFNActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		logger.info("Starting NYL Translator");
-		File networkFile = context.getDataFile("TestNetworkConfig.json");
-		File channelsFile = context.getDataFile("CMEChannels.json");
-		ExecutorService threadPool = Executors.newCachedThreadPool();
-		NetworkConfig networkConfig = NetworkConfig.load(networkFile);
-		TranslationChannels translationChannels = TranslationChannels.load(channelsFile);
-		runApp(threadPool, networkConfig, translationChannels);
+//		logger.info("Starting NYL Translator");
+//		File networkFile = context.getDataFile("TestNetworkConfig.json");
+//		File channelsFile = context.getDataFile("CMEChannels.json");
+//		ExecutorService threadPool = Executors.newCachedThreadPool();
+//		NetworkConfig networkConfig = NetworkConfig.load(networkFile);
+//		TranslationChannels translationChannels = TranslationChannels.load(channelsFile);
+//		runApp(threadPool, networkConfig, translationChannels);
 	}
 
 	public void runApp(ExecutorService threadPool, NetworkConfig networkConfig, TranslationChannels translationChannels) throws UnknownHostException,
@@ -44,11 +44,11 @@ public class CFNActivator implements BundleActivator {
 	}
 
 	public static void main(String[] args) throws IOException {
-		logger.info("Starting NYL Translator from main()");
-		ExecutorService threadPool = Executors.newCachedThreadPool();
-		NetworkConfig networkConfig = NetworkConfig.load(new File("src/main/resources/config/network/TestNetworkConfig.json"));
-		TranslationChannels translationChannels = TranslationChannels.load(new File("src/main/resources/config/channels/CMEChannels.json"));
-		CFNActivator activator = new CFNActivator();
-		activator.runApp(threadPool, networkConfig, translationChannels);
+//		logger.info("Starting NYL Translator from main()");
+//		ExecutorService threadPool = Executors.newCachedThreadPool();
+//		NetworkConfig networkConfig = NetworkConfig.load(new File("src/main/resources/config/network/TestNetworkConfig.json"));
+//		TranslationChannels translationChannels = TranslationChannels.load(new File("src/main/resources/config/channels/CMEChannels.json"));
+//		CFNActivator activator = new CFNActivator();
+//		activator.runApp(threadPool, networkConfig, translationChannels);
 	}
 }

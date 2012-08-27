@@ -20,7 +20,7 @@ public class TestComponent {
 	
 	@Activate
 	protected void activate() {
-		logger.info("Activate test........ java 7");
+		logger.info("www");
 		
 		
 		logger.info("Class loader: " + config.getClass().getClassLoader());
