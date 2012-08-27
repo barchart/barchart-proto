@@ -14,19 +14,24 @@
 
 	<dependencies>
 
-	    <dependency>
+		<dependency>
 			<groupId>com.barchart.proto</groupId>
 			<artifactId>barchart-proto-xform-ice</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
-	    	    
+
+		<dependency>
+			<groupId>com.barchart.proto</groupId>
+			<artifactId>barchart-proto-xform</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.barchart.translator</groupId>
 			<artifactId>common-translator</artifactId>
 		</dependency>
 
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>

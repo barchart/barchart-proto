@@ -1,18 +1,19 @@
 package com.barchart.translator.cme;
 
-import java.lang.reflect.Method;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.barchart.conf.sync.api.ConfigManager;
+import com.barchart.proto.buf.data.MarketPacket;
 
 @Component(immediate = true)
-public class TestComponent {
+public class TestComponent implements EventHandler {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private ConfigManager config;
@@ -20,23 +21,16 @@ public class TestComponent {
 	
 	@Activate
 	protected void activate() {
-		logger.info("www");
-		
-		
-		logger.info("Class loader: " + config.getClass().getClassLoader());
-		logger.info("config: " + config.getClass());
-		
-		
-		logger.info("Ident: " + config.getIdentity());
-		
-		for (Method m : config.getClass().getMethods()) {
-			logger.info("Method: " + m);
-		}
-		
-		logger.info("Received config.....d......");
-//		logger.info("Is config valid: " + config.isConfigValid());
+		logger.info("IIIIIIIIIIIIIIIIIIIIIIII");
+		logger.info("Received config");
 		logger.info("Config: " + config.getConfig());
-
+		MarketPacket.Builder builder = MarketPacket.newBuilder();
+		builder.setSequence(1234L);
+		MarketPacket build = builder.build();
+		logger.info("Packet: " + build);
+		
+		
+		
 	}
 
 	@Deactivate
@@ -51,8 +45,13 @@ public class TestComponent {
 		
 	}
 	
-	public void unbind(ConfigManager config) {////
+	public void unbind(ConfigManager config) {
 		
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		logger.info("event : {}", event.getTopic());		
 	}
 
 }

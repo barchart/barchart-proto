@@ -14,24 +14,32 @@
 
 	<dependencies>
 
-	    <dependency>
+		<dependency>
 			<groupId>com.barchart.proto</groupId>
 			<artifactId>barchart-proto-xform-cfn</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
-	    	    
+
 		<dependency>
 			<groupId>com.barchart.translator</groupId>
 			<artifactId>common-translator</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.barchart.proto</groupId>
+			<artifactId>barchart-proto-xform</artifactId>
+		</dependency>
+
+
+
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -45,12 +53,12 @@
 						<Bundle-Activator>com.barchart.translator.ice.ICEActivator</Bundle-Activator>
 						<Export-Package>
 						</Export-Package>
-						<Import-Package> 
-						    com.barchart.translator.common*,
-							org.osgi.framework;version="1.4", 
+						<Import-Package>
+							com.barchart.translator.common*,
+							org.osgi.framework;version="1.4",
 							org.osgi.service.log,
 							com.barchart.proto.*;
-							org.jboss.netty.*; 
+							org.jboss.netty.*;
 							org.slf4j
 						</Import-Package>
 						<Embed-Dependency>

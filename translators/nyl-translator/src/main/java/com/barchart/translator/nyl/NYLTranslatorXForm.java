@@ -21,8 +21,8 @@ public class NYLTranslatorXForm implements Translator {
 
 	public NYLTranslatorXForm(int channelID) {
 		this.channelID = channelID;
-		NYL.bind(new CodecNYL());
-		NYL.bind(new ConverterNYL());
+//		NYL.bind(new CodecNYL());
+//		NYL.bind(new ConverterNYL());
 	}
 
 	@Override
