@@ -36,7 +36,7 @@
 		<module>ice-translator</module>
 		<module>nyl-translator</module>
 		<module>cfn-translator</module>
-		<module>test-trasnaltor</module>
+		<module>test-translator</module>
 	</modules>
 
 	<dependencies>
