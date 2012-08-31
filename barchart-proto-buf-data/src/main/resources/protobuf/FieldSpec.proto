@@ -65,33 +65,38 @@ message MarketEntry {
 	// primary entry category
 	// keep most frequent first
 	enum Type {
-	//
+	
 		TRADE = 0; // a.k.a last sale; price & size (size mostly present)
-		//
+	
 		BID = 1; // book side
 		ASK = 2; // book side
-		//
+	
 		CHANGE = 3; // such as price change from previous day
-		//
+		
 		UNDERLYING = 4; // such as option/spread underlying price
-		//
+		
 		VOLUME = 5;
-		//
+		
 		OPEN = 6;
 		HIGH = 7;
 		LOW = 8;
 		CLOSE = 9; // a.k.a last sale, before close; price; (size mostly absent)
-		//
+		
 		SETTLE = 10;
-		//
+		
 		INTEREST = 11;
-		//
+		
 		CUVOL = 12; // cumulative volume
-		//
+		
 		STATUS = 13; // non price/size change; such as OPEN/CLOSE event
-		//
+		
 		SEQUENCE = 14; //such as snapshot & update sequence synchronization index
-		//
+		
+		SESSION_HIGH_BID = 15;
+		SESSION_LOW_ASK = 16;
+
+		FIXING_PRICE = 17;
+		
 		// keep under 128
 	}
 	//
