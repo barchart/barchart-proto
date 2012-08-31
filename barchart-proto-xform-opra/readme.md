@@ -1,4 +1,0 @@
-barchart-proto
-==============
-
-barchart protocols
