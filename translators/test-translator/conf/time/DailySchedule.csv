@@ -1,9 +1,0 @@
-EventNumber,EventName,TimeZone,EventStart,EventFinish,Comment
-1,Standing_Data_Sent,America/New_York,6:10:00 PM,6:25:00 PM,No info in spec; (sent on FTP? Or UDP? Or both?)
-2,Session_Start,America/New_York,6:25:00 PM,6:30:00 PM,"Product Availability (741) sent for each product available for trading. Outright Standing Data (721) and Strategy Standing Data (731) mes- sages sent for all tradable futures, options and strategies. Market Update (701) messages sent with best bid/offer and market depth Snapshot."
-3,Pre_Open,America/New_York,6:30:00 PM,7:16:00 PM,"Market Update (701) messages sent with changes to best bid/offer, incremental market depth updates and indicative opening prices as calculated at regular intervals."
-4,Open,America/New_York,7:16:00 PM,4:58:00 PM,"This is the main trading state. At the start of Open for each product, there may be backwardation or choice markets in some markets (bids higher that or equal to offers). When this occurs the trading host runs an uncrossing algorithm to calculate the price at which the maximum volume will be traded and automatically execute those trades at the price calculated.  The daily settlement prices may be sent during the open period or afteclose in Settlement Prices (711) message UpdateType = 2."
-5,Pre_Close,America/New_York,4:58:00 PM,5:00:00 PM,"Shortly before the close of trading in a product, the market enters a pre-close period."
-6,Close,America/New_York,5:00:00 PM,5:29:59 PM,"Once the Market Close period has commenced, all trading ceases and no further orders are accepted until the next Pre-Open. Close prices are usually published during this period in Settlement Prices (711) message UpdateType = 4."
-7,Session_Close,America/New_York,5:30:00 PM,6:10:00 PM,No further price updates are sent after the session close.
-8,Open_Interest_Available,America/New_York,1:30:00 PM,2:30:00 PM,The Open Interest file is made available to clients between 01:30 EST and 02:30 EST.
