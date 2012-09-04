@@ -46,4 +46,8 @@ message ProtoDiffMessage {
 	
 	optional Type enumValue = 17;
 	
+	
+	repeated sint32 repeatedIntValues = 19;
+	
+	repeated ProtoDiffMessage messages = 20;
 }

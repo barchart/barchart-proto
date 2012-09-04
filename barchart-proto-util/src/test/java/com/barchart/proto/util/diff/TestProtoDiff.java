@@ -1,10 +1,9 @@
 package com.barchart.proto.util.diff;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +11,7 @@ import org.junit.Test;
 import com.barchart.proto.util.diff.ProtoDiff.Difference;
 import com.barchart.proto.util.diff.ProtoDiffMessage.Builder;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 
 public class TestProtoDiff {
 
@@ -24,6 +24,12 @@ public class TestProtoDiff {
 	public void setup() {
 		this.expectedBuilder = createTestMessageBuilder();
 		this.actualBuilder = createTestMessageBuilder();
+		
+		expectedBuilder.addMessages(createTestMessageBuilder());
+		expectedBuilder.addMessages(createTestMessageBuilder());
+		
+		actualBuilder.addMessages(createTestMessageBuilder());
+		actualBuilder.addMessages(createTestMessageBuilder());
 	}
 	
 	
@@ -39,9 +45,14 @@ public class TestProtoDiff {
 		builder.setSint64Value(-99999999);
 		builder.setFixed32Value(12341234);
 		builder.setFixed64Value(1234123499999L);
-		builder.setBoolValue(true);
+		builder.setBoolValue(false);
 		builder.setStringValue("abcdefghijklmnopqrstuvwxyz");
 		builder.setBytesValue(ByteString.copyFromUtf8("1234567890")); 
+		builder.setEnumValue(Type.A);
+		
+		builder.addRepeatedIntValues(1);
+		builder.addRepeatedIntValues(2);
+		builder.addRepeatedIntValues(3);
 		return builder;
 	}
 
@@ -86,7 +97,6 @@ public class TestProtoDiff {
 		performSingleDiff(expectedBuilder.getUint32Value(), actualBuilder.getUint32Value());
 	}
 	
-	
 	@Test
 	public void uint64Diff() {
 		actualBuilder.setUint64Value(1234123412341224L);
@@ -94,12 +104,99 @@ public class TestProtoDiff {
 	}
 	
 	
+	@Test
+	public void sint32ValueDiff() {
+		actualBuilder.setSint32Value(234);
+		performSingleDiff(expectedBuilder.getSint32Value(), actualBuilder.getSint32Value());
+	}
+	
+	@Test
+	public void sint64ValueDiff() {
+		actualBuilder.setSint64Value(1234123412L);
+		performSingleDiff(expectedBuilder.getSint64Value(), actualBuilder.getSint64Value());
+	}
 	
 	
-	private void performSingleDiff(Object expectedValue, Object actualValue) {
+	@Test
+	public void fixed32ValueDiff() {
+		actualBuilder.setFixed32Value(98123);
+		performSingleDiff(expectedBuilder.getFixed32Value(), actualBuilder.getFixed32Value());
+	}
+	
+	@Test
+	public void fixed64ValueDiff() {
+		actualBuilder.setFixed64Value(12121212122121L);
+		performSingleDiff(expectedBuilder.getFixed64Value(), actualBuilder.getFixed64Value());
+	}
+	
+	@Test
+	public void sfixed32ValueDiff() {
+		actualBuilder.setFixed32Value(888888);
+		performSingleDiff(expectedBuilder.getFixed32Value(), actualBuilder.getFixed32Value());
+	}
+	
+	@Test
+	public void sfixed64ValueDiff() {
+		actualBuilder.setSfixed64Value(1234123412341L);
+		performSingleDiff(expectedBuilder.getSfixed64Value(), actualBuilder.getSfixed64Value());
+	}
+	
+	@Test
+	public void boolValueDiff() {
+		actualBuilder.setBoolValue(true);
+		performSingleDiff(expectedBuilder.getBoolValue(), actualBuilder.getBoolValue());
+	}
+	
+	@Test
+	public void stringValueDiff() {
+		actualBuilder.setStringValue("zxc");
+		performSingleDiff(expectedBuilder.getStringValue(), actualBuilder.getStringValue());
+	}
+	
+	@Test
+	public void bytesValueDiff() {
+		actualBuilder.setBytesValue(ByteString.copyFromUtf8("qqq"));
+		performSingleDiff(expectedBuilder.getBytesValue(), actualBuilder.getBytesValue());
+	}
+	
+	@Test
+	public void enumValueDiff() {
+		actualBuilder.setEnumValue(Type.C);
+		performSingleDiff(expectedBuilder.getEnumValue().toString(), actualBuilder.getEnumValue().toString());
+	}
+	
+	@Test
+	public void testRepeatedInts() {
+		actualBuilder.addRepeatedIntValues(4);
+		ProtoDiff diff = performDiff();
+		assertEquals(1, diff.getDifferenceCount());
+		Difference difference = diff.getDifferences().get(0);
+		assertEquals(null, difference.getExpected());
+		assertEquals(4, difference.getActual());
+	}
+	
+	
+	@Test
+	public void experiment() {
+		ProtoDiffMessage expected = expectedBuilder.addMessages(createTestMessageBuilder()).build();
+		ProtoDiffMessage actual = actualBuilder.addMessages(createTestMessageBuilder()).build();
+		Map<FieldDescriptor, Object> allFields = expected.getAllFields();
+		for (Map.Entry<FieldDescriptor, Object> entry : allFields.entrySet()) {
+			Object field = actual.getField(entry.getKey());
+			assertEquals(entry.getValue(), field);
+		}
+	}
+	
+	private ProtoDiff performDiff() {
 		ProtoDiffMessage expected = expectedBuilder.build();
 		ProtoDiffMessage actual = actualBuilder.build();
 		ProtoDiff diff = new ProtoDiff(expected, actual);
+		return diff;
+	}
+	
+	
+	private void performSingleDiff(Object expectedValue, Object actualValue) {
+		ProtoDiff diff = performDiff();
 		expectSingleDifference(expectedValue, actualValue, diff);
 	}
 

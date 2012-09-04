@@ -2,12 +2,20 @@ package com.barchart.proto.util.diff;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.EnumDescriptor;
+import com.google.protobuf.Descriptors.EnumValueDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Message;
 
@@ -16,8 +24,12 @@ public class ProtoDiff {
 	private static final Logger logger = LoggerFactory.getLogger(ProtoDiff.class);
 
 	private final Message expected;
+	
 	private final Message actual;
+	
 	private final List<Difference> differences;
+	
+	
 	private final Descriptor descriptor;
 
 	public ProtoDiff(Message expected, Message actual) {
@@ -25,12 +37,58 @@ public class ProtoDiff {
 		this.actual = actual;
 		this.descriptor = expected.getDescriptorForType();
 		this.differences = new ArrayList<Difference>();
-		
+
 		if (checkSameClass(expected, actual)) {
-			diff();	
-		} 
-		
+			diff();
+		}
+
 	}
+
+	
+	public void accept(ProtoDiffVisitor visitor) {
+		for (FieldDescriptor fieldDescriptor: getAllFields()) {
+			switch (fieldDescriptor.getJavaType()) {
+			case BOOLEAN:
+			case BYTE_STRING:
+			case DOUBLE:
+			case FLOAT:
+			case INT:
+			case LONG:
+			case STRING:
+			case ENUM:
+				visitor.visitMessageField(fieldDescriptor, null, null);
+				break;
+			case MESSAGE:
+				diffMessage(fieldDescriptor);
+				break;
+			}
+		}
+	}
+	
+	public List<FieldDescriptor> getAllFields() {
+		return descriptor.getFields();
+	}
+	
+	public boolean diffFieldpublic(FieldDescriptor fieldDescriptor) {
+		if (fieldDescriptor.isRepeated()) {
+			return diffRepeatedField(fieldDescriptor);
+		} else {
+			return diffNonRepeatedField(fieldDescriptor);
+		}
+	}
+	
+	
+	private boolean diffRepeatedField(FieldDescriptor fieldDescriptor) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	private boolean diffNonRepeatedField(FieldDescriptor fieldDescriptor) {
+		
+		return false;
+	}
+
 
 	public void diff() {
 
@@ -48,7 +106,6 @@ public class ProtoDiff {
 		case BOOLEAN:
 		case BYTE_STRING:
 		case DOUBLE:
-		case ENUM:
 		case FLOAT:
 		case INT:
 		case LONG:
@@ -58,6 +115,20 @@ public class ProtoDiff {
 		case MESSAGE:
 			diffMessage(fieldDescriptor);
 			break;
+		case ENUM:
+			// diffObject(fieldDescriptor);
+			diffEnum(fieldDescriptor);
+			break;
+		}
+	}
+
+	private void diffEnum(FieldDescriptor fieldDescriptor) {
+		EnumValueDescriptor enumValue1 = (EnumValueDescriptor) expected.getField(fieldDescriptor);
+		EnumValueDescriptor enumValue2 = (EnumValueDescriptor) actual.getField(fieldDescriptor);
+		String name1 = enumValue1.getName();
+		String name2 = enumValue2.getName();
+		if (!nullSafeEquals(name1, name2)) {
+			differences.add(new FieldDifference(fieldDescriptor, name1, name2));
 		}
 	}
 
@@ -70,17 +141,47 @@ public class ProtoDiff {
 			
 			
 			
+			
+			
 		} else {
 			throw new UnsupportedOperationException();
 		}
 	}
 
+	
+//    private boolean diffCollections(Iterator<Message> iter1, Iterator<Message> iter2) {
+//        while (iter1.hasNext() && iter2.hasNext()) {
+//            Message m1 = iter1.next();
+//            Message m2 = iter2.next();
+//        
+//        }
+//        return !(e1.hasNext() || e2.hasNext());
+//    }
+	
+	
 	private void diffObject(FieldDescriptor fieldDescriptor) {
-		Object value1 = expected.getField(fieldDescriptor);
-		Object value2 = actual.getField(fieldDescriptor);
-		if (!nullSafeEquals(value1, value2)) {
-			differences.add(new FieldDifference(fieldDescriptor, value1, value2));
+		if (fieldDescriptor.isRepeated()) {
+			diffRepeatedObject(fieldDescriptor);
+		} else {
+			Object value1 = expected.getField(fieldDescriptor);
+			Object value2 = actual.getField(fieldDescriptor);
+			if (!nullSafeEquals(value1, value2)) {
+				differences.add(new FieldDifference(fieldDescriptor, value1, value2));
+			}
 		}
+	}
+
+	private void diffRepeatedObject(FieldDescriptor fieldDescriptor) {
+		ImmutableSet<Object> expectedObjects = ImmutableSet.copyOf((Collection<Object>) expected.getField(fieldDescriptor));
+		ImmutableSet<Object> actualObjects = ImmutableSet.copyOf((Collection<Object>) actual.getField(fieldDescriptor));
+		Set<Object> missingInExpected = Sets.difference(actualObjects, expectedObjects);
+		Set<Object> missingInActual = Sets.difference(expectedObjects, actualObjects);
+
+		Difference difference = new ListLengthDifference(fieldDescriptor, missingInExpected, missingInActual);
+		differences.add(difference);
+		
+		
+		
 	}
 
 	private boolean checkSameClass(Message expected, Message actual) {
@@ -90,10 +191,8 @@ public class ProtoDiff {
 		} else {
 			return true;
 		}
-		
+
 	}
-
-
 
 	private boolean nullSafeEquals(Object o1, Object o2) {
 		if (o1 == null) {
@@ -106,19 +205,18 @@ public class ProtoDiff {
 	public List<Difference> getDifferences() {
 		return differences;
 	}
-	
-	
+
 	public static class Difference {
-	
+
 		private final Object expected;
-		
+
 		private final Object actual;
 
 		public Difference(Object expected, Object actual) {
 			this.expected = expected;
 			this.actual = actual;
 		}
-		
+
 		public String toString() {
 			return "Expected: " + expected + ", actual: " + actual;
 		}
@@ -130,25 +228,23 @@ public class ProtoDiff {
 		public Object getActual() {
 			return actual;
 		}
-		
-		
-		
-		
+
 	}
-	
+
 	public static class ClassDifference extends Difference {
 
 		public ClassDifference(Object expected, Object actual) {
 			super(expected, actual);
 		}
-		
+
 		public String toString() {
 			return "Class difference. - " + super.toString();
 		}
 	}
-	
+
 	public static class FieldDifference extends Difference {
-		private final FieldDescriptor fieldDescriptor;
+
+		protected final FieldDescriptor fieldDescriptor;
 
 		public FieldDifference(FieldDescriptor fieldDescriptor, Object expected, Object actual) {
 			super(expected, actual);
@@ -156,14 +252,22 @@ public class ProtoDiff {
 		}
 
 		public String toString() {
-			return fieldDescriptor.getFullName() + " - " + super.toString(); 
+			return fieldDescriptor.getFullName() + " - " + super.toString();
 		}
+	}
+
+	public static class ListLengthDifference extends FieldDifference {
+
+		public ListLengthDifference(FieldDescriptor fieldDescriptor, Object expected, Object actual) {
+			super(fieldDescriptor, expected, actual);
+		}
+
 	}
 
 	public boolean hasDifferences() {
 		return !differences.isEmpty();
 	}
-	
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		for (Difference difference : differences) {
@@ -176,5 +280,5 @@ public class ProtoDiff {
 	public int getDifferenceCount() {
 		return differences.size();
 	}
-	
+
 }

@@ -149,26 +149,27 @@ message MarketEntry {
 		//
 		// keep under 128
 	}
-	//
+	
 	optional Action action = 1; // entry action
 	optional Type type = 2; // primary category
 	repeated Descriptor descriptor = 3 [packed = true]; // list of secondary category
-	//
+	
 	optional sint64 marketId = 4; // override to head;
 	optional sint64 sequence = 5; // offset to head;
 	optional sint64 timeStamp = 6; // offset to head;
 	optional sint32 tradeDate = 7; // offset to head;
-	//
+	
 	optional sint64 priceMantissa = 8;
 	optional sint32 priceExponent = 9; // override to head;
-	//
+	
 	optional sint64 sizeMantissa = 10;
 	optional sint32 sizeExponent = 11; // override to head;
-	//
+	
 	// such as book level, cuvol position, snapshot & update sequence, etc
 	optional sint64 index = 12;
-	//
-	//
+	
+	
 	optional sint64 orderId = 13; // TODO review
-	//
+	
+	optional sint32 numberOfOrders = 14;
 }
