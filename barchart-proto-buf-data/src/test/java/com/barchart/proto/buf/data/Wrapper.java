@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf;
+package com.barchart.proto.buf.data;
 
 public class Wrapper<T> {
 

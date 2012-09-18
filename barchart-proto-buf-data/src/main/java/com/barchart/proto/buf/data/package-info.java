@@ -11,4 +11,6 @@ package com.barchart.proto.buf.data;
  *
  * public api for management of proto.buf messages
  * 
+ * see tests for examples
+ * 
  */

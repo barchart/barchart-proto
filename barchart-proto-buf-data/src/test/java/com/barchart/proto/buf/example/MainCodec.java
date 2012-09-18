@@ -5,7 +5,7 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package com.barchart.proto.buf.data.example;
+package com.barchart.proto.buf.example;
 
 import java.math.BigInteger;
 import java.util.Calendar;
