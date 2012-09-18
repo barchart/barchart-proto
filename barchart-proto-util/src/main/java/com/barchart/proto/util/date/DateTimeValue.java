@@ -1,4 +1,4 @@
-package com.barchart.proto.util;
+package com.barchart.proto.util.date;
 
 public class DateTimeValue extends DateOnlyValue {
 

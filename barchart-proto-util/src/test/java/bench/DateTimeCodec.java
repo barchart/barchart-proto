@@ -3,8 +3,8 @@ package bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.proto.util.DateTimeValue;
-import com.barchart.proto.util.ProtoUtil;
+import com.barchart.proto.util.date.DateTimeValue;
+import com.barchart.proto.util.date.ProtoDateUtil;
 
 public class DateTimeCodec {
 
@@ -22,9 +22,9 @@ public class DateTimeCodec {
 
 		for (int k = 0; k < COUNT; k++) {
 
-			final long binary = ProtoUtil.intoBinaryDateTime(value);
+			final long binary = ProtoDateUtil.intoBinaryDateTime(value);
 
-			ProtoUtil.fromBinaryDateTime(binary);
+			ProtoDateUtil.fromBinaryDateTime(binary);
 
 		}
 
@@ -45,9 +45,9 @@ public class DateTimeCodec {
 
 		for (int k = 0; k < COUNT; k++) {
 
-			final long decimal = ProtoUtil.intoDecimalDateTime(value);
+			final long decimal = ProtoDateUtil.intoDecimalDateTime(value);
 
-			ProtoUtil.fromDecimalDateTime(decimal);
+			ProtoDateUtil.fromDecimalDateTime(decimal);
 
 		}
 

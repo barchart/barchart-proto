@@ -3,8 +3,8 @@ package bench;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.barchart.proto.util.DateOnlyValue;
-import com.barchart.proto.util.ProtoUtil;
+import com.barchart.proto.util.date.DateOnlyValue;
+import com.barchart.proto.util.date.ProtoDateUtil;
 
 public class DateOnlyCodec {
 
@@ -21,9 +21,9 @@ public class DateOnlyCodec {
 
 		for (int k = 0; k < COUNT; k++) {
 
-			final int binary = ProtoUtil.intoBinaryDateOnly(value);
+			final int binary = ProtoDateUtil.intoBinaryDateOnly(value);
 
-			ProtoUtil.fromBinaryDateOnly(binary);
+			ProtoDateUtil.fromBinaryDateOnly(binary);
 
 		}
 
@@ -43,9 +43,9 @@ public class DateOnlyCodec {
 
 		for (int k = 0; k < COUNT; k++) {
 
-			final int decimal = ProtoUtil.intoDecimalDateOnly(value);
+			final int decimal = ProtoDateUtil.intoDecimalDateOnly(value);
 
-			ProtoUtil.fromDecimalDateOnly(decimal);
+			ProtoDateUtil.fromDecimalDateOnly(decimal);
 
 		}
 

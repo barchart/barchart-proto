@@ -1,6 +1,6 @@
-package com.barchart.proto.util;
+package com.barchart.proto.util.date;
 
-public final class ProtoUtil {
+public final class ProtoDateUtil {
 
 	public static int YEAR_BITS = 11;
 	public static int YEAR_MASK = 0x7FF;
@@ -270,7 +270,7 @@ public final class ProtoUtil {
 				* 1000L + millis;
 	}
 
-	private ProtoUtil() {
+	private ProtoDateUtil() {
 	}
 
 }
