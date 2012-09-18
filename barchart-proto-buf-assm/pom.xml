@@ -7,6 +7,7 @@
 		<groupId>com.barchart.proto</groupId>
 		<artifactId>barchart-proto-buf-archon</artifactId>
 		<version>1.0.1</version>
+		<relativePath />
 	</parent>
 
 	<artifactId>barchart-proto-buf-assm</artifactId>
@@ -31,7 +32,7 @@
 	<dependencies>
 
 		<!-- MAIN -->
-		
+
 		<dependency>
 			<groupId>com.barchart.proto</groupId>
 			<artifactId>barchart-proto-buf-data</artifactId>
