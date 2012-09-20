@@ -24,12 +24,11 @@ public class ProtoDiff {
 	private static final Logger logger = LoggerFactory.getLogger(ProtoDiff.class);
 
 	private final Message expected;
-	
+
 	private final Message actual;
-	
+
 	private final List<Difference> differences;
-	
-	
+
 	private final Descriptor descriptor;
 
 	public ProtoDiff(Message expected, Message actual) {
@@ -44,31 +43,30 @@ public class ProtoDiff {
 
 	}
 
-	
 	public void accept(ProtoDiffVisitor visitor) {
-		for (FieldDescriptor fieldDescriptor: getAllFields()) {
+		for (FieldDescriptor fieldDescriptor : getAllFields()) {
 			switch (fieldDescriptor.getJavaType()) {
-			case BOOLEAN:
-			case BYTE_STRING:
-			case DOUBLE:
-			case FLOAT:
-			case INT:
-			case LONG:
-			case STRING:
-			case ENUM:
-				visitor.visitMessageField(fieldDescriptor, null, null);
-				break;
-			case MESSAGE:
-				diffMessage(fieldDescriptor);
-				break;
+				case BOOLEAN:
+				case BYTE_STRING:
+				case DOUBLE:
+				case FLOAT:
+				case INT:
+				case LONG:
+				case STRING:
+				case ENUM:
+					visitor.visitMessageField(fieldDescriptor, null, null);
+					break;
+				case MESSAGE:
+					diffMessage(fieldDescriptor);
+					break;
 			}
 		}
 	}
-	
+
 	public List<FieldDescriptor> getAllFields() {
 		return descriptor.getFields();
 	}
-	
+
 	public boolean diffFieldpublic(FieldDescriptor fieldDescriptor) {
 		if (fieldDescriptor.isRepeated()) {
 			return diffRepeatedField(fieldDescriptor);
@@ -76,19 +74,16 @@ public class ProtoDiff {
 			return diffNonRepeatedField(fieldDescriptor);
 		}
 	}
-	
-	
+
 	private boolean diffRepeatedField(FieldDescriptor fieldDescriptor) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-
 	private boolean diffNonRepeatedField(FieldDescriptor fieldDescriptor) {
-		
+
 		return false;
 	}
-
 
 	public void diff() {
 
@@ -103,22 +98,22 @@ public class ProtoDiff {
 
 	private void diffField(FieldDescriptor fieldDescriptor) {
 		switch (fieldDescriptor.getJavaType()) {
-		case BOOLEAN:
-		case BYTE_STRING:
-		case DOUBLE:
-		case FLOAT:
-		case INT:
-		case LONG:
-		case STRING:
-			diffObject(fieldDescriptor);
-			break;
-		case MESSAGE:
-			diffMessage(fieldDescriptor);
-			break;
-		case ENUM:
-			// diffObject(fieldDescriptor);
-			diffEnum(fieldDescriptor);
-			break;
+			case BOOLEAN:
+			case BYTE_STRING:
+			case DOUBLE:
+			case FLOAT:
+			case INT:
+			case LONG:
+			case STRING:
+				diffObject(fieldDescriptor);
+				break;
+			case MESSAGE:
+				diffMessage(fieldDescriptor);
+				break;
+			case ENUM:
+				// diffObject(fieldDescriptor);
+				diffEnum(fieldDescriptor);
+				break;
 		}
 	}
 
@@ -137,28 +132,22 @@ public class ProtoDiff {
 		if (fieldDescriptor.isRepeated()) {
 			Collection<Message> expectedMessages = (Collection<Message>) expected.getField(fieldDescriptor);
 			Collection<Message> actualMessages = (Collection<Message>) actual.getField(fieldDescriptor);
-			
-			
-			
-			
-			
-			
+
 		} else {
 			throw new UnsupportedOperationException();
 		}
 	}
 
-	
-//    private boolean diffCollections(Iterator<Message> iter1, Iterator<Message> iter2) {
-//        while (iter1.hasNext() && iter2.hasNext()) {
-//            Message m1 = iter1.next();
-//            Message m2 = iter2.next();
-//        
-//        }
-//        return !(e1.hasNext() || e2.hasNext());
-//    }
-	
-	
+	// private boolean diffCollections(Iterator<Message> iter1,
+	// Iterator<Message> iter2) {
+	// while (iter1.hasNext() && iter2.hasNext()) {
+	// Message m1 = iter1.next();
+	// Message m2 = iter2.next();
+	//
+	// }
+	// return !(e1.hasNext() || e2.hasNext());
+	// }
+
 	private void diffObject(FieldDescriptor fieldDescriptor) {
 		if (fieldDescriptor.isRepeated()) {
 			diffRepeatedObject(fieldDescriptor);
@@ -176,12 +165,11 @@ public class ProtoDiff {
 		ImmutableSet<Object> actualObjects = ImmutableSet.copyOf((Collection<Object>) actual.getField(fieldDescriptor));
 		Set<Object> missingInExpected = Sets.difference(actualObjects, expectedObjects);
 		Set<Object> missingInActual = Sets.difference(expectedObjects, actualObjects);
+		if (missingInExpected.size() != missingInActual.size()) {
+			Difference difference = new ListLengthDifference(fieldDescriptor, missingInExpected, missingInActual);
+			differences.add(difference);
+		}
 
-		Difference difference = new ListLengthDifference(fieldDescriptor, missingInExpected, missingInActual);
-		differences.add(difference);
-		
-		
-		
 	}
 
 	private boolean checkSameClass(Message expected, Message actual) {
