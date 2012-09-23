@@ -7,7 +7,7 @@
  */
 package bench.fix_openfast;
 
-import static org.testng.AssertJUnit.*;
+import static org.junit.Assert.*;
 
 import java.io.File;
 

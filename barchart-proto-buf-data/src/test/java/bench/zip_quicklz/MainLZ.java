@@ -7,7 +7,7 @@
  */
 package bench.zip_quicklz;
 
-import static org.testng.internal.junit.ArrayAsserts.*;
+import static org.junit.Assert.*;
 
 import java.nio.charset.Charset;
 
