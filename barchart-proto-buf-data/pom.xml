@@ -7,7 +7,7 @@
 		<groupId>com.barchart.proto</groupId>
 		<artifactId>barchart-proto-buf-archon</artifactId>
 		<version>1.0.2</version>
-		<relativePath/>
+		<relativePath />
 	</parent>
 
 	<artifactId>barchart-proto-buf-data</artifactId>
@@ -24,9 +24,6 @@
 	</scm>
 
 	<properties>
-
-		<barchartNettyVersion>3.5.1.Final</barchartNettyVersion>
-		<!-- <barchartNettyVersion>4.0.0.Alpha1-SNAPSHOT</barchartNettyVersion> -->
 
 	</properties>
 
@@ -67,15 +64,9 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>${barchartNettyVersion}</version>
+			<version>3.5.7.Final</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>io.netty</groupId> -->
-		<!-- <artifactId>netty-codec</artifactId> -->
-		<!-- <version>${barchartNettyVersion}</version> -->
-		<!-- <scope>test</scope> -->
-		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>org.openfast</groupId>
@@ -87,7 +78,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.3</version>
+			<version>2.4</version>
 			<scope>test</scope>
 		</dependency>
 

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.barchart.base</groupId>
 		<artifactId>barchart-archon</artifactId>
-		<version>2.2.1</version>
+		<version>2.2.2</version>
 		<relativePath />
 	</parent>
 
@@ -23,19 +23,19 @@
 
 	<properties>
 
-		<barchartProtobufVersion>2.4.1</barchartProtobufVersion>
-
 	</properties>
 
 	<dependencies>
 
-		<!-- protocol buffers -->
+		<!-- protocol buffers - original -->
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>${barchartProtobufVersion}</version>
+			<version>2.4.1</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- protocol buffers - as osgi bundle -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.apache.servicemix.bundles</groupId> -->
 		<!-- <artifactId>org.apache.servicemix.bundles.protobuf-java</artifactId> -->

@@ -37,7 +37,7 @@
 
 		<barchartJavaVersion>1.6</barchartJavaVersion>
 
-		<barchartProtobufVersion>2.4.1</barchartProtobufVersion>
+		<projectProtobufVersion>2.4.1</projectProtobufVersion>
 
 	</properties>
 
