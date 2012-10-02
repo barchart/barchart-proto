@@ -93,54 +93,58 @@ message MarketEntry {
 
 		// keep under 128
 	}
-	//
+
 	// secondary entry category a.k.a entry annotation;
 	// keep in "name-space-like" format
 	enum Descriptor {
-	//
+
 		BOOK_IMPLIED = 0; // ICE, CME
 		BOOK_RFQ = 1; // ICE
-		//
+
 		SETTLE_UNOFFICIAL = 2; // ICE
 		SETTLE_PRELIMINARY = 3; // CME
 		SETTLE_THEORETICAL = 4; // CME
-		//
+
 		PERIOD_DAY = 10;
 		PERIOD_WEEK = 11;
 		PERIOD_MONTH = 12;
 		PERIOD_YEAR = 13;
-		//
+
 		// such as FORM-T
 		SESSION_OVERNIGHT = 50; //
-		//
+
+		ORDER_COUNT = 60;
+		IMPLIED_QUANTITY = 61;
+		IMPLIED_ORDER_COUNT = 62;
+
 		STATUS_MARKET_OPEN = 100; // OPRA, ICE
 		STATUS_MARKET_CLOSE = 101; // OPRA, ICE
 		STATUS_MARKET_PRE_OPEN = 102; // OPRA, ICE
 		STATUS_MARKET_PRE_CLOSE = 103; // OPRA, ICE
-		//
+
 		STATUS_TRADING_PAUSE = 104;
 		STATUS_TRADING_RESUME = 105;
-		//
+
 		// keep under 128
-		//
+
 		SIDE_FIRM = 110; // OPRA
 		SIDE_CUSTOMER = 111; // OPRA
-		//
+		
 		INDEX_ON_TRADE = 112; // OPRA
 		INDEX_ON_BOOK = 113; // OPRA
-		//
+		
 		VOLUME_BLOCK = 120; // ICE
 		VOLUME_EFS = 121; // ICE
 		VOLUME_EFP = 122; // ICE
-		//
+		
 		PRICE_VWAP = 123; // ICE
 		PRICE_SYSTEM = 124; // ICE IsSystemPricedLeg
-		//
+		
 		TRADE_BLOCK = 125; // ICE
-		//
+		
 		TRADE_CANCELED = 126; // ICE
 		TRADE_INVESTIGATED = 127; // ICE
-		//
+		
 		// keep under 128
 	}
 
