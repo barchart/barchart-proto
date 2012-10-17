@@ -33,7 +33,7 @@ enum PacketType {
 	NEWS = 2;
 }
 
-// market data packet
+// news packet
 message NewsPacket {
 //
 	optional sint32 channel = 1; // packet channel number
