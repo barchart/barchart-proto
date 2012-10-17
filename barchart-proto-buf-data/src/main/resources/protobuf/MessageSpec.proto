@@ -44,9 +44,4 @@ message MarketMessage {
 	//
 	optional sint32 priceExponent = 7; // base for entries
 	optional sint32 sizeExponent = 8; // base for entries
-
-	// TODO
-	// this should be encoded as an MarketEntry with Type=SEQUENCE, index=lastSequenceProcessed, etc
-	//	optional sint64 lastSequenceProcessed = 9;
-	//
 }

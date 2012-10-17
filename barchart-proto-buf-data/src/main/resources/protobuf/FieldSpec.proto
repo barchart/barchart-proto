@@ -188,6 +188,6 @@ message MarketEntry {
 	// TODO is this really needed?
 	// can this be always expressed as size above? //
 	// if yes, should be "optional sint32 orderCount"
-	//	optional sint32 numberOfOrders = 14;
+	optional sint32 orderCount = 14;
 	//
 }
