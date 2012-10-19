@@ -38,7 +38,7 @@ message ClientRequest {
 
 	optional sint32 requestId = 1;
 	optional string command = 2;
-	repeated string param = 3;
+	repeated KeyValueMessage param = 6;
 
 }
 
