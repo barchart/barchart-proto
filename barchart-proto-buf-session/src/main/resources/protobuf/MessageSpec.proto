@@ -22,9 +22,10 @@ message SessionPacketMessage {
 		SESSIONDESTROY = 4;
 		SESSIONRESPONSE = 5;
 		SESSIONHEARTBEAT = 6;
-		STARTTLS = 7;
-		STOPTLS = 8;
-		CAPABILITIES = 9;
+		SESSIONHEARTBEATRESPONSE = 7;
+		STARTTLS = 8;
+		STOPTLS = 9;
+		CAPABILITIES = 10;
 	}
 
 	optional string version = 1;
@@ -96,16 +97,29 @@ message SessionResponseMessage {
 	optional Status status = 1;
 	optional string userId = 2;
 	optional string group = 3;
-	optional SessionMessage message = 4;
+	optional SessionMessage session = 4;
 
 }
 
 message SessionHeartbeatMessage {
 
-	optional string sessionId = 1;
+	repeated string sessionId = 1;
 	optional sint64 localTimestamp = 2;
-	optional sint64 peerTimestamp = 3;
-	optional SessionResponseMessage.Status status = 4;
+
+}
+
+message SessionHeartbeatResponseMessage {
+
+	optional sint64 localTimestamp = 1;
+	optional sint64 peerTimestamp = 2;
+	repeated SessionStatusMessage status = 3;
+
+}
+
+message SessionStatusMessage {
+
+	optional string sessionId = 1;
+	optional SessionResponseMessage.Status status = 2;
 
 }
 
