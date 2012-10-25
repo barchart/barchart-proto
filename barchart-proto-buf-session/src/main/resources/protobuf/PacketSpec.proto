@@ -17,7 +17,7 @@
 package barchart; // non-java (C, C++, etc) package name space
 
 //
-option java_package = "com.barchart.proto.buf.assm";
+option java_package = "com.barchart.proto.buf.session";
 option java_outer_classname = "PacketSpec";
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
@@ -25,37 +25,28 @@ option java_generate_equals_and_hash = true;
 option optimize_for = SPEED;
 
 //
-enum PacketType {
+import "MessageSpec.proto";
+
 //
-	MarketData = 1;
-	MarketNews = 2;
-	Instrument = 3;
-	Session = 4;
-	//
-	DataSubscribeRequest = 100;
-	DataSubscribeResponse = 101;
-	//
-	NewsSubscribeRequest = 102;
-	NewsSubscribeResponse = 103;
-	//
-	InstrumentRequest = 104;
-	InstrumentResponse = 105;
-	//
-	LoginRequest = 106;
-	LoginResponse = 107;
-	//
-	HeartBeat = 127;
-	//
+enum PacketType {
+	UNKNOWN = 0;
+	SESSION = 4;
 }
 
-// generic packet (ignorant of body content)
-message Packet {
+// session packet
+message SessionPacket {
 //
 	optional sint32 channel = 1; // packet channel number
 	optional sint64 sequence = 2; // packet sequence number inside the channel
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
-	optional PacketType type = 4; // packet body type selector
+	optional PacketType type = 4; // packet type selector
 	//
-	optional bytes body = 5; // opaque byte array
+	optional SessionPacketMessage body = 5; // message
+	//
+}
+
+message SessionMessageCodec {
+//
+	repeated SessionPacketMessage body = 5; // message
 	//
 }

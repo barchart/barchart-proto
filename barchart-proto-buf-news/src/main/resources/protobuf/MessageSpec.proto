@@ -26,7 +26,8 @@ message NewsMessage {
 	}
 
 	optional Type type = 1;
-	optional bytes body = 2;
+	optional sint32 requestId = 2;
+	optional bytes body = 3;
 
 }
 
@@ -235,7 +236,6 @@ message UserMessage {
 	optional sint64 refreshed = 3;
 	repeated string product = 4;
 	repeated string permission = 5;
-	repeated KeyValueMessage context = 6;
 
 }
 

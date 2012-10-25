@@ -1,0 +1,143 @@
+/**
+ * Copyright (C) 2011-2012 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+package barchart;
+
+option java_package = "com.barchart.proto.buf.session";
+option java_outer_classname = "MessageSpec";
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+message SessionPacketMessage {
+
+	enum Type {
+		AUTHREQUEST = 1;
+		AUTHRESPONSE = 2;
+		SESSIONCREATE = 3;
+		SESSIONDESTROY = 4;
+		SESSIONRESPONSE = 5;
+		SESSIONHEARTBEAT = 6;
+		STARTTLS = 7;
+		STOPTLS = 8;
+		CAPABILITIES = 9;
+	}
+
+	optional string version = 1;
+	optional Type type = 2;
+	optional bytes body = 3;
+
+}
+
+/*
+ * Client/server commands
+ */
+
+message AuthRequestMessage {
+
+	optional string username = 1;
+	optional string password = 2;
+	optional string group = 3;
+
+}
+
+message AuthResponseMessage {
+
+	enum Status {
+		SUCCESS = 0;
+		FAILURE = 1;
+	}
+
+	optional Status status = 1;
+	optional UserMessage user = 2;
+
+}
+
+message UserMessage {
+
+	optional string id = 1;
+	optional string username = 2;
+	optional string password = 3;
+	optional string group = 4;
+	repeated string permission = 5;
+	repeated ProductMessage product = 6;
+
+}
+
+message ProductMessage {
+
+	optional string id = 1;
+	optional sint32 maxSymbols = 2;
+
+}
+
+message SessionCreateMessage {
+
+	optional string userId = 1;
+	optional string group = 2;
+	optional bool claim = 3;
+
+}
+
+message SessionResponseMessage {
+
+	enum Status {
+		ACTIVE = 1;
+		DUPLICATE = 2;
+		EXPIRED = 3;
+		LOCKOUT = 4;
+		INVALID = 5;
+	}
+
+	optional Status status = 1;
+	optional string userId = 2;
+	optional string group = 3;
+	optional SessionMessage message = 4;
+
+}
+
+message SessionHeartbeatMessage {
+
+	optional string sessionId = 1;
+	optional sint64 localTimestamp = 2;
+	optional sint64 peerTimestamp = 3;
+	optional SessionResponseMessage.Status status = 4;
+
+}
+
+message SessionDestroyMessage {
+
+	optional string sessionId = 1;
+
+}
+
+message SessionMessage {
+
+	optional string id = 1;
+	optional string userId = 2;
+	optional string group = 3;
+	optional sint64 created = 4;
+	optional sint64 renewed = 5;
+
+}
+
+message StartTLSMessage {
+}
+
+message StopTLSMessage {
+}
+
+message CapabilitiesMessage {
+
+	enum Capabilities {
+		PLAINTEXT = 0;
+		TLS = 1;
+	}
+
+	repeated Capabilities capability = 1;
+
+}
