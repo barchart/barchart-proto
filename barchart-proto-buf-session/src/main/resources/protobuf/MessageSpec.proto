@@ -16,16 +16,17 @@ option optimize_for = SPEED;
 message SessionPacketMessage {
 
 	enum Type {
-		AUTHREQUEST = 1;
-		AUTHRESPONSE = 2;
-		SESSIONCREATE = 3;
-		SESSIONDESTROY = 4;
-		SESSIONRESPONSE = 5;
-		SESSIONHEARTBEAT = 6;
-		SESSIONHEARTBEATRESPONSE = 7;
-		STARTTLS = 8;
-		STOPTLS = 9;
+		AUTH_REQUEST = 1;
+		AUTH_RESPONSE = 2;
+		SESSION_CREATE = 3;
+		SESSION_DESTROY = 4;
+		SESSION_RESPONSE = 5;
+		SESSION_HEARTBEAT = 6;
+		SESSION_HEARTBEAT_RESPONSE = 7;
+		START_TLS = 8;
+		STOP_TLS = 9;
 		CAPABILITIES = 10;
+		TIMESTAMP = 11;
 	}
 
 	optional string version = 1;
@@ -110,9 +111,14 @@ message SessionHeartbeatMessage {
 
 message SessionHeartbeatResponseMessage {
 
+	repeated SessionStatusMessage status = 3;
+
+}
+
+message SessionTimestampMessage {
+
 	optional sint64 localTimestamp = 1;
 	optional sint64 peerTimestamp = 2;
-	repeated SessionStatusMessage status = 3;
 
 }
 
