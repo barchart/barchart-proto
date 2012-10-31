@@ -22,7 +22,6 @@ message NewsMessage {
 		FEED = 4;
 		PERMISSIONS = 5;
 		AUTH = 6;
-		HEARTBEAT = 7;
 	}
 
 	optional Type type = 1;
@@ -98,12 +97,6 @@ message AuthResponse {
 
 	optional Status status = 1;
 	optional UserMessage user = 2;
-
-}
-
-message Heartbeat {
-
-	optional sint64 timestamp = 1;
 
 }
 
