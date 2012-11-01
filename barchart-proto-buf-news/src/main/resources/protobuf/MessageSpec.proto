@@ -22,11 +22,11 @@ message NewsMessage {
 		FEED = 4;
 		PERMISSIONS = 5;
 		AUTH = 6;
-		HEARTBEAT = 7;
 	}
 
 	optional Type type = 1;
-	optional bytes body = 2;
+	optional sint32 requestId = 2;
+	optional bytes body = 3;
 
 }
 
@@ -38,7 +38,7 @@ message ClientRequest {
 
 	optional sint32 requestId = 1;
 	optional string command = 2;
-	repeated string param = 3;
+	repeated KeyValueMessage param = 6;
 
 }
 
@@ -97,12 +97,6 @@ message AuthResponse {
 
 	optional Status status = 1;
 	optional UserMessage user = 2;
-
-}
-
-message Heartbeat {
-
-	optional sint64 timestamp = 1;
 
 }
 
@@ -235,7 +229,6 @@ message UserMessage {
 	optional sint64 refreshed = 3;
 	repeated string product = 4;
 	repeated string permission = 5;
-	repeated KeyValueMessage context = 6;
 
 }
 
