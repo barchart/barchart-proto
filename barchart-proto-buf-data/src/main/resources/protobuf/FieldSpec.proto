@@ -109,6 +109,12 @@ message MarketEntry {
 		PERIOD_WEEK = 11;
 		PERIOD_MONTH = 12;
 		PERIOD_YEAR = 13;
+		
+		LAST_BEST = 14;
+
+		SESSION_HIGH = 20;
+		SESSION_LOW = 21;
+		
 
 		// such as FORM-T
 		SESSION_OVERNIGHT = 50; //
@@ -137,8 +143,6 @@ message MarketEntry {
 		STATUS_TRADING_RESUME = 105;
 		
 		STATUS_MARKET_EXPIRED = 106;
-
-
 
 		// keep under 128
 
