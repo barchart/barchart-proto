@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -11,7 +10,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-data</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -21,7 +20,8 @@
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	</scm>
+	  <tag>barchart-proto-buf-data-1.0.1</tag>
+  </scm>
 
 	<properties>
 
