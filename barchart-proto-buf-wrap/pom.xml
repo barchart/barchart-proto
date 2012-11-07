@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-wrap</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -20,7 +20,7 @@
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>barchart-proto-buf-wrap-1.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<properties>
