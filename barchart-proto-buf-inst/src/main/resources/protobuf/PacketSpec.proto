@@ -37,7 +37,7 @@ message InstrumentPacket {
 //
 	optional sint32 channel = 1; // packet channel number
 	optional sint64 sequence = 2; // packet sequence number inside the channel
-	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
+	optional sint64 timeStamp = 3; // packet time stamp, millisFIX
 	optional PacketType type = 4; // packet type selector
 	//
 	optional Instrument message = 5; // instrument definition message
