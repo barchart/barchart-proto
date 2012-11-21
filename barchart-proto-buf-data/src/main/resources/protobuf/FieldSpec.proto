@@ -115,6 +115,10 @@ message MarketEntry {
 		SESSION_HIGH = 20;
 		SESSION_LOW = 21;
 		
+		ADJUSTED_TRADE = 30;
+		
+		
+		
 
 		// such as FORM-T
 		SESSION_OVERNIGHT = 50; //
@@ -156,8 +160,10 @@ message MarketEntry {
 		VOLUME_EFS = 121; // ICE
 		VOLUME_EFP = 122; // ICE
 		
+		
+		
 		PRICE_VWAP = 123; // ICE
-		PRICE_SYSTEM = 124; // ICE IsSystemPricedLeg
+		PRICE_SYSTEM = 124; // ICE IsSystemPricedLeg. Update: Don't use this.  All SystemPriceLegs are either SYSTEM_PRICED_CRACK_SPREAD_LEG or SYSTEM_PRICED_LEG
 		
 		TRADE_BLOCK = 125; // ICE
 		
@@ -165,6 +171,21 @@ message MarketEntry {
 		TRADE_INVESTIGATED = 127; // ICE
 		
 		// keep under 128
+		
+		// TODO: Optimize the codes
+		BLOCK_TRADE = 200;
+		EFP_TRADE = 201;
+		EFS_TRADE = 202;
+		BILATERAL_OFF_EXCHANGE_TRADE = 203;
+		NG_EFP_EFS_TRADE = 204;
+		CCX_EFP_TRADE = 205;
+		EFR_TRADE = 206;
+		
+		SYSTEM_PRICED_CRACK_SPREAD_LEG = 207;
+		SYSTEM_PRICED_LEG = 208;
+		
+		IMPLIED_SPREAD_AT_MARKET_OPEN = 209;
+		
 	}
 
 	//
