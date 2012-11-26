@@ -91,6 +91,7 @@ message MarketEntry {
 		// is this semantically the same as SETTLE? then should be type=SETTLE plus annotation
 		//	FIXING_PRICE = 17;
 
+		UNKNOWN = 127;
 		// keep under 128
 	}
 
