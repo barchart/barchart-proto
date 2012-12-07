@@ -204,7 +204,7 @@ message EnclosureMessage {
 		MAIN = 3;
 	}
 
-	optional sint64 id = 1;
+	optional string id = 1;
 	optional string sourceId = 2;
 	optional string name = 3;
 	optional string url = 4;
