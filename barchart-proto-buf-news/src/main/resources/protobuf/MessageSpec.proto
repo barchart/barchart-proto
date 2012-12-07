@@ -155,7 +155,7 @@ message StoryMessage {
 	}
 
 	// Critical fields for routing/matching
-	optional sint64 id = 1;
+	optional string id = 1;
 	optional sint64 sequence = 2;
 	optional string feed = 3;
 	optional Status status = 4;
