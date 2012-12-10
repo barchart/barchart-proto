@@ -51,6 +51,7 @@ enum SpreadType {
 	DefaultSpread = 0;
 	CondorSpread = 1;
 	ButterflySpread = 2;
+	CrackSpread = 3;
 }
 
 //
