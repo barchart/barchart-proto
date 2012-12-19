@@ -157,14 +157,15 @@ message StoryMessage {
 
 	// Critical fields for routing/matching
 	optional string id = 1;
-	optional sint64 sequence = 2;
-	optional string feed = 3;
-	optional Status status = 4;
-	optional string sourceId = 5;
-	optional string sourceVersion = 6;
-	optional sint64 added = 7;
-	optional sint64 published = 8;
-	optional sint64 updated = 9;
+	optional sint64 version = 2;
+	optional sint64 sequence = 3;
+	optional string feed = 4;
+	optional Status status = 5;
+	optional string sourceId = 6;
+	optional string sourceVersion = 7;
+	optional sint64 added = 8;
+	optional sint64 published = 9;
+	optional sint64 updated = 10;
 
 	// Content-oriented fields
 	optional Media media = 20;
@@ -188,10 +189,10 @@ message StoryMessage {
 	optional bool partial = 38;
 
 	// Media enclosures
-	repeated EnclosureMessage enclosure = 101;
+	repeated EnclosureMessage enclosure = 100;
 
 	// Categorization
-	repeated string package = 100;
+	repeated string package = 101;
 	repeated string flag = 102;
 	repeated string subject = 103;
 	repeated string symbol = 104;
