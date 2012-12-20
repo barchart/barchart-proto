@@ -48,7 +48,7 @@ enum MarketEventType {
 
 
 message BookEvent {
-	optional BookEventType action = 1;
+	optional BookAction action = 1;
 	
 	optional Side side = 2;
 	
@@ -73,7 +73,7 @@ message MarketEvent {
 	optional sint64 quantityMantissa = 4;
 	optional sint32 quantityExponent = 5;
 
-	optional MarketState marketState = 6;	
+//	optional MarketState marketState = 6;	
 }
 
 
@@ -85,13 +85,13 @@ message MarketUpdate {
 	
 	repeated BookEvent bookEvents = 3;
 	
-	repeated MarketEntry marketEvents = 4;
+//	repeated MarketEntry marketEvents = 4;
 
 }
 
 message MarketSnapshot {
 
-	optional sint64 marketId = 1
+	optional sint64 marketId = 1;
 	
 	optional sint64 lastMarketSequence = 2;
 	
