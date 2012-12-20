@@ -1,0 +1,41 @@
+<!-- Copyright (C) 2011-2012 Barchart, Inc. <http://www.barchart.com/> All 
+	rights reserved. Licensed under the OSI BSD License. http://www.opensource.org/licenses/bsd-license.php -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.barchart.base</groupId>
+		<artifactId>barchart-archon</artifactId>
+		<version>2.3.6</version>
+		<relativePath />
+	</parent>
+
+	<groupId>com.barchart.proto</groupId>
+	<artifactId>barchart-proto</artifactId>
+	<version>0.0.0</version>
+	<packaging>pom</packaging>
+
+	<description>eclipse import helper</description>
+
+	<modules>
+
+		<module>barchart-proto-buf-archon</module>
+		<module>barchart-proto-buf-assm</module>
+		<module>barchart-proto-buf-data</module>
+		<module>barchart-proto-buf-inst</module>
+		<module>barchart-proto-buf-news</module>
+		<!-- <module>barchart-proto-buf-order</module> -->
+		<module>barchart-proto-buf-session</module>
+		<module>barchart-proto-buf-test</module>
+		<module>barchart-proto-buf-wrap</module>
+		<!-- <module>barchart-proto-openfast</module> -->
+		<module>barchart-proto-util</module>
+
+		<!-- experimental -->
+		<module>barchart-proto-openfeed</module>
+
+	</modules>
+
+</project>

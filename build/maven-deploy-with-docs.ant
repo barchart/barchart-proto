@@ -23,15 +23,16 @@
 		<exec executable="${executable}">
 
 			<arg value="clean" />
-			<arg value="process-resources" />
-			<arg value="compile" />
-			<arg value="test-compile" />
+			<arg value="package" />
+			<arg value="javadoc:jar" />
+			<arg value="source:jar" />
+			<arg value="deploy" />
 
-			<arg value="--activate-profiles" />
-			<arg value="license" />
+			<arg value="--define" />
+			<arg value="skipTests" />
 
 		</exec>
-			
+
 	</target>
 
 </project>

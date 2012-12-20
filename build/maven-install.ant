@@ -23,15 +23,13 @@
 		<exec executable="${executable}">
 
 			<arg value="clean" />
-			<arg value="process-resources" />
-			<arg value="compile" />
-			<arg value="test-compile" />
+			<arg value="install" />
 
-			<arg value="--activate-profiles" />
-			<arg value="license" />
+			<arg value="--define" />
+			<arg value="skipTests" />
 
 		</exec>
-			
+
 	</target>
 
 </project>
