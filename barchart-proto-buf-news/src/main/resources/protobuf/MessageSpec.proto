@@ -153,6 +153,9 @@ message StoryMessage {
 		PHOTO = 2;
 		VIDEO = 3;
 		AUDIO = 4;
+		PDF = 5;
+		CSV = 6;
+		OTHER = 7;
 	}
 
 	// Critical fields for routing/matching
