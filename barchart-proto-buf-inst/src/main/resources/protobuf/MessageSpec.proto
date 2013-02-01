@@ -64,34 +64,28 @@ message InstrumentDefinition {
 
 	optional string currency = 9;
 
-	optional sint64 minPriceIncrementMantissa = 10;
+	optional string exchange = 10;
 
-	optional sint32 minPriceIncrementExponent = 11;
+	optional sint64 minPriceIncrementMantissa = 11;
 
-	optional sint64 pointValueMantissa = 12;
+	optional sint32 minPriceIncrementExponent = 12;
 
-	optional sint32 pointValueExponent = 13;
+	optional sint64 pointValueMantissa = 13;
 
+	optional sint32 pointValueExponent = 14;
 
-	optional FractionType fractionType = 14;
+	optional sint32 displayExponent = 15;
 
-	optional sint32 displayExponent = 16;
+	optional sint32 displayFractionDenominator = 16;
 
-	optional sint32 displayFractionDenominator = 17;
+	optional Calendar calendar = 17;
 
-	optional Calendar calendar = 18;
+	optional sint64 recordCreateTime = 18; // when instrument was created
 
-	optional sint64 recordCreateTime = 19; // when instrument was created
+	optional sint64 recordUpdateTime = 19; // when instrument must be updated
 
-	optional sint64 recordUpdateTime = 20; // when instrument must be updated
+	optional sint32 timeZoneOffset = 20; // minutes + UTC
 
-	optional sint32 timeZoneOffset = 21; // minutes + UTC
-
-}
-
-enum FractionType {
-	BINARY = 0;
-	DECIMAL = 1;
 }
 
 message Equity {
