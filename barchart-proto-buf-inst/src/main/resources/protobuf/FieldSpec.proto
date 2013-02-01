@@ -26,11 +26,17 @@ extend google.protobuf.MessageOptions {
 }
 
 //
+//enum BookType {
+//	NoBook = 0;
+//	DefaultBook = 1;
+//	ImpliedBook = 2;
+//	CombinedBook = 3;
+//}
+
 enum BookType {
-	NoBook = 0;
-	DefaultBook = 1;
-	ImpliedBook = 2;
-	CombinedBook = 3;
+	PRICE_LEVEL_BOOK = 0;
+	PRICE_VALUE_BOOK = 1;
+	ORDER_ID_BOOK = 2;
 }
 
 //

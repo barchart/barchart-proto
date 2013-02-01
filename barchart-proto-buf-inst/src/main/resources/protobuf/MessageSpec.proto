@@ -20,7 +20,7 @@ option optimize_for = SPEED;
 import "FieldSpec.proto";
 
 //
-enum InstType {
+enum InstrumentType {
 	ForexInst = 1000;
 	IndexInst = 1001;
 	EquityInst = 1002;
@@ -43,61 +43,75 @@ extend Instrument {
 message Instrument {
 	option (optionEnumNameSuffix) = "Inst"; // msg type enum names must use suffix
 	option (optionExtensionPrefix) = "inst"; // msg extension names must use prefix
-	//
+
 	extensions 1000 to 2000;
-	//
-	optional string sourceId = 1; // external GUID;
-	optional sint64 targetId = 2; // internal GUID;
-	//
-	optional InstType instType = 3;
-	//
-	optional BookType bookType = 4;
-	optional sint32 bookSize = 5;
-	//
-	optional string symbol = 6; // original exchange's symbol
-	optional string description = 7; // original exchange's description
-	//
-	optional PriceDisplay priceDisplay = 8; // display rendering
-	//
-	optional Calendar calendar = 9; //
-	//
-	optional string codeCFI = 10; //
-	//
-	optional string currency = 11; //
-	//
-	optional sint64 recordCreateTime = 12; // when instrument was created
-	optional sint64 recordUpdateTime = 13; // when instrument must be updated
-	//
+
+	optional sint64 instrumentId = 1;
+
+	optional string vendor = 2;
+
+	optional string vendorSymbol = 3;
+
+	optional string description = 4;
+
+	optional InstrumentType instumentType = 5;
+
+	optional BookType bookType = 6;
+
+	optional sint32 bookDepth = 7;
+
+	optional string cfiCode = 8;
+
+	optional string currency = 9;
+
+	optional sint64 minPriceIncrementMantissa = 10;
+
+	optional sint32 minPriceIncrementExponent = 11;
+
+	optional sint64 pointValueMantissa = 12;
+
+	optional sint32 pointValueExponent = 13;
+
+
+	optional FractionType fractionType = 14;
+
+	optional sint32 displayFractionDenominator = 15;
+
+	optional Calendar calendar = 16;
+
+	optional sint64 recordCreateTime = 17; // when instrument was created
+
+	optional sint64 recordUpdateTime = 18; // when instrument must be updated
+
 }
 
-//
+enum FractionType {
+	BINARY = 0;
+	DECIMAL = 1;
+}
+
 message Equity {
 }
 
-//
 message Forex {
 }
 
-//
 message Index {
-	optional sint64 underlyingTargetId = 1; //
+	optional sint64 underlyingInstrumentId = 1;
 }
 
-//
 message Future {
-	optional sint64 underlyingTargetId = 1; //
+	optional sint64 underlyingInstrumentId = 1;
 }
 
-//
 message Option {
-	optional sint64 underlyingTargetId = 1; //
+	optional sint64 underlyingInstrumentId = 1;
 	optional Decimal strikePrice = 2;
 	optional OptionType optionType = 3;
 	optional OptionStyle optionStyle = 4;
 }
 
-//
 message Spread {
-	repeated sint64 underlyingTargetId = 1; //
+	repeated sint64 underlyingInstrumentId = 1;
 	optional SpreadType spreadType = 2;
 }
