@@ -75,13 +75,15 @@ message Instrument {
 
 	optional FractionType fractionType = 14;
 
-	optional sint32 displayFractionDenominator = 15;
+	optional sint32 displayExponent = 16;
 
-	optional Calendar calendar = 16;
+	optional sint32 displayFractionDenominator = 17;
 
-	optional sint64 recordCreateTime = 17; // when instrument was created
+	optional Calendar calendar = 18;
 
-	optional sint64 recordUpdateTime = 18; // when instrument must be updated
+	optional sint64 recordCreateTime = 19; // when instrument was created
+
+	optional sint64 recordUpdateTime = 20; // when instrument must be updated
 
 }
 
