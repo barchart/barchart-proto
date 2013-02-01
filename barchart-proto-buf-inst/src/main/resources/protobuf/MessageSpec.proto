@@ -30,7 +30,7 @@ enum InstrumentType {
 }
 
 //
-extend Instrument {
+extend InstrumentDefinition {
 	optional Forex instForex = 1000; //
 	optional Index instIndex = 1001; //
 	optional Equity instEquity = 1002; //
@@ -40,7 +40,7 @@ extend Instrument {
 }
 
 // market instrument message
-message Instrument {
+message InstrumentDefinition {
 	option (optionEnumNameSuffix) = "Inst"; // msg type enum names must use suffix
 	option (optionExtensionPrefix) = "inst"; // msg extension names must use prefix
 

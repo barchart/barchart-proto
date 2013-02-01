@@ -68,11 +68,11 @@ public class InstrumentCodec {
 		MessageSpec.registerAllExtensions(registry);
 
 		/** all message extensions must have this prefix */
-		final String extensionPrefix = Instrument.getDescriptor().getOptions()
+		final String extensionPrefix = InstrumentDefinition.getDescriptor().getOptions()
 				.getExtension(FieldSpec.optionExtensionPrefix);
 
 		/** all message type enums must have this suffix */
-		final String enumNameSuffix = Instrument.getDescriptor().getOptions()
+		final String enumNameSuffix = InstrumentDefinition.getDescriptor().getOptions()
 				.getExtension(FieldSpec.optionEnumNameSuffix);
 
 		final List<FieldDescriptor> list = MessageSpec.getDescriptor()
@@ -130,16 +130,16 @@ public class InstrumentCodec {
 
 	}
 
-	public static Instrument decode(final ByteString data) throws Exception {
+	public static InstrumentDefinition decode(final ByteString data) throws Exception {
 
-		return Instrument.newBuilder().mergeFrom(data, registry).build();
+		return InstrumentDefinition.newBuilder().mergeFrom(data, registry).build();
 
 	}
 
-	public static <MESSAGE extends Message> Instrument.Builder encode(
+	public static <MESSAGE extends Message> InstrumentDefinition.Builder encode(
 			final MESSAGE message) {
 
-		final Instrument.Builder builder = Instrument.newBuilder();
+		final InstrumentDefinition.Builder builder = InstrumentDefinition.newBuilder();
 
 		if (message == null) {
 			log.warn("missing message", new NullPointerException("message"));

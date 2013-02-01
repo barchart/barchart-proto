@@ -40,6 +40,6 @@ message InstrumentPacket {
 	optional sint64 timeStamp = 3; // packet time stamp, millisFIX
 	optional PacketType type = 4; // packet type selector
 	//
-	optional Instrument message = 5; // instrument definition message
+	optional InstrumentDefinition definition = 5; // instrument definition message
 	//
 }
