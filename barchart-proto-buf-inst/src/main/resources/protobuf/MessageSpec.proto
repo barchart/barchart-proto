@@ -85,6 +85,8 @@ message Instrument {
 
 	optional sint64 recordUpdateTime = 20; // when instrument must be updated
 
+	optional sint32 timeZoneOffset = 21; // minutes + UTC
+
 }
 
 enum FractionType {
