@@ -54,7 +54,7 @@ message Instrument {
 
 	optional string description = 4;
 
-	optional InstrumentType instumentType = 5;
+	optional InstrumentType instrumentType = 5;
 
 	optional BookType bookType = 6;
 

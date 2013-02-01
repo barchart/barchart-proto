@@ -23,9 +23,9 @@ public class InstrumentCodec {
 
 		final ExtensionInfo info;
 
-		final InstType type;
+		final InstrumentType type;
 
-		MessageMeta(final InstType type, final ExtensionInfo info) {
+		MessageMeta(final InstrumentType type, final ExtensionInfo info) {
 			this.type = type;
 			this.info = info;
 		}
@@ -91,7 +91,7 @@ public class InstrumentCodec {
 			final Class<? extends Message> klaz = info.defaultInstance
 					.getClass();
 
-			final InstType type = InstType.valueOf(number);
+			final InstrumentType type = InstrumentType.valueOf(number);
 
 			assertNotNull(type, "missing type enum : " + fullName);
 
@@ -153,7 +153,7 @@ public class InstrumentCodec {
 			return builder;
 		}
 
-		builder.setInstType(meta.type);
+		builder.setInstrumentType(meta.type);
 		builder.setField(meta.info.descriptor, message);
 
 		return builder;

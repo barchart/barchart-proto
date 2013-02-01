@@ -16,7 +16,7 @@ public class TestUniqEnums {
 	@Test
 	public void testInstType() throws Exception {
 
-		EnumUtil.testUnique(InstType.class);
+		EnumUtil.testUnique(InstrumentType.class);
 
 	}
 
