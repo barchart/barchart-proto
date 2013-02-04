@@ -20,6 +20,11 @@ import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.ExtensionRegistry.ExtensionInfo;
 import com.google.protobuf.Message;
 
+/**
+ * Instrument definition message codec.
+ * <p>
+ * Provides management of message sub types / extensions.
+ */
 public class InstrumentCodec {
 
 	private static final Logger log = LoggerFactory
@@ -75,17 +80,17 @@ public class InstrumentCodec {
 		MessageSpec.registerAllExtensions(registry);
 
 		/** all message extensions must have this prefix */
-		final String extensionPrefix = InstrumentDefinition.getDescriptor().getOptions()
-				.getExtension(FieldSpec.optionExtensionPrefix);
+		final String extensionPrefix = InstrumentDefinition.getDescriptor()
+				.getOptions().getExtension(FieldSpec.optionExtensionPrefix);
 
 		/** all message type enums must have this suffix */
-		final String enumNameSuffix = InstrumentDefinition.getDescriptor().getOptions()
-				.getExtension(FieldSpec.optionEnumNameSuffix);
+		final String enumNameSuffix = InstrumentDefinition.getDescriptor()
+				.getOptions().getExtension(FieldSpec.optionEnumNameSuffix);
 
-		final List<FieldDescriptor> list = MessageSpec.getDescriptor()
+		final List<FieldDescriptor> fieldList = MessageSpec.getDescriptor()
 				.getExtensions();
 
-		for (final FieldDescriptor field : list) {
+		for (final FieldDescriptor field : fieldList) {
 
 			final int number = field.getNumber();
 			final String nickName = field.getName();
@@ -137,16 +142,19 @@ public class InstrumentCodec {
 
 	}
 
-	public static InstrumentDefinition decode(final ByteString data) throws Exception {
+	public static InstrumentDefinition decode(final ByteString data)
+			throws Exception {
 
-		return InstrumentDefinition.newBuilder().mergeFrom(data, registry).build();
+		return InstrumentDefinition.newBuilder().mergeFrom(data, registry)
+				.build();
 
 	}
 
 	public static <MESSAGE extends Message> InstrumentDefinition.Builder encode(
 			final MESSAGE message) {
 
-		final InstrumentDefinition.Builder builder = InstrumentDefinition.newBuilder();
+		final InstrumentDefinition.Builder builder = InstrumentDefinition
+				.newBuilder();
 
 		if (message == null) {
 			log.warn("missing message", new NullPointerException("message"));

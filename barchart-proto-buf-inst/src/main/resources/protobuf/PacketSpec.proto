@@ -24,22 +24,37 @@ option java_generate_equals_and_hash = true;
 //
 option optimize_for = SPEED;
 
-//
+// Message and Field.
 import "MessageSpec.proto";
 
-//
+// Packet type for instrument.
 enum PacketType {
 	INSTRUMENT = 3;
 }
 
-// instrument packet (packet body contains single message)
+// Instrument definition packet with header.
 message InstrumentPacket {
-//
-	optional sint32 channel = 1; // packet channel number
-	optional sint64 sequence = 2; // packet sequence number inside the channel
-	optional sint64 timeStamp = 3; // packet time stamp, millisFIX
-	optional PacketType type = 4; // packet type selector
-	//
-	optional InstrumentDefinition definition = 5; // instrument definition message
-	//
+
+	// Packet channel number.
+	// Globally unique in data feed.
+	optional sint32 channel = 1;
+
+	optional sint64 sequence = 2;
+
+	// Packet send time.
+	// millisFIX, UTC
+	optional sint64 timeStamp = 3;
+
+	// Packet body type selector.
+	optional PacketType type = 4;
+
+	// Ordered instrument definition message list.
+	repeated InstrumentDefinition definition = 5;
+}
+
+// Instrument definition packet without header, used as codec.
+message InstrumentMessageCodec {
+
+	// Ordered list of messages.
+	repeated InstrumentDefinition message = 5;
 }

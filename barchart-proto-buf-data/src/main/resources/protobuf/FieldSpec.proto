@@ -7,13 +7,6 @@
  */
 
 //
-/**
- * https://developers.google.com/protocol-buffers/docs/proto
- *
- * factory for entries
- */
-
-//
 package barchart; // non-java (C, C++, etc) package name space
 
 //
@@ -52,18 +45,18 @@ option optimize_for = SPEED;
  * note: field number 1..15 is 1 byte tag, 16..127 is 2 byte tag
  */
 
-// market data entry
+// Market data entry.
 message MarketEntry {
-//
-// entry action
+
+	// Entry action.
 	enum Action {
 		ADD = 0; // new, create, insert
 		EDIT = 1; // merge, modify, replace, override, overlay
 		REMOVE = 2; // delete, erase, clear, reset
 	}
-	//
-	// primary entry category
-	// keep most frequent first
+
+	// Primary entry category.
+	// Keep most frequent first.
 	enum Type {
 		TRADE = 0; // a.k.a last sale; price & size (size mostly present)
 		BID = 1; // book side
@@ -80,99 +73,70 @@ message MarketEntry {
 		CUVOL = 12; // cumulative volume
 		STATUS = 13; // non price/size change; such as OPEN/CLOSE event
 		SEQUENCE = 14; //such as snapshot & update sequence synchronization index
-
-		// TODO
-		// this should be expressed as "normal" type=BID/ASK
-		// plussome Descriptor annotations, such as PERIOD_XXX or SESSION_XXX or both
-		//	SESSION_HIGH_BID = 15;
-		//	SESSION_LOW_ASK = 16;
-
-		// TODO
-		// is this semantically the same as SETTLE? then should be type=SETTLE plus annotation
-		//	FIXING_PRICE = 17;
-
 		UNKNOWN = 127;
 		// keep under 128
 	}
 
-	// secondary entry category a.k.a entry annotation;
-	// keep in "name-space-like" format
+	// Secondary entry category a.k.a entry annotation.
+	// Keep in "name-space-like" format.
 	enum Descriptor {
-
 		BOOK_IMPLIED = 0; // ICE, CME
 		BOOK_RFQ = 1; // ICE
-
 		SETTLE_UNOFFICIAL = 2; // ICE
 		SETTLE_PRELIMINARY = 3; // CME
 		SETTLE_THEORETICAL = 4; // CME
-
 		PERIOD_DAY = 10;
 		PERIOD_WEEK = 11;
 		PERIOD_MONTH = 12;
 		PERIOD_YEAR = 13;
-		
 		LAST_BEST = 14;
-
 		SESSION_HIGH = 20;
 		SESSION_LOW = 21;
-		
 		ADJUSTED_TRADE = 30;
-		
-		
-		
 
 		// such as FORM-T
 		SESSION_OVERNIGHT = 50; //
-
+		//
 		ORDER_COUNT = 60;
 		IMPLIED_QUANTITY = 61;
 		IMPLIED_ORDER_COUNT = 62;
-
 		NUMBER_OF_BOOK_ENTRIES = 70;
 		LAST_MESSAGE_SEQUENCE = 71;
 		PERCENTAGE = 72;
 		OVER_THE_COUNTER = 73;
 		EXCHANGE_TRADED = 74;
-
 		OPTION_THEORETICAL_BID = 80;
 		OPTION_THEORETICAL_ASK = 81;
 		OPTION_DELTA = 82;
 		OPTION_VEGA = 83;
-
 		STATUS_MARKET_OPEN = 100; // OPRA, ICE
 		STATUS_MARKET_CLOSE = 101; // OPRA, ICE
 		STATUS_MARKET_PRE_OPEN = 102; // OPRA, ICE
 		STATUS_MARKET_PRE_CLOSE = 103; // OPRA, ICE
-
 		STATUS_TRADING_PAUSE = 104;
 		STATUS_TRADING_RESUME = 105;
-		
 		STATUS_MARKET_EXPIRED = 106;
 
 		// keep under 128
-
+		//
 		SIDE_FIRM = 110; // OPRA
 		SIDE_CUSTOMER = 111; // OPRA
-		
 		INDEX_ON_TRADE = 112; // OPRA
 		INDEX_ON_BOOK = 113; // OPRA
-		
 		VOLUME_BLOCK = 120; // ICE
 		VOLUME_EFS = 121; // ICE
 		VOLUME_EFP = 122; // ICE
-		
-		
-		
 		PRICE_VWAP = 123; // ICE
+
+		// FIXME
 		PRICE_SYSTEM = 124; // ICE IsSystemPricedLeg. Update: Don't use this.  All SystemPriceLegs are either SYSTEM_PRICED_CRACK_SPREAD_LEG or SYSTEM_PRICED_LEG
-		
+		//
 		TRADE_BLOCK = 125; // ICE
-		
 		TRADE_CANCELED = 126; // ICE
 		TRADE_INVESTIGATED = 127; // ICE
-		
+
 		// keep under 128
-		
+
 		// TODO: Optimize the codes
 		BLOCK_TRADE = 200;
 		EFP_TRADE = 201;
@@ -181,39 +145,53 @@ message MarketEntry {
 		NG_EFP_EFS_TRADE = 204;
 		CCX_EFP_TRADE = 205;
 		EFR_TRADE = 206;
-		
 		SYSTEM_PRICED_CRACK_SPREAD_LEG = 207;
 		SYSTEM_PRICED_LEG = 208;
-		
 		IMPLIED_SPREAD_AT_MARKET_OPEN = 209;
-		
 	}
 
-	//
-	optional Action action = 1; // entry action
-	optional Type type = 2; // primary category
-	repeated Descriptor descriptor = 3 [packed = true]; // list of secondary category
-	//
-	optional sint64 marketId = 4; // override to head;
-	optional sint64 sequence = 5; // offset to head;
-	optional sint64 timeStamp = 6; // offset to head;
-	optional sint32 tradeDate = 7; // offset to head;
-	//
+	// Entry action.
+	optional Action action = 1;
+
+	// Primary entry category.
+	optional Type type = 2;
+
+	// Secondary entry category list.
+	repeated Descriptor descriptor = 3 [packed = true];
+
+	// Globally unique market id.
+	// Override to message head;
+	optional sint64 marketId = 4;
+
+	// Market sequence number.
+	// Offset to message head;
+	optional sint64 sequence = 5;
+
+	// Transaction time stamp.
+	// Offset to message head, millis (non fix).
+	optional sint64 timeStamp = 6;
+
+	// Entry trade date.
+	// Offset to message head, millis (non fix).
+	optional sint32 tradeDate = 7;
+
+	// Entry price value.
 	optional sint64 priceMantissa = 8;
 	optional sint32 priceExponent = 9; // override to head;
-	//
+
+	// Entry size value.
 	optional sint64 sizeMantissa = 10;
 	optional sint32 sizeExponent = 11; // override to head;
 
-	// such as book level, cuvol position, snapshot & update sequence, etc
+	// Entry index.
+	// Such as book level, cuvol position, snapshot & update sequence, etc.
 	optional sint64 index = 12;
 
-	// TODO review if really needed
+	// Market order id of this entry.
 	optional sint64 orderId = 13;
 
-	// TODO is this really needed?
-	// can this be always expressed as size above? //
-	// if yes, should be "optional sint32 orderCount"
+	// Market order count in this entry.
 	optional sint32 orderCount = 14;
+
 	//
 }

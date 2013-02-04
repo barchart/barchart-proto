@@ -5,12 +5,6 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-//
-/**
- * https://developers.google.com/protocol-buffers/docs/proto
- *
- * factory for messages
- */
 
 //
 package barchart; // non-java (C, C++, etc) package name space
@@ -23,20 +17,22 @@ option java_generate_equals_and_hash = true;
 //
 option optimize_for = SPEED;
 
-// message fields
+// Message fields.
 import "FieldSpec.proto";
 
-//
+// Instrument type.
+// Must follow name suffix convention.
 enum InstrumentType {
-	ForexInst = 1000;
-	IndexInst = 1001;
-	EquityInst = 1002;
-	FutureInst = 1003;
-	OptionInst = 1004;
-	SpreadInst = 1005;
+	FOREX_INST = 1000;
+	INDEX_INST = 1001;
+	EQUITY_INST = 1002;
+	FUTURE_INST = 1003;
+	OPTION_INST = 1004;
+	SPREAD_INST = 1005;
 }
 
-//
+// Market instrument definition message sub types.
+// Must follow name prefix convention.
 extend InstrumentDefinition {
 	optional Forex instForex = 1000; //
 	optional Index instIndex = 1001; //
@@ -46,65 +42,130 @@ extend InstrumentDefinition {
 	optional Spread instSpread = 1005; //
 }
 
-// market instrument message
+// Market instrument definition message.
+// FIXME renumber fields & ranges.
 message InstrumentDefinition {
-//
-	option (optionEnumNameSuffix) = "Inst"; // message type enum names must use this suffix
-	option (optionExtensionPrefix) = "inst"; // message extension names must use this prefix
 
-	// InstrumentDefinition extensi9on range - see above
+	// Metadata: message type enum names must use this suffix.
+	option (optionEnumNameSuffix) = "_INST";
+
+	// Metadata: message extension names must use this prefix.
+	option (optionExtensionPrefix) = "inst";
+
+	// Metadata: InstrumentDefinition extension range.
+	// Must match "extend InstrumentDefinition".
 	extensions 1000 to 2000;
 
-	optional sint64 instrumentId = 1;
-	optional string vendor = 2;
-	optional string vendorSymbol = 3;
-	optional string description = 4;
+	// Market id used in the data feed.
+	// Globally unique for for all vendor channels.
+	// Static, never changes.
+	// Defined by a vendor. Multiple vendors may agree to sync.
+	optional sint64 marketId = 1;
+
+	// Instrument type as enum.
 	optional InstrumentType instrumentType = 5;
-	optional BookType bookType = 6;
+
+	// Market depth liquidity type.
+	optional BookLiquidity bookLiquidity = 6;
+
+	// Market depth implementation type.
+	optional BookStructure bookStructure = 100;
+
+	// Market book size/limit.
+	// FIXME define values for missing/unlimited
 	optional sint32 bookDepth = 7;
+
+	// FIXME define what is this?
+	optional string vendorId = 2;
+
+	// Human readable market symbol.
+	// FIXME Globally unique for given: vendor? channel?
+	optional string symbol = 3;
+
+	// Human readable market description.
+	optional string description = 4;
+
+	// Market CFI code: http://en.wikipedia.org/wiki/ISO_10962
 	optional string cfiCode = 8;
-	optional string currency = 9;
+
+	// Market currency code: http://en.wikipedia.org/wiki/ISO_4217
+	optional string currencyCode = 9;
+
+	// Market exchange code.
 	optional string exchange = 10;
-	optional sint64 minPriceIncrementMantissa = 11;
-	optional sint32 minPriceIncrementExponent = 12;
-	optional sint64 pointValueMantissa = 13;
-	optional sint32 pointValueExponent = 14;
-	optional sint32 displayExponent = 15;
-	optional sint32 displayFractionDenominator = 16;
+
+	// Minimum price increment in market currency.
+	optional Decimal minimumPriceIncrement = 11;
+
+	// Contract point value in market currency.
+	optional Decimal contractPointValue = 13;
+
+	// Market price display rendering parameters.
+	optional sint32 displayDenominatorBase = 16;
+	optional sint32 displayDenominatorExponent = 15;
+
+	// Market calendar.
 	optional Calendar calendar = 17;
 
-	// when instrument was created
+	// Date/Time instrument was created, millisFIX, UTC
 	optional sint64 recordCreateTime = 18;
 
-	// when instrument must be updated
+	// Date/Time instrument was updated, millisFIX, UTC
 	optional sint64 recordUpdateTime = 19;
 
-	// minutes + UTC
-	optional sint32 timeZoneOffset = 20;
+	// Market local time offset to UTC time, millisFIX
+	// FIXME when? offset depends on time of year.
+	optional sint64 timeZoneOffset = 20;
+
+	// Ordered list of component market id for a synthetic market.
+	repeated sint64 component = 21;
 }
 
+// Instrument definition : Equity.
 message Equity {
 }
 
+// Instrument definition : Forex.
 message Forex {
 }
 
+// Instrument definition : Index.
 message Index {
-	optional sint64 underlyingInstrumentId = 1;
+
+	// Instrument underlying this index.
+	optional sint64 underlyingMarketId = 1;
 }
 
+// Instrument definition : Future.
 message Future {
-	optional sint64 underlyingInstrumentId = 1;
+
+	// Instrument underlying this future.
+	optional sint64 underlyingMarketId = 1;
 }
 
+// Instrument definition : Option.
 message Option {
-	optional sint64 underlyingInstrumentId = 1;
+
+	// Instrument underlying this option.
+	optional sint64 underlyingMarketId = 1;
+
+	// Option strike price in market currency.
 	optional Decimal strikePrice = 2;
+
+	// Option type: call vs put.
 	optional OptionType optionType = 3;
+
+	// Option style : American vs European.
 	optional OptionStyle optionStyle = 4;
 }
 
+// Instrument definition : Spread.
 message Spread {
-	repeated sint64 underlyingInstrumentId = 1;
+
+	// Ordered list of spread legs market id.
+	// Must preserve order during any transformations.
+	repeated sint64 underlyingMarketId = 1;
+
+	// Spread type.
 	optional SpreadType spreadType = 2;
 }
