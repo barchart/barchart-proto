@@ -40,9 +40,10 @@ extend google.protobuf.MessageOptions {
 //	CombinedBook = 3;
 //}
 enum BookType {
-	PRICE_LEVEL_BOOK = 0;
-	PRICE_VALUE_BOOK = 1;
-	ORDER_ID_BOOK = 2;
+	NO_BOOK = 0;
+	PRICE_LEVEL_BOOK = 1;
+	PRICE_VALUE_BOOK = 2;
+	ORDER_ID_BOOK = 3;
 }
 
 //
