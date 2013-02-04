@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
 //
 /**
  * https://developers.google.com/protocol-buffers/docs/proto
@@ -32,7 +39,6 @@ extend google.protobuf.MessageOptions {
 //	ImpliedBook = 2;
 //	CombinedBook = 3;
 //}
-
 enum BookType {
 	PRICE_LEVEL_BOOK = 0;
 	PRICE_VALUE_BOOK = 1;
