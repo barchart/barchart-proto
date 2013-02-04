@@ -32,13 +32,19 @@ extend google.protobuf.MessageOptions {
 	optional string optionExtensionPrefix = 50002; // message extension name prefix
 }
 
-//
-//enum BookType {
-//	NoBook = 0;
-//	DefaultBook = 1;
-//	ImpliedBook = 2;
-//	CombinedBook = 3;
-//}
+/**
+ * Defines market depth flavor.
+ */
+enum BookKind {
+	NoBook = 0;
+	DefaultBook = 1;
+	ImpliedBook = 2;
+	CombinedBook = 3;
+}
+
+/**
+ * Defines market depth structure.
+ */
 enum BookType {
 	NO_BOOK = 0;
 	PRICE_LEVEL_BOOK = 1;

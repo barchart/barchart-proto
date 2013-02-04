@@ -48,51 +48,39 @@ extend InstrumentDefinition {
 
 // market instrument message
 message InstrumentDefinition {
-	option (optionEnumNameSuffix) = "Inst"; // msg type enum names must use suffix
-	option (optionExtensionPrefix) = "inst"; // msg extension names must use prefix
+//
+	option (optionEnumNameSuffix) = "Inst"; // message type enum names must use this suffix
+	option (optionExtensionPrefix) = "inst"; // message extension names must use this prefix
 
+	// InstrumentDefinition extensi9on range - see above
 	extensions 1000 to 2000;
 
 	optional sint64 instrumentId = 1;
-
 	optional string vendor = 2;
-
 	optional string vendorSymbol = 3;
-
 	optional string description = 4;
-
 	optional InstrumentType instrumentType = 5;
-
 	optional BookType bookType = 6;
-
 	optional sint32 bookDepth = 7;
-
 	optional string cfiCode = 8;
-
 	optional string currency = 9;
-
 	optional string exchange = 10;
-
 	optional sint64 minPriceIncrementMantissa = 11;
-
 	optional sint32 minPriceIncrementExponent = 12;
-
 	optional sint64 pointValueMantissa = 13;
-
 	optional sint32 pointValueExponent = 14;
-
 	optional sint32 displayExponent = 15;
-
 	optional sint32 displayFractionDenominator = 16;
-
 	optional Calendar calendar = 17;
 
-	optional sint64 recordCreateTime = 18; // when instrument was created
+	// when instrument was created
+	optional sint64 recordCreateTime = 18;
 
-	optional sint64 recordUpdateTime = 19; // when instrument must be updated
+	// when instrument must be updated
+	optional sint64 recordUpdateTime = 19;
 
-	optional sint32 timeZoneOffset = 20; // minutes + UTC
-
+	// minutes + UTC
+	optional sint32 timeZoneOffset = 20;
 }
 
 message Equity {
