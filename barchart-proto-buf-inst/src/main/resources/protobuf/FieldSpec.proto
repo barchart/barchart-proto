@@ -19,12 +19,6 @@ option optimize_for = SPEED;
 // Message options descriptor.
 import "google/protobuf/descriptor.proto";
 
-// Define static message fields for meta data.
-extend google.protobuf.MessageOptions {
-	optional string optionEnumNameSuffix = 50001; // message type enum name suffix
-	optional string optionExtensionPrefix = 50002; // message extension name prefix
-}
-
 // Market depth liquidity type.
 enum BookLiquidity {
 	// Market without any book.
@@ -33,7 +27,7 @@ enum BookLiquidity {
 	DEFAULT_LIQUIDITY = 1;
 	// Book reflects only implied transactions.
 	IMPLIED_LIQUIDITY = 2;
-	// Book reflects both implied and explicit transactions
+	// Book reflects both implied and explicit transactions.
 	COMBINED_LIQUIDITY = 3;
 }
 
