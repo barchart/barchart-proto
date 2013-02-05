@@ -20,7 +20,6 @@ option optimize_for = SPEED;
 import "FieldSpec.proto";
 
 // Instrument type.
-// Must follow name suffix convention.
 enum InstrumentType {
 	FOREX_INST = 1000;
 	INDEX_INST = 1001;
@@ -30,30 +29,9 @@ enum InstrumentType {
 	SPREAD_INST = 1005;
 }
 
-// Market instrument definition message sub types.
-// Must follow name prefix convention.
-extend InstrumentDefinition {
-	optional Forex instForex = 1000; //
-	optional Index instIndex = 1001; //
-	optional Equity instEquity = 1002; //
-	optional Future instFuture = 1003; //
-	optional Option instOption = 1004; //
-	optional Spread instSpread = 1005; //
-}
-
 // Market instrument definition message.
 // FIXME renumber fields & ranges.
 message InstrumentDefinition {
-
-	// Metadata: message type enum names must use this suffix.
-	option (optionEnumNameSuffix) = "_INST";
-
-	// Metadata: message extension names must use this prefix.
-	option (optionExtensionPrefix) = "inst";
-
-	// Metadata: InstrumentDefinition extension range.
-	// Must match "extend InstrumentDefinition".
-	extensions 1000 to 2000;
 
 	// Market id used in the data feed.
 	// Globally unique for for all vendor channels.
@@ -125,53 +103,27 @@ message InstrumentDefinition {
 
 	// Ordered list of component market id for a synthetic market.
 	repeated sint64 component = 21;
-}
 
-// Instrument definition : Equity.
-message Equity {
-}
+	// Ordered list of underlying market id.
+	// Must preserve order during any transformations.
+	// Used by: future, option, spread.
+	repeated sint64 underlyingMarketId = 1000;
 
-// Instrument definition : Forex.
-message Forex {
-}
-
-// Instrument definition : Index.
-message Index {
-
-	// Instrument underlying this index.
-	optional sint64 underlyingMarketId = 1;
-}
-
-// Instrument definition : Future.
-message Future {
-
-	// Instrument underlying this future.
-	optional sint64 underlyingMarketId = 1;
-}
-
-// Instrument definition : Option.
-message Option {
-
-	// Instrument underlying this option.
-	optional sint64 underlyingMarketId = 1;
+	// #############################################
 
 	// Option strike price in market currency.
-	optional Decimal strikePrice = 2;
+	optional Decimal optionStrike = 2002;
 
 	// Option type: call vs put.
-	optional OptionType optionType = 3;
+	optional OptionType optionType = 3002;
 
 	// Option style : American vs European.
-	optional OptionStyle optionStyle = 4;
-}
+	optional OptionStyle optionStyle = 4002;
 
-// Instrument definition : Spread.
-message Spread {
-
-	// Ordered list of spread legs market id.
-	// Must preserve order during any transformations.
-	repeated sint64 underlyingMarketId = 1;
+	// #############################################
 
 	// Spread type.
-	optional SpreadType spreadType = 2;
+	optional SpreadType spreadType = 2000;
+
+	// #############################################
 }
