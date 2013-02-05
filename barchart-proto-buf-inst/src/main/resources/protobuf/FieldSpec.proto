@@ -19,6 +19,17 @@ option optimize_for = SPEED;
 // Message options descriptor.
 import "google/protobuf/descriptor.proto";
 
+// Instrument type.
+enum InstrumentType {
+	NO_TYPE_INST = 0;
+	FOREX_INST = 1;
+	INDEX_INST = 2;
+	EQUITY_INST = 3;
+	FUTURE_INST = 4;
+	OPTION_INST = 5;
+	SPREAD_INST = 6;
+}
+
 // Market depth liquidity type.
 enum BookLiquidity {
 	// Market without any book.

@@ -19,16 +19,6 @@ option optimize_for = SPEED;
 // Message fields.
 import "FieldSpec.proto";
 
-// Instrument type.
-enum InstrumentType {
-	FOREX_INST = 1000;
-	INDEX_INST = 1001;
-	EQUITY_INST = 1002;
-	FUTURE_INST = 1003;
-	OPTION_INST = 1004;
-	SPREAD_INST = 1005;
-}
-
 // Market instrument definition message.
 // FIXME renumber fields & ranges.
 message InstrumentDefinition {
