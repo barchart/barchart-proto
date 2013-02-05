@@ -100,8 +100,8 @@ message InstrumentDefinition {
 	optional Decimal contractPointValue = 13;
 
 	// Market price display rendering parameters.
-	optional sint32 displayDenominatorBase = 16;
-	optional sint32 displayDenominatorExponent = 15;
+	optional sint32 displayBase = 16;
+	optional sint32 displayExponent = 15;
 
 	// Market calendar.
 	optional Calendar calendar = 17;
