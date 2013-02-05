@@ -13,15 +13,14 @@
  * factory for packets
  */
 
-//
-package barchart; // non-java (C, C++, etc) package name space
+// Non-java (C, C++, etc) package name space.
+package barchart;
 
-//
+// Builder options.
 option java_package = "com.barchart.proto.buf.data";
 option java_outer_classname = "PacketSpec";
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
-//
 option optimize_for = SPEED;
 
 // Message descriptor.

@@ -6,10 +6,10 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-//
-package barchart; // non-java (C, C++, etc) package name space
+// Non-java (C, C++, etc) package name space.
+package barchart;
 
-//
+// Builder options.
 option java_package = "com.barchart.proto.buf.data";
 option java_outer_classname = "MessageSpec";
 option java_multiple_files = true;
