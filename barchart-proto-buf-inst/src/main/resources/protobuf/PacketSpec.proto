@@ -6,15 +6,8 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-//
-/**
- * https://developers.google.com/protocol-buffers/docs/proto
- *
- * factory for packets
- */
-
 // Non-java (C, C++, etc) package name space.
-package barchart;
+package barchart_inst;
 
 // Builder options.
 option java_package = "com.barchart.proto.buf.inst";
@@ -47,13 +40,13 @@ message InstrumentPacket {
 	// Packet body type selector.
 	optional PacketType type = 4;
 
-	// Ordered instrument definition message list.
+	// Ordered instrument definition list.
 	repeated InstrumentDefinition definition = 5;
 }
 
 // Instrument definition packet without header, used as codec.
 message InstrumentMessageCodec {
 
-	// Ordered list of messages.
+	// Ordered instrument definition list.
 	repeated InstrumentDefinition message = 5;
 }

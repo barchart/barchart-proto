@@ -7,7 +7,7 @@
  */
 
 // Non-java (C, C++, etc) package name space.
-package barchart;
+package barchart_data;
 
 // Builder options.
 option java_package = "com.barchart.proto.buf.data";

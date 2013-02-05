@@ -6,27 +6,19 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-//
-/**
- * https://developers.google.com/protocol-buffers/docs/proto
- *
- * factory for packets
- */
+// Non-java (C, C++, etc) package name space
+package barchart_assm;
 
-//
-package barchart; // non-java (C, C++, etc) package name space
-
-//
+// Builder options.
 option java_package = "com.barchart.proto.buf.assm";
 option java_outer_classname = "PacketSpec";
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
-//
 option optimize_for = SPEED;
 
-//
+// Packet type for all messages.
 enum PacketType {
-//
+
 	MarketData = 1;
 	MarketNews = 2;
 	Instrument = 3;
@@ -48,14 +40,23 @@ enum PacketType {
 	//
 }
 
-// generic packet (ignorant of body content)
+// Generic packet, ignorant of body content.
 message Packet {
-//
-	optional sint32 channel = 1; // packet channel number
-	optional sint64 sequence = 2; // packet sequence number inside the channel
-	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
-	optional PacketType type = 4; // packet body type selector
-	//
-	optional bytes body = 5; // opaque byte array
+
+	// Packet channel number.
+	optional sint32 channel = 1;
+
+	// Packet sequence number inside the channel.
+	optional sint64 sequence = 2;
+
+	// Packet time stamp, millisFIX, UTC
+	optional sint64 timeStamp = 3;
+
+	// Packet body type selector
+	optional PacketType type = 4;
+
+	// Message content, opaque byte array.
+	optional bytes body = 5;
+
 	//
 }

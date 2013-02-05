@@ -6,8 +6,8 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-//
-package barchart;
+// Non-java name space.
+package barchart_session;
 
 option java_package = "com.barchart.proto.buf.session";
 option java_outer_classname = "MessageSpec";

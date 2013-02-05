@@ -5,7 +5,9 @@
  *
  * http://www.opensource.org/licenses/bsd-license.php
  */
-package barchart;
+
+// Non-java name space.
+package barchart_news;
 
 option java_package = "com.barchart.proto.buf.news";
 option java_outer_classname = "MessageSpec";

@@ -6,15 +6,8 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-//
-/**
- * https://developers.google.com/protocol-buffers/docs/proto
- *
- * factory for packets
- */
-
-//
-package barchart; // non-java (C, C++, etc) package name space
+// Non-java name space.
+package barchart_news;
 
 //
 option java_package = "com.barchart.proto.buf.news";
