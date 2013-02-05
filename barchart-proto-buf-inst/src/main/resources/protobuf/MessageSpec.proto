@@ -113,8 +113,15 @@ message InstrumentDefinition {
 	optional sint64 recordUpdateTime = 19;
 
 	// Market local time offset to UTC time, millisFIX
-	// FIXME when? offset depends on time of year.
+	// Needs periodic update.
+	// FIXME consider elimination in favor of timeZoneName
 	optional sint64 timeZoneOffset = 20;
+
+	// Market time zone TZ database name.
+	// Permanent. Can be resolved into timeZoneOffset for given date/time.
+	// See http://joda-time.sourceforge.net/timezones.html
+	// See http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+	optional string timeZoneName = 202;
 
 	// Ordered list of component market id for a synthetic market.
 	repeated sint64 component = 21;
