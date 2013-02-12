@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketMessageCodec;
-import com.barchart.proto.buf.inst.Instrument;
 import com.barchart.proto.buf.inst.InstrumentCodec;
+import com.barchart.proto.buf.inst.InstrumentDefinition;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 
@@ -42,7 +42,7 @@ public final class PacketCodec {
 	static {
 
 		messageTypeToKlaz.put(PacketType.MarketData, MarketMessage.class);
-		messageTypeToKlaz.put(PacketType.Instrument, Instrument.class);
+		messageTypeToKlaz.put(PacketType.Instrument, InstrumentDefinition.class);
 
 		for (final Map.Entry<PacketType, Class<? extends Message>> entry : messageTypeToKlaz
 				.entrySet()) {
@@ -89,7 +89,7 @@ public final class PacketCodec {
 
 		case Instrument: {
 
-			final Instrument message = InstrumentCodec.decode(body);
+			final InstrumentDefinition message = InstrumentCodec.decode(body);
 
 			visitor.apply(message, target);
 
