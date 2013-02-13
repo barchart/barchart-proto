@@ -80,12 +80,6 @@ message InstrumentDefinition {
 	// Date/Time instrument was updated, millisFIX, UTC
 	optional sint64 recordUpdateTime = 19;
 
-	// Market local time offset to UTC time, millisFIX
-	// Needs periodic update.
-	// FIXME consider elimination in favor of timeZoneName
-	optional sint64 timeZoneOffset = 20;
-
-
 
 	// Market time zone TZ database name.
 	// Permanent. Can be resolved into timeZoneOffset for given date/time.
