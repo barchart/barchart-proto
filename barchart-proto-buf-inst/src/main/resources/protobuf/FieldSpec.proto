@@ -120,7 +120,7 @@ message Calendar {
 }
 
 
-message Date {
+message SymbolExpiration {
 	optional sint32 dayOfMonth = 1;
 	optional Month month = 2;
 	optional sint32 year = 3;

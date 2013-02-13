@@ -100,7 +100,7 @@ message InstrumentDefinition {
 	optional string instrumentGroup = 22;
 
 	// The Date of expiration for futures and options.  For symbology purposes, not lifecycle.
-	optional Date symbolExpiration = 23;
+	optional SymbolExpiration symbolExpiration = 23;
 
 	//
 	optional bool isActive = 24;
