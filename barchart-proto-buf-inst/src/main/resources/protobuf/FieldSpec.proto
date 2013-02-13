@@ -90,6 +90,11 @@ enum Month {
 	DECEMBER_MONTH = 11;
 }
 
+enum State {
+	ACTIVE_STATE = 0;
+	PASSIVE_STATE = 1;
+}
+
 
 // Price value.
 message Decimal {

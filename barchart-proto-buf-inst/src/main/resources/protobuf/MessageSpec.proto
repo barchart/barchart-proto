@@ -102,8 +102,11 @@ message InstrumentDefinition {
 	// The Date of expiration for futures and options.  For symbology purposes, not lifecycle.
 	optional SymbolExpiration symbolExpiration = 23;
 
-	//
-	optional bool isActive = 24;
+	// active: can have market state updates, can have historical data
+	// passive: can NOT have market state updates, but can have historical data
+	// normally "active" means newly listed or currently non expired markets
+	// normally "passive" means expired options, de-listed equities, etc.
+	optional State state = 24;
 
 	// The channel that updates for this instrument will appear on.
 	optional sint32 channel = 25;
