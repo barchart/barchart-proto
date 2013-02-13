@@ -18,6 +18,9 @@ option optimize_for = SPEED;
 
 // Message fields.
 import "FieldSpec.proto";
+// Message enums.
+import "Type1Enum.proto";
+import "Type2Enum.proto";
 
 // Market instrument definition message.
 // FIXME renumber fields & ranges.
@@ -31,6 +34,9 @@ message InstrumentDefinition {
 
 	// Instrument type as enum.
 	optional InstrumentType instrumentType = 5;
+
+	optional barchart_inst_et1.InstType1 type1 = 55;
+	optional barchart_inst_et2.InstType2 type2 = 56;
 
 	// Market depth liquidity type.
 	optional BookLiquidity bookLiquidity = 6;
