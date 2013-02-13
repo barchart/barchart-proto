@@ -38,15 +38,15 @@ message InstrumentDefinition {
 	// Market depth implementation type.
 	optional BookStructure bookStructure = 100;
 
-	// Market book size/limit.
-	// FIXME define values for missing/unlimited
+	// Market book size/limit for non-finite bookStructures.
 	optional sint32 bookDepth = 7;
 
-	// FIXME define what is this?
+	// The name of the market data vendor
 	optional string vendorId = 2;
 
-	// Human readable market symbol.
-	// FIXME Globally unique for given: vendor? channel?
+	// Human readable market symbol, assigned by the vendor
+	// Not necessarily unique as the vendor could assign the same symbol to different
+	// instruments, for example if the instruments trade on different exchanges.
 	optional string symbol = 3;
 
 	// Human readable market description.
@@ -85,6 +85,8 @@ message InstrumentDefinition {
 	// FIXME consider elimination in favor of timeZoneName
 	optional sint64 timeZoneOffset = 20;
 
+
+
 	// Market time zone TZ database name.
 	// Permanent. Can be resolved into timeZoneOffset for given date/time.
 	// See http://joda-time.sourceforge.net/timezones.html
@@ -93,6 +95,18 @@ message InstrumentDefinition {
 
 	// Ordered list of component market id for a synthetic market.
 	repeated sint64 componentId = 21;
+
+	// Identifies a logical grouping of instruments. By product, for example.
+	optional string instrumentGroup = 22;
+
+	// The Date of expiration for futures and options.  For symbology purposes, not lifecycle.
+	optional Date symbolExpiration = 23;
+
+	//
+	optional bool isActive = 24;
+
+	// The channel that updates for this instrument will appear on.
+	optional sint32 channel = 25;
 
 	// Ordered list of underlying market id for a derived market.
 	// Must preserve order during any transformations.

@@ -75,6 +75,22 @@ enum SpreadType {
 	CRACK_SPREAD = 3;
 }
 
+enum Month {
+	JANUARY_MONTH = 0;
+	FEBRUARY_MONTH = 1;
+	MARCH_MONTH = 2;
+	APRIL_MONTH = 3;
+	MAY_MONTH = 4;
+	JUNE_MONTH = 5;
+	JULY_MONTH = 6;
+	AUGUST_MONTH = 7;
+	SEPTEMBER_MONTH = 8;
+	OCTOBER_MONTH = 9;
+	NOVEMBER_MONTH = 10;
+	DECEMBER_MONTH = 11;
+}
+
+
 // Price value.
 message Decimal {
 	optional sint64 mantissa = 1;
@@ -101,4 +117,11 @@ message Calendar {
 	// Standard market hours, millisFIX.
 	// FIXME static? dynamic? local market time zone? UTC?
 	repeated Interval marketHours = 2;
+}
+
+
+message Date {
+	optional sint32 dayOfMonth = 1;
+	optional Month month = 2;
+	optional sint32 year = 3;
 }
