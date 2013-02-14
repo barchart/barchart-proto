@@ -105,8 +105,12 @@ message InstrumentDefinition {
 	// The channel that updates for this instrument will appear on.
 	optional sint32 channel = 25;
 
+	// The marketId of the underlying asset.
+	// Used by Futures and Options when the underlying instrument is defined by the vendor
+	optional sint64 underlyingMarketId = 26;
+
 	// Ordered list of underlying legs in a spread.
-	repeated Leg spreadLegs = 1000;
+	repeated SpreadLeg spreadLegs = 1000;
 
 
 
@@ -116,8 +120,7 @@ message InstrumentDefinition {
 	// Option strike price in market currency.
 	optional Decimal optionStrike = 2002;
 
-	// The marketId of the underlying instrument for this option.
-	optional sint64 optionUnderlyingMarketId = 2003;
+
 
 	// Option type: call vs put.
 	optional OptionType optionType = 3002;
