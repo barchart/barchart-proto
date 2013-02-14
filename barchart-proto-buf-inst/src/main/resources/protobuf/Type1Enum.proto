@@ -1,0 +1,28 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+// Non-java (C, C++, etc) package name space.
+package barchart_inst_et1;
+
+// Builder options.
+option java_package = "com.barchart.proto.buf.inst";
+option java_outer_classname = "EnumSpec";
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+// Instrument type (experimental).
+enum InstType1 {
+	NO_TYPE = 0;
+	FOREX = 1;
+	INDEX = 2;
+	EQUITY = 3;
+	FUTURE = 4;
+	OPTION = 5;
+	SPREAD = 6;
+}
