@@ -184,7 +184,7 @@ message SpreadLeg {
 	// Negative means short the absolute value, positive means long the absolute value.
 	// FIXME? Alternatively, we could have separate LONG/SHORT indicator in the message
 	// and use this field as only the absolute value
-	optional sint32 legRatio = 2;
+	optional sint32 ratio = 2;
 
 	// Additional information about the leg will be found in the instrument definition
 	// for the leg.  It is not included here to reduce duplication.

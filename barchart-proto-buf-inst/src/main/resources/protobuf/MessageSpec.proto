@@ -110,7 +110,7 @@ message InstrumentDefinition {
 	optional sint64 underlyingMarketId = 26;
 
 	// Ordered list of underlying legs in a spread.
-	repeated SpreadLeg spreadLegs = 1000;
+	repeated SpreadLeg spreadLeg = 1000;
 
 
 
