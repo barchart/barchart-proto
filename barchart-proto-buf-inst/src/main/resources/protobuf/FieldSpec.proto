@@ -174,3 +174,19 @@ message SymbolExpiration {
 	optional Month month = 2;
 	optional sint32 year = 3;
 }
+
+message Leg {
+
+	// The marketId of the leg
+	optional sint64 legMarketId = 1;
+
+	// The ratio of the this leg with respect to the spread.
+	// Negative means short the absolute value, positive means long the absolute value.
+	// FIXME? Alternatively, we could have separate LONG/SHORT indicator in the message
+	// and use this field as only the absolute value
+	optional sint32 legRatio = 2;
+
+	// Additional fields could contain more leg information. This would duplicate some
+	// of the information in the the full definition of the leg instrument, but it could
+	// add some clarity.  For example, legInstrumentType (future? option?) legSymbol, legCFICode, etc...
+}
