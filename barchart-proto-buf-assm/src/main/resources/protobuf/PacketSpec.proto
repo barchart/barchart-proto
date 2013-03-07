@@ -56,7 +56,6 @@ message Packet {
 	optional PacketType type = 4;
 
 	// Message content, opaque byte array.
-	optional bytes body = 5;
+	repeated bytes body = 5;
 
-	//
 }

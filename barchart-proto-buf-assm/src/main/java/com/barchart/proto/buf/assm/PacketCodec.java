@@ -9,11 +9,15 @@ package com.barchart.proto.buf.assm;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.sound.midi.Instrument;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +26,10 @@ import com.barchart.proto.buf.data.MarketMessage;
 import com.barchart.proto.buf.data.MarketMessageCodec;
 import com.barchart.proto.buf.inst.InstrumentCodec;
 import com.barchart.proto.buf.inst.InstrumentDefinition;
+import com.barchart.proto.buf.inst.InstrumentMessageCodec;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import com.google.protobuf.UnknownFieldSet;
 
 /**
  * encode/decode proto.buf messages
@@ -73,25 +79,38 @@ public final class PacketCodec {
 		final PacketType type = packet.getType();
 
 		/** packet body is just a byte array at this point */
-		final ByteString body = packet.getBody();
+		final List<ByteString> bodyList = packet.getBodyList();
 
 		switch (type) {
 
 		case MarketData: {
+//			MarketMessageCodec parseFrom = MarketMessageCodec.parseFrom(body);
+//			MarketMessageCodec build = MarketMessageCodec.newBuilder().mergeFrom(body).build();
+//			List<MarketMessage> messasgeList = build.getMessageList(); 
+//			MarketMessageCodec codec = MarketMessageCodec.parseFrom(body);
+//			int messageCount = codec.getMessageCount();
+//			UnknownFieldSet unknownFields = codec.getUnknownFields();
+//			List<MarketMessage> messasgeList = codec.getMessageList();
 
-			final List<MarketMessage> messasgeList = //
-			MarketMessageCodec.parseFrom(body).getMessageList();
+//			visitor.apply(messasgeList, target);
 
-			visitor.apply(messasgeList, target);
-
+			
 			break;
 		}
 
 		case Instrument: {
-
-			final InstrumentDefinition message = InstrumentCodec.decode(body);
-
-			visitor.apply(message, target);
+			
+			
+			for (ByteString body : bodyList) {
+				InstrumentDefinition definition = InstrumentDefinition.parseFrom(body);
+			}
+			
+			InstrumentMessageCodec parseFrom = InstrumentMessageCodec.parseFrom(ByteString.copyFrom(bodyList));
+			
+			System.out.println(parseFrom);
+//			final InstrumentDefinition message = InstrumentCodec.decode(body);
+//
+//			visitor.apply(message, target);
 
 			break;
 		}
@@ -149,13 +168,21 @@ public final class PacketCodec {
 		decode(packet, visitor, target);
 
 	}
+	
+	public static <TARGET> void decodeStream(InputStream stream, PacketVisitor<TARGET> visitor, TARGET target) throws Exception {
+		Packet packet;
+		while ( (packet = Packet.parseDelimitedFrom(stream)) != null) {
+			decode(packet, visitor, target);
+		}
+	}
+	
 
 	public static byte[] encode(final Packet base) throws Exception {
-
 		return base.toByteArray();
-
 	}
 
+
+	
 	/** embed sub type message into a base */
 	public static <MESSAGE extends Message> Packet.Builder encode(
 			final MESSAGE message) {
