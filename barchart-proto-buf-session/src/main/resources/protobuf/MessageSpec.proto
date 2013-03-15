@@ -148,6 +148,14 @@ message SessionMessage {
 
 }
 
+// MJS: This allows clients to "reclaim" existing sessions on reconnect if they were disconnected.
+// This is valid as long as the session hasn't been flushed and we transmit the necessary info to match
+// a session on the server with the one transmitted here
+message SessionResumeMessage {
+
+	optional string sessionId = 1;
+}
+
 message StartTLSMessage {
 }
 
