@@ -89,6 +89,18 @@ message SessionCreateMessage {
 
 }
 
+// MJS: This allows clients to "reclaim" existing sessions on reconnect if they were disconnected.
+// Behavior is:
+// 1 - If simple timeout we get back the same session with an updated renewed time
+// 2 - If purged from the session store after the flush time it is same as createSession
+// It is in a way a message similar to SessionCreateMessage as we transmit just enough info to
+// get back session info in #1 and create a new session in #2
+message SessionResumeMessage {
+
+	optional string userId = 1;
+	optional string group = 2;
+}
+
 message SessionResponseMessage {
 
 	enum Status {
@@ -147,14 +159,6 @@ message SessionMessage {
 	optional sint64 created = 4;
 	optional sint64 renewed = 5;
 
-}
-
-// MJS: This allows clients to "reclaim" existing sessions on reconnect if they were disconnected.
-// This is valid as long as the session hasn't been flushed and we transmit the necessary info to match
-// a session on the server with the one transmitted here
-message SessionResumeMessage {
-
-	optional string sessionId = 1;
 }
 
 message StartTLSMessage {
