@@ -17,20 +17,43 @@
 	<version>0.0.0</version>
 	<packaging>pom</packaging>
 
-	<description>Layout Project</description>
+	<description>
+<![CDATA[
+### ${project.artifactId}
+
+Protocol Layout Project.
+]]>
+	</description>
 
 	<modules>
 
-		<module>barchart-proto-buf-archon</module>
-		<module>barchart-proto-buf-assm</module>
-		<module>barchart-proto-buf-data</module>
-		<module>barchart-proto-buf-inst</module>
-		<module>barchart-proto-buf-news</module>
-		<module>barchart-proto-buf-session</module>
-		<module>barchart-proto-buf-test</module>
-		<module>barchart-proto-buf-wrap</module>
-		<module>barchart-proto-util</module>
+		<module>archon</module>
+		
+		<module>assm</module>
+		<module>data</module>
+		<module>inst</module>
+		<module>news</module>
+		<module>session</module>
+		<module>test</module>
+		<module>wrap</module>
+		
+		<module>util</module>
 
 	</modules>
+
+	<build>
+
+		<!-- Layout project is not for deployment. -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 
 </project>
