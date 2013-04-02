@@ -1,12 +1,5 @@
-<!--
-
-    Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
-
-    All rights reserved. Licensed under the OSI BSD License.
-
-    http://www.opensource.org/licenses/bsd-license.php
-
--->
+<!-- Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/> All 
+	rights reserved. Licensed under the OSI BSD License. http://www.opensource.org/licenses/bsd-license.php -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
@@ -24,7 +17,7 @@
 	<version>0.0.0</version>
 	<packaging>pom</packaging>
 
-	<description>eclipse import helper</description>
+	<description>Layout Project</description>
 
 	<modules>
 
@@ -33,36 +26,11 @@
 		<module>barchart-proto-buf-data</module>
 		<module>barchart-proto-buf-inst</module>
 		<module>barchart-proto-buf-news</module>
-		<!-- <module>barchart-proto-buf-order</module> -->
 		<module>barchart-proto-buf-session</module>
 		<module>barchart-proto-buf-test</module>
 		<module>barchart-proto-buf-wrap</module>
-		<!-- <module>barchart-proto-openfast</module> -->
 		<module>barchart-proto-util</module>
 
-		<!-- experimental -->
-		<module>barchart-proto-openfeed</module>
-
 	</modules>
-
-<!-- MJS: In windows I need to sometimes disable that plugin -->
-<!-- 	<build>
-
-		<plugins>
-			<plugin>
-				<groupId>com.carrotgarden.maven</groupId>
-				<artifactId>carrot-maven-scr-plugin</artifactId>
-				<configuration>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>invalid</phase>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-
-	</build>
- -->
 
 </project>
