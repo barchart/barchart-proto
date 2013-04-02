@@ -29,7 +29,7 @@ message SessionPacketMessage {
 		STOP_TLS = 9;
 		CAPABILITIES = 10;
 		TIMESTAMP = 11;
-		RESUME = 12;
+		SESSION_RESUME = 12;
 	}
 
 	optional string version = 1;
