@@ -19,7 +19,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-session</artifactId>
-	<version>1.0.8</version>
+	<version>1.0.9-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -29,7 +29,7 @@
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>barchart-proto-buf-session-1.0.8</tag>
+	  <tag>master</tag>
   </scm>
 
 	<properties>
