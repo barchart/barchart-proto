@@ -32,9 +32,10 @@ Protocol Layout Project.
 		<module>assm</module>
 		<module>data</module>
 		<module>inst</module>
+		
 		<module>news</module>
 		<module>session</module>
-		<module>test</module>
+		
 		<module>wrap</module>
 		
 		<module>util</module>
