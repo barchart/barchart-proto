@@ -97,8 +97,7 @@ message SessionCreateMessage {
 // get back session info in #1 and create a new session in #2
 message SessionResumeMessage {
 
-	optional string userId = 1;
-	optional string group = 2;
+	optional string sessionId = 1;
 }
 
 message SessionResponseMessage {
