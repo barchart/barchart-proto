@@ -13,14 +13,14 @@
 
 	<groupId>com.barchart.proto</groupId>
 	<artifactId>barchart-proto-buf-archon</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<scm>
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-		<tag>barchart-proto-buf-archon-1.0.7</tag>
+		<tag>master</tag>
 	</scm>
 
 	<properties>
