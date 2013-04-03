@@ -33,7 +33,7 @@
 
 	<properties>
 
-		<barchartJavaVersion>1.6</barchartJavaVersion>
+		<projectJavaVersion>1.6</projectJavaVersion>
 
 	</properties>
 
