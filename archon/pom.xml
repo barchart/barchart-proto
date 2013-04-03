@@ -1,13 +1,7 @@
-<!--
-
-    Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com />
-
-    All rights reserved. Licensed under the OSI BSD License.
-
-    http://www.opensource.org/licenses/bsd-license.php
-
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com /> All 
+	rights reserved. Licensed under the OSI BSD License. http://www.opensource.org/licenses/bsd-license.php -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -43,7 +37,7 @@
 			<version>2.4.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- protocol buffers - as osgi bundle -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.apache.servicemix.bundles</groupId> -->
@@ -60,7 +54,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
@@ -68,11 +62,11 @@
 	<build>
 		<plugins>
 
-			<!-- generate java source from proto files -->
+			<!-- Generate java source from proto files. -->
 			<plugin>
 				<groupId>com.github.igor-petruk.protobuf</groupId>
 				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>0.6.2</version>
+				<version>0.6.3</version>
 				<executions>
 					<execution>
 						<id>protocol-sources</id>
@@ -81,6 +75,8 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
+							<!-- Disable, produces build loop. -->
+							<addSources>none</addSources>
 							<ignoreVersions>false</ignoreVersions>
 							<inputDirectories>
 								<entry>src/main/resources/protobuf</entry>
@@ -95,6 +91,8 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
+							<!-- Disable, produces build loop. -->
+							<addSources>none</addSources>
 							<ignoreVersions>false</ignoreVersions>
 							<inputDirectories>
 								<entry>src/test/resources/protobuf</entry>
@@ -137,18 +135,45 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>com.carrotgarden.maven</groupId>
-				<artifactId>carrot-maven-scr-plugin</artifactId>
-				<configuration>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>invalid</phase>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
+
+		<pluginManagement>
+
+			<plugins>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<!-- Disable in eclipse - build loop bug. -->
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.igor-petruk.protobuf</groupId>
+										<artifactId>protobuf-maven-plugin</artifactId>
+										<versionRange>[0,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+
+			</plugins>
+
+		</pluginManagement>
+
+
 	</build>
 
 </project>
