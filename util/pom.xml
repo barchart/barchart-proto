@@ -21,14 +21,14 @@
 	</parent>
 
 	<artifactId>barchart-proto-util</artifactId>
-	<version>1.1.2</version>
+	<version>1.1.3-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<scm>
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>barchart-proto-util-1.1.2</tag>
+	  <tag>master</tag>
   </scm>
 
 	<properties>
