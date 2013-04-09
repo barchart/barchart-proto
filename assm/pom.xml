@@ -19,7 +19,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-assm</artifactId>
-	<version>1.2.2-SNAPSHOT</version>
+	<version>1.2.2</version>
 	<packaging>bundle</packaging>
 
 	<description>assembly of all message types</description>
@@ -28,7 +28,7 @@
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>master</tag>
+	  <tag>barchart-proto-buf-assm-1.2.2</tag>
   </scm>
 
 	<properties>
