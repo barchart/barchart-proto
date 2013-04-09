@@ -19,7 +19,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-inst</artifactId>
-	<version>1.2.2</version>
+	<version>1.2.3-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -29,7 +29,7 @@
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>barchart-proto-buf-inst-1.2.2</tag>
+	  <tag>master</tag>
   </scm>
 
 	<properties>
