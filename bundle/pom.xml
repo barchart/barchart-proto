@@ -1,0 +1,48 @@
+<!-- Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com /> All 
+	rights reserved. Licensed under the OSI BSD License. http://www.opensource.org/licenses/bsd-license.php -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.barchart.proto</groupId>
+		<artifactId>barchart-proto-buf-archon</artifactId>
+		<version>1.0.9-SNAPSHOT</version>
+		<relativePath>../archon</relativePath>
+	</parent>
+
+	<artifactId>barchart-proto-buf-bundle</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<description>assembly of all message types</description>
+
+	<scm>
+		<url>https://github.com/barchart/barchart-proto</url>
+		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
+		<tag>master</tag>
+	</scm>
+
+	<properties>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.openfeed.proto</groupId>
+			<artifactId>openfeed-protocol-instrument</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openfeed.proto</groupId>
+			<artifactId>openfeed-protocol-marketdata</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+</project>
