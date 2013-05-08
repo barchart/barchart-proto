@@ -6,27 +6,24 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-// Non-java name space.
-package barchart_session;
+// Session name space.
+package com.barchart.proto.buf.session;
 
-//
-option java_package = "com.barchart.proto.buf.session";
-option java_outer_classname = "PacketSpec";
+// Builder options.
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
-//
 option optimize_for = SPEED;
 
-//
+// Message definition.
 import "MessageSpec.proto";
 
-//
+// Subset of known types.
 enum PacketType {
 	UNKNOWN = 0;
 	SESSION = 4;
 }
 
-// session packet
+// Session packet.
 message SessionPacket {
 //
 	optional sint32 channel = 1; // packet channel number
@@ -38,6 +35,7 @@ message SessionPacket {
 	//
 }
 
+// Session message.
 message SessionMessageCodec {
 //
 	repeated SessionPacketMessage body = 5; // message
