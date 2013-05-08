@@ -29,7 +29,7 @@ Protocol Layout Project.
 
 		<module>archon</module>
 		
-		<module>bundle</module>
+		<module>assm</module>
 		
 		<module>news</module>
 		<module>session</module>
