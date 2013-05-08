@@ -6,11 +6,10 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-// Non-java name space.
-package barchart_news;
+// News name space.
+package com.barchart.proto.buf.news;
 
-option java_package = "com.barchart.proto.buf.news";
-option java_outer_classname = "MessageSpec";
+// Builder options.
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
 option optimize_for = SPEED;
@@ -64,17 +63,22 @@ message ServerResponse {
 
 message StoryResponse {
 
-	optional sint32 requestId = 1; // The client request ID associated with this response
-	optional StoryMessage story = 2; // The story content
-	repeated sint32 subscription = 3 [packed = true]; // Which subscription filter(s) this story applies to
+	// The client request ID associated with this response
+	optional sint32 requestId = 1;
+	// The story content
+	optional StoryMessage story = 2;
+	// Which subscription filter(s) this story applies to
+	repeated sint32 subscription = 3 [packed = true];
 
 }
 
 message FeedUpdate {
 
 	enum Action {
-		REFRESH = 1; // Full refresh, message contains all items
-		UPDATE = 2; // Add/update the subset of items in this message
+		// Full refresh, message contains all items
+		REFRESH = 1;
+		// Add/update the subset of items in this message
+		UPDATE = 2;
 	}
 
 	optional Action action = 1;

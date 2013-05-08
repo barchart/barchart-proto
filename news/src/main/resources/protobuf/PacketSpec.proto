@@ -6,27 +6,24 @@
  * http://www.opensource.org/licenses/bsd-license.php
  */
 
-// Non-java name space.
-package barchart_news;
+// News name space.
+package com.barchart.proto.buf.news;
 
-//
-option java_package = "com.barchart.proto.buf.news";
-option java_outer_classname = "PacketSpec";
+// Builder options.
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
-//
 option optimize_for = SPEED;
 
-//
+// Message descriptor.
 import "MessageSpec.proto";
 
-//
+// Subset of known types.
 enum PacketType {
 	UNKNOWN = 0;
 	NEWS = 2;
 }
 
-// news packet
+// News packet
 message NewsPacket {
 //
 	optional sint32 channel = 1; // packet channel number
