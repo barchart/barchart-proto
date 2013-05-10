@@ -38,6 +38,8 @@ enum PacketType {
 	// Packet with market news snapshot/update messages.
 	NEWS = 5;
 
+	// Packet with market order/trade messages.
+	TRADE = 6;
 }
 
 // Generic packet with flexible body encoding.
