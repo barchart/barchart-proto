@@ -12,11 +12,17 @@
 		<relativePath>../archon</relativePath>
 	</parent>
 
-	<artifactId>barchart-proto-buf-assm</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<artifactId>barchart-proto-buf-generic</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
-	<description>assembly of all message types</description>
+	<description>
+<![CDATA[
+### ${project.artifactId}
+
+Protocol Packet Registry.
+]]>
+	</description>
 
 	<scm>
 		<url>https://github.com/barchart/barchart-proto</url>
@@ -30,18 +36,6 @@
 	</properties>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>org.openfeed.proto</groupId>
-			<artifactId>openfeed-protocol-instrument</artifactId>
-			<version>[1-SNAPSHOT,2)</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openfeed.proto</groupId>
-			<artifactId>openfeed-protocol-marketdata</artifactId>
-			<version>[1-SNAPSHOT,2)</version>
-		</dependency>
 
 	</dependencies>
 

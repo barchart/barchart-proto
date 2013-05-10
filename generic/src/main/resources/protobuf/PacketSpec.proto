@@ -1,0 +1,61 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+// Generic elements name space.
+package org.openfeed.proto.generic;
+
+// Builder options.
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+// Packet type for supported messages.
+enum PacketType {
+
+	// Invalid type.
+	// Represents error condition.
+	UNKNOWN = 0;
+
+	// Market data update packet.
+	// Contains only update messages.
+	MARKET_UPDATE = 1;
+
+	// Market data snapshot packet.
+	// Contains only snapshot messages.
+	MARKET_SNAPSHOT = 2;
+
+	// Packet with instrument definitions.
+	INSTRUMENT = 3;
+
+	// Packet with session control messages.
+	SESSION = 4;
+
+	// Packet with market news snapshot/update messages.
+	NEWS = 5;
+
+}
+
+// Generic packet with flexible body encoding.
+message Packet {
+
+	// Packet channel number.
+	optional sint32 channel = 1;
+
+	// Packet sequence number inside the channel.
+	optional sint64 sequence = 2;
+
+	// Packet time stamp, millisFIX, UTC.
+	optional sint64 timeStamp = 3;
+
+	// Packet body type selector.
+	optional PacketType type = 4;
+
+	// Packet body content in PacketType format.
+	optional bytes body = 5;
+
+}

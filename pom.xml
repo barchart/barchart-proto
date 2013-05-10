@@ -28,11 +28,12 @@ Protocol Layout Project.
 	<modules>
 
 		<module>archon</module>
-		
-		<module>assm</module>
-		
+
+		<module>generic</module>
 		<module>news</module>
 		<module>session</module>
+
+		<module>assm</module>
 		
 		<module>wrap</module>
 		
