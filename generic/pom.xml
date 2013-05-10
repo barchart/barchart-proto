@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-generic</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -31,7 +31,7 @@ https://github.com/openfeed-project/openfeed-protocol/tree/master/src/template/g
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-		<tag>barchart-proto-buf-generic-1.0.0</tag>
+		<tag>master</tag>
 	</scm>
 
 </project>
