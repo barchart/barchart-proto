@@ -32,7 +32,7 @@ message SessionPacket {
 	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
 	optional PacketType type = 4; // packet type selector
 	//
-	optional SessionPacketMessage body = 5; // message
+	repeated SessionPacketMessage body = 5; // message
 	//
 }
 
