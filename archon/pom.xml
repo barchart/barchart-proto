@@ -24,9 +24,13 @@
 		<tag>master</tag>
 	</scm>
 
-	<properties>
+	<description>
+<![CDATA[
+### ${project.artifactId}
 
-	</properties>
+Parent for Protocol Projects.
+]]>
+	</description>
 
 	<dependencies>
 
@@ -191,7 +195,6 @@
 			</plugins>
 
 		</pluginManagement>
-
 
 	</build>
 

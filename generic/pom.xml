@@ -20,7 +20,11 @@
 <![CDATA[
 ### ${project.artifactId}
 
-Protocol Packet Registry.
+Generic Protocol Elements.
+
+Keep in sync/replace-with when ready   
+https://github.com/openfeed-project/openfeed-protocol/tree/master/src/template/generic
+
 ]]>
 	</description>
 
@@ -30,6 +34,5 @@ Protocol Packet Registry.
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
 		<tag>master</tag>
 	</scm>
-
 
 </project>
