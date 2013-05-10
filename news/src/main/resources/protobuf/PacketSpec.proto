@@ -18,9 +18,10 @@ option optimize_for = SPEED;
 import "MessageSpec.proto";
 
 // Subset of known types.
+// Keep in sync: https://github.com/openfeed-project/openfeed-protocol/tree/master/src/template/generic
 enum PacketType {
 	UNKNOWN = 0;
-	NEWS = 2;
+	NEWS = 5;
 }
 
 // News packet
