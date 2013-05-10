@@ -19,7 +19,7 @@
 	</parent>
 
 	<artifactId>barchart-proto-buf-news</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<description>
@@ -34,7 +34,7 @@ Barchart News Protocol.
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>barchart-proto-buf-news-1.1.0</tag>
+	  <tag>master</tag>
   </scm>
 
 </project>
