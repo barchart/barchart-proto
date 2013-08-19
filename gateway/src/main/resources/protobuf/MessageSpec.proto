@@ -1,0 +1,208 @@
+// Gateway name space.
+package com.barchart.proto.buf.gateway;
+
+// Builder options.
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+message GatewayMessage {
+
+	enum Type {
+		ACCOUNT = 1;
+		ORDER = 2;
+	}
+
+	optional Type type = 1;
+	optional string id = 2;
+	optional bytes body = 3;
+
+}
+
+// ***** ***** Account Messages ***** *****
+message AccountRequest {
+
+	enum RequestType {
+		INFO = 1;
+		NEW = 2;
+		MODIFY = 3;
+		CLOSE = 4;
+	}
+
+	optional RequestType type = 1;
+
+}
+
+message AccountInfoReport {
+
+	repeated AccountInfo accounts = 1;
+
+}
+
+message AccountInfo {
+
+	optional AccountMeta account = 1;
+	optional PortfolioMeta portfolio = 2;
+	repeated Position positions = 3;
+	repeated Execution executions = 4;
+
+}
+
+message AccountMeta {
+
+	optional string name = 1;
+	optional string id = 2;
+	optional string accountNo = 3;
+	optional string clearingPartyName = 4;
+	optional string clearingPartyId = 5;
+
+}
+
+message PortfolioMeta {
+
+	optional sint64 availableBallanceMantissa = 1;
+	optional sint32 availableBallanceExponent = 2;
+
+	optional sint64 previousDayBallanceMantissa = 3;
+	optional sint32 previousDayBallanceExponent = 4;
+
+	optional sint64 netLiquidityMantissa = 5;
+	optional sint32 netLequidityExponent = 6;
+
+	optional sint64 profitLossMantissa = 7;
+	optional sint32 profitLossExponent = 8;
+
+}
+
+message Position {
+
+	optional string instrumentId = 1;
+	optional sint64 qtyMantissa = 2;
+	optional sint32 qtyExponent = 3;
+
+	// Avg fill price?
+}
+
+message OrderMeta {
+
+	enum OrderType {
+		MARKET = 1;
+		LIMIT = 2;
+		STOP = 3;
+		STOP_LIMIT = 4;
+	}
+
+	enum OrderStatus {
+		NEW = 1;
+		PARTIAL = 2;
+		FILLED = 3;
+		REJECTED = 4;
+		CANCELED = 5;
+		EXPIRED = 6;
+	}
+
+	enum OrderInstruction {
+		ALL_OR_NONE = 1;
+		QUANTITY_TRIGGERED_STOP = 2;
+		PARKED = 3;
+		FUNARI = 4;
+		MARKET_IF_TOUCHED = 5;
+		MARKET_LIMIT = 6;
+		TRAILING = 7;
+	}
+
+	enum TimeInForce {
+		DAY = 1;
+		IMMEDIATE_OR_CANCEL = 2;
+		FILL_OR_KILL = 3;
+		GOOD_TILL_DATE = 4;
+	}
+
+	enum BookSide {
+		BID = 1;
+		ASK = 2;
+	}
+
+	optional OrderType orderType = 1;
+	optional OrderStatus orderStatus = 2;
+	repeated OrderInstruction orderInstructions = 3;
+	optional TimeInForce timeInForce = 4;
+
+	optional AccountMeta account = 5;
+	optional string instrumentId = 6;
+
+	optional sint64 timeCreated = 7;
+	optional sint64 timeLastModified = 8;
+
+	optional BookSide bookSide = 9;
+
+	optional sint64 limitPriceMantissa = 10;
+	optional sint32 limitPriceExponent = 11;
+
+	optional sint64 stopPriceMantissa = 12;
+	optional sint32 stopPriceExponent = 13;
+
+	optional sint64 lastFillPriceMantissa = 14;
+	optional sint32 lastFillPriceExponent = 15;
+
+	optional sint64 totalQtyMantissa = 16;
+	optional sint32 totalQtyExponent = 17;
+
+	optional sint64 cumulativeFilledMantissa = 18;
+	optional sint32 cumulativeFilledExponent = 19;
+
+	optional sint64 remainingQtyMantissa = 20;
+	optional sint32 remainingQtyExponent = 21;
+
+}
+
+message Execution {
+
+	enum ExecutionType {
+		NEW = 1;
+		FILL = 2;
+		MODIFY = 3;
+		CANCEL = 4;
+		REJECT = 5;
+		EXPIRE = 6;
+	}
+
+	optional ExecutionType executionType = 1;
+	optional AccountMeta account = 2;
+	optional string instrumentId = 3;
+	optional OrderMeta order = 4;
+	optional sint64 executionTime = 5;
+	optional OrderMeta.BookSide bookSide = 6;
+
+	optional sint64 avgPriceMantissa = 7;
+	optional sint32 avgPriceExponent = 8;
+
+	optional sint64 fillQtyMantissa = 9;
+	optional sint32 fillQtyExponent = 10;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

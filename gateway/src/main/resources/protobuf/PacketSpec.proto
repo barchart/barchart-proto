@@ -1,0 +1,35 @@
+
+
+package com.barchart.proto.buf.gateway;
+
+// Builder options.
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+// Message descriptor.
+import "MessageSpec.proto";
+
+// Subset of known types.
+// Keep in sync: https://github.com/openfeed-project/openfeed-protocol/tree/master/src/template/generic
+enum PacketType {
+	UNKNOWN = 0;
+	GATEWAY = 20;
+}
+
+message GatewayPacket {
+
+	optional sint32 channel = 1; // packet channel number
+	optional sint64 sequence = 2; // packet sequence number inside the channel
+	optional sint64 timeStamp = 3; // packet time stamp, millisUTC
+	optional PacketType type = 4; // packet type selector
+
+	optional GatewayMessage message = 5;
+
+}
+
+message GatewayMessageCodec {
+
+	repeated GatewayMessage message = 5;
+
+}
