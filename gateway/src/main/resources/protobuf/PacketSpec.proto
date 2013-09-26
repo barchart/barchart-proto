@@ -14,7 +14,7 @@ import "MessageSpec.proto";
 // Keep in sync: https://github.com/openfeed-project/openfeed-protocol/tree/master/src/template/generic
 enum PacketType {
 	UNKNOWN = 0;
-	GATEWAY = 20;
+	GATEWAY = 10;
 }
 
 message GatewayPacket {

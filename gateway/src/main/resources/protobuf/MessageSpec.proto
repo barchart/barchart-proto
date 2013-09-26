@@ -8,91 +8,244 @@ option optimize_for = SPEED;
 
 message GatewayMessage {
 
-	enum Type {
-		ACCOUNT = 1;
-		ORDER = 2;
+	enum MessageType {
+		ADMIN = 0;
+		ORDER = 1;
 	}
 
-	optional Type type = 1;
-	optional string id = 2;
-	optional bytes body = 3;
+	optional MessageType messageType = 1;
+	optional bytes body = 2;
 
 }
 
-// ***** ***** Account Messages ***** *****
-message AccountRequest {
+enum Side {
+
+	BID = 0;
+	ASK = 1;
+
+}
+
+// ***** ***** Admin ***** *****
+
+message PortfolioRequest {
 
 	enum RequestType {
+		NULL = 0;
 		INFO = 1;
 		NEW = 2;
 		MODIFY = 3;
 		CLOSE = 4;
 	}
 
-	optional RequestType type = 1;
+	optional RequestType requestType = 1;
+	optional Account account = 2;
+	optional Portfolio portfolio = 3;
+	optional PortfolioPermission permissions = 4;
+	optional string contestID = 5;
+	optional string gatewayID = 6;
+	optional string requestID = 7;
 
 }
 
-message AccountInfoReport {
+message PortfolioResponse {
 
-	repeated AccountInfo accounts = 1;
+	enum ResponseType {
+		NULL = 0;
+		ERROR = 1;
+		INFO = 2;
+	}
+
+	optional ResponseType responseType = 1;
+	repeated Portfolio portfolios = 2;
+	optional string responseText = 3;
+	optional string gatewayID = 4;
+	optional string requestID = 5;
 
 }
 
-message AccountInfo {
+message Portfolio {
 
-	optional AccountMeta account = 1;
-	optional PortfolioMeta portfolio = 2;
-	repeated Position positions = 3;
-	repeated Execution executions = 4;
+	enum Status {
+		ACTIVE = 0;
+		CLOSED = 1;
+	}
+
+	optional Status status = 1;
+	optional Account account = 2;
+	optional PortfolioPermission permission = 3;
+	repeated Position positions = 4;
+	repeated Order openOrders = 5;
+	repeated Execution executions = 6;
+
+	optional sint64 availableBallanceMantissa = 7;
+	optional sint32	availableBallanceExponent = 8;
+
+	optional sint64 previousDayBallanceMantissa = 9;
+	optional sint32 previousDayBallanceExponent = 10;
+
+	optional sint64 netLiquidityMantissa = 11;
+	optional sint32 netLiquidityExponent = 12;
+
+	optional sint64 profitLossMantissa = 13;
+	optional sint32 profitLossExponent = 14;
 
 }
 
-message AccountMeta {
+message Account {
 
 	optional string name = 1;
 	optional string id = 2;
-	optional string accountNo = 3;
+	optional string clearingPartyNo = 3;
 	optional string clearingPartyName = 4;
-	optional string clearingPartyId = 5;
+	optional sint64 created = 5;
+	optional sint64 modified = 6;
+	optional PortfolioPermission permission = 7;
+	optional string userID = 8;
 
 }
 
-message PortfolioMeta {
+message InstrumentPermission {
 
-	optional sint64 availableBallanceMantissa = 1;
-	optional sint32 availableBallanceExponent = 2;
+	optional string instID = 1;
 
-	optional sint64 previousDayBallanceMantissa = 3;
-	optional sint32 previousDayBallanceExponent = 4;
+	optional sint64 maxOrderSizeMantissa = 2;
+	optional sint32 maxOrderSizeExponent = 3;
 
-	optional sint64 netLiquidityMantissa = 5;
-	optional sint32 netLequidityExponent = 6;
+	optional sint64 maxExposureMantissa = 4;
+	optional sint32 maxExposureExponent = 5;
 
-	optional sint64 profitLossMantissa = 7;
-	optional sint32 profitLossExponent = 8;
+	optional sint64 maxPositionMantissa = 6;
+	optional sint32 maxPositionExponent = 7;
+
+}
+
+message PortfolioPermission {
+
+	repeated InstrumentPermission params = 1;
+
+	optional sint64 maxPositionMantissa = 2;
+	optional sint32 maxPositionExponent = 3;
+
+	optional sint64 minBallanceMantissa = 4;
+	optional sint32 minBallanceExponent = 5;
 
 }
 
 message Position {
 
-	optional string instrumentId = 1;
-	optional sint64 qtyMantissa = 2;
-	optional sint32 qtyExponent = 3;
+	optional string instID = 1;
 
-	// Avg fill price?
+	optional sint64 instPointValueMantissa = 2;
+	optional sint32 instPointValueExponent = 3;
+
+	optional sint64 positionMantissa = 4;
+	optional sint32 positionExponent = 5;
+
+	optional sint64 closedValueMantissa = 6;
+	optional sint32 closedValueExponent = 7;
+
+	optional sint64 avgOpenPriceMantissa = 8;
+	optional sint32 avgOpenPriceExponent = 9;
+
+	repeated Fill unallocatedFills = 10;
+
 }
 
-message OrderMeta {
+// ***** ***** Order ***** *****
 
-	enum OrderType {
+message OrderRequest {
+
+	enum RequestType {
+		NULL = 0;
+		NEW = 1;
+		MODIFY = 2;
+		CANCEL = 3;
+	}
+
+	optional RequestType requestType = 1;
+	optional Account account = 2;
+	optional string instID = 3;
+	optional Order order = 4;
+	optional string gatewayID = 5;
+	optional string requestID = 6;
+
+}
+
+message OrderResponse {
+
+	enum ResponseType {
+		NULL = 0;
+		ERROR = 1;
+		REJECT = 2;
+		EXECUTION = 3;
+	}
+
+	optional ResponseType responseType = 1;
+	optional string responseText = 2;
+	optional Execution execution = 3;
+	optional Order order = 4;
+	optional Account account = 5;
+	optional string gatewayID = 6;
+	optional string requestID = 7;
+
+}
+
+message Fill {
+
+	optional sint64 fillTime = 1;
+	optional string instID = 2;
+	optional string accountID = 3;
+	optional Side side = 4;
+
+	optional sint64 fillQtyMantissa = 5;
+	optional sint32 fillQtyExponent = 6;
+
+	optional sint64 avgFillPriceMantissa = 7;
+	optional sint32 avgFillPriceExponent = 8;
+
+}
+
+message Execution {
+
+	enum ExecutionType {
+		NULL = 0;
+		NEW = 1;
+		PARTIAL_FILL = 2;
+		FILL = 3;
+		MODIFY = 4;
+		CANCEL = 5;
+		REJECT = 6;
+		EXPIRE = 7;
+	}
+
+	optional ExecutionType executionType = 1;
+
+	optional sint32 chainIndex = 2;
+
+	optional Account account = 3;
+	optional string gatewayID = 4;
+	optional string instID = 5;
+	optional string orderID = 6;
+	optional sint64 timeExecuted = 7;
+	optional Fill fill = 8;
+	repeated Fill legFills = 9;
+
+}
+
+message Order {
+
+	enum Type {
+		NULL_TYPE = 0;
 		MARKET = 1;
 		LIMIT = 2;
 		STOP = 3;
 		STOP_LIMIT = 4;
 	}
 
-	enum OrderStatus {
+	optional Type type = 1;
+
+	enum Status {
+		NULL_STATUS = 0;
 		NEW = 1;
 		PARTIAL = 2;
 		FILLED = 3;
@@ -101,7 +254,10 @@ message OrderMeta {
 		EXPIRED = 6;
 	}
 
-	enum OrderInstruction {
+	optional Status status = 2;
+
+	enum Instruction {
+		NULL_INSTRUCTION = 0;
 		ALL_OR_NONE = 1;
 		QUANTITY_TRIGGERED_STOP = 2;
 		PARKED = 3;
@@ -111,30 +267,23 @@ message OrderMeta {
 		TRAILING = 7;
 	}
 
+	repeated Instruction instructions = 3;
+
 	enum TimeInForce {
+		NULL_TIMEINFORCE = 0;
 		DAY = 1;
 		IMMEDIATE_OR_CANCEL = 2;
 		FILL_OR_KILL = 3;
 		GOOD_TILL_DATE = 4;
 	}
 
-	enum BookSide {
-		BID = 1;
-		ASK = 2;
-	}
-
-	optional OrderType orderType = 1;
-	optional OrderStatus orderStatus = 2;
-	repeated OrderInstruction orderInstructions = 3;
 	optional TimeInForce timeInForce = 4;
 
-	optional AccountMeta account = 5;
-	optional string instrumentId = 6;
-
+	optional Account account = 5;
+	optional string instID = 6;
 	optional sint64 timeCreated = 7;
-	optional sint64 timeLastModified = 8;
-
-	optional BookSide bookSide = 9;
+	optional sint64 timeModified = 8;
+	optional Side side = 9;
 
 	optional sint64 limitPriceMantissa = 10;
 	optional sint32 limitPriceExponent = 11;
@@ -148,39 +297,18 @@ message OrderMeta {
 	optional sint64 totalQtyMantissa = 16;
 	optional sint32 totalQtyExponent = 17;
 
-	optional sint64 cumulativeFilledMantissa = 18;
-	optional sint32 cumulativeFilledExponent = 19;
+	optional sint64 cumulativeFilledQtyMantissa = 18;
+	optional sint32 cumulativeFilledQtyExponent = 19;
 
 	optional sint64 remainingQtyMantissa = 20;
 	optional sint32 remainingQtyExponent = 21;
 
-}
+	repeated Execution history = 22;
 
-message Execution {
-
-	enum ExecutionType {
-		NEW = 1;
-		FILL = 2;
-		MODIFY = 3;
-		CANCEL = 4;
-		REJECT = 5;
-		EXPIRE = 6;
-	}
-
-	optional ExecutionType executionType = 1;
-	optional AccountMeta account = 2;
-	optional string instrumentId = 3;
-	optional OrderMeta order = 4;
-	optional sint64 executionTime = 5;
-	optional OrderMeta.BookSide bookSide = 6;
-
-	optional sint64 avgPriceMantissa = 7;
-	optional sint32 avgPriceExponent = 8;
-
-	optional sint64 fillQtyMantissa = 9;
-	optional sint32 fillQtyExponent = 10;
+	optional string ID = 23;
 
 }
+
 
 
 
