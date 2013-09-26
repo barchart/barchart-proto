@@ -28,16 +28,15 @@ Protocol Layout Project.
 	<modules>
 
 		<module>archon</module>
+	
+    <module>protobuf</module>
+    <module>protobuf-internal</module>
 
-		<module>generic</module>
-		<module>news</module>
+
+    <!-- Do these really need to be separate modules? -->
+    <module>gateway</module>	
+    <module>news</module>
 		<module>session</module>
-
-		<module>assm</module>
-		
-		<module>wrap</module>
-		
-		<module>util</module>
 
 	</modules>
 

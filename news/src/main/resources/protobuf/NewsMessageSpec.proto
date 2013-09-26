@@ -1,0 +1,247 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+// News name space.
+package com.barchart.proto.buf.news;
+
+// Builder options.
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+enum NewsMessageType {
+    REQUEST = 1;
+    RESPONSE = 2;
+    STORY = 3;
+    FEED = 4;
+    PERMISSIONS = 5;
+    AUTH = 6;
+}
+
+message NewsMessage {
+	optional NewsMessageType type = 1;
+	optional sint32 requestId = 2;
+	optional bytes body = 3;
+}
+
+/*
+ * Client/server commands
+ */
+
+message ClientRequest {
+	optional sint32 requestId = 1;
+	optional string command = 2;
+	repeated KeyValueMessage param = 6;
+}
+
+message ServerResponse {
+
+	enum Status {
+		OK = 1;
+		BADREQUEST = 2;
+		UNAUTHORIZED = 3;
+		NOTFOUND = 4;
+		TIMEOUT = 5;
+		ERROR = 6;
+	}
+
+	optional Status code = 1;
+	optional sint32 requestId = 2;
+	optional string request = 3;
+	optional string message = 4;
+
+}
+
+message StoryResponse {
+
+	// The client request ID associated with this response
+	optional sint32 requestId = 1;
+	// The story content
+	optional StoryMessage story = 2;
+	// Which subscription filter(s) this story applies to
+	repeated sint32 subscription = 3 [packed = true];
+
+}
+
+message FeedUpdate {
+
+	enum Action {
+		// Full refresh, message contains all items
+		REFRESH = 1;
+		// Add/update the subset of items in this message
+		UPDATE = 2;
+	}
+
+	optional Action action = 1;
+	repeated ProviderMessage provider = 2;
+	repeated FeedMessage feed = 3;
+	repeated PackageMessage package = 4;
+
+}
+
+message PermissionsRefresh {
+
+	repeated PermissionMessage permission = 2;
+
+}
+
+message AuthResponse {
+
+	enum Status {
+		SUCCESS = 0;
+		FAILURE = 1;
+	}
+
+	optional Status status = 1;
+	optional UserMessage user = 2;
+
+}
+
+/*
+ * News content messages
+ */
+
+message PermissionMessage {
+
+	optional string permission = 1;
+	optional string feed = 2;
+	optional string package = 3;
+	optional sint32 delay = 4;
+
+}
+
+message PackageMessage {
+
+	optional string code = 1;
+	optional string name = 2;
+	optional sint32 delay = 3;
+
+}
+
+message ProviderMessage {
+
+	optional string code = 1;
+	optional string name = 2;
+
+}
+
+message FeedMessage {
+
+	optional string code = 1;
+	optional string provider = 2;
+	optional string name = 3;
+	optional string tag = 4;
+	optional string trailer = 5;
+
+}
+
+message StoryMessage {
+
+	enum Status {
+		PUBLISHED = 1;
+		HOLD = 2;
+		UNKNOWN = 3;
+		RECALLED = 4;
+		KILLED = 5;
+	}
+
+	enum Media {
+		TEXT = 1;
+		PHOTO = 2;
+		VIDEO = 3;
+		AUDIO = 4;
+		PDF = 5;
+		CSV = 6;
+		OTHER = 7;
+	}
+
+	// Critical fields for routing/matching
+	optional string id = 1;
+	optional sint64 version = 2;
+	optional sint64 sequence = 3;
+	optional string feed = 4;
+	optional Status status = 5;
+	optional string sourceId = 6;
+	optional string sourceVersion = 7;
+	optional sint64 added = 8;
+	optional sint64 published = 9;
+	optional sint64 updated = 10;
+
+	// Content-oriented fields
+	optional Media media = 20;
+	optional string language = 21;
+	optional sint32 priority = 22;
+	optional string series = 23;
+	optional string author = 24;
+	optional string authorTitle = 25;
+	optional string organization = 26;
+	optional string location = 27;
+	optional string title = 28;
+	optional string subtitle = 29;
+	optional string copyright = 30;
+	optional string summary = 31;
+	optional bytes content = 32;
+	optional string contentType = 33;
+	optional EnclosureMessage thumbnail = 34;
+	optional bool external = 35;
+	optional string externalLink = 36;
+	optional bool flash = 37;
+	optional bool partial = 38;
+
+	// Media enclosures
+	repeated EnclosureMessage enclosure = 100;
+
+	// Categorization
+	repeated string package = 101;
+	repeated string flag = 102;
+	repeated string subject = 103;
+	repeated string symbol = 104;
+}
+
+message EnclosureMessage {
+
+	enum Role {
+		THUMBNAIL = 1;
+		PREVIEW = 2;
+		MAIN = 3;
+	}
+
+	optional string id = 1;
+	optional string sourceId = 2;
+	optional string name = 3;
+	optional string url = 4;
+	optional string caption = 5;
+	optional string description = 6;
+	optional string filename = 7;
+	optional string credit = 8;
+	optional string copyright = 9;
+	optional string mimeType = 10;
+	optional Role role = 11;
+	optional string ref = 12;
+	optional sint32 width = 13;
+	optional sint32 height = 14;
+	optional sint64 size = 15;
+
+}
+
+message UserMessage {
+
+	optional string username = 1;
+	optional string password = 2;
+	optional sint64 refreshed = 3;
+	repeated string product = 4;
+	repeated string permission = 5;
+
+}
+
+message KeyValueMessage {
+
+	optional string key = 1;
+	optional string value = 2;
+
+}
