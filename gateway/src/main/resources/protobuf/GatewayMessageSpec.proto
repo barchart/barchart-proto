@@ -8,21 +8,14 @@ option optimize_for = SPEED;
 
 // Reserved types for gateway: 301-399
 enum GatewayMessageType {
-    GATEWAY_MESSAGE = 301;
-
-    // The following two message types aren't following convention of messageType as first field
-    // Instead, GatewayMessage has a "bytes body" field and a separate messageType.
-    // If 2.0 propsal is accepted, these should be converted to top level types and the
-    // generic GatewayMessage type should be removed.
-    ADMIN_MESSAGE = 302;
-    ORDER_MESSAGE = 303;
+    PORTFOLIO_REQUEST= 301;
+    PORTFOLIO_RESPONSE = 302;
+    ORDER_REQUEST = 303;
+    ORDER_RESPONSE = 304;
 }
 
 
-message GatewayMessage {
-	optional GatewayMessageType messageType = 1;
-	optional bytes body = 2;
-}
+
 
 
 enum Side {
