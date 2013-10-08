@@ -229,6 +229,7 @@ message Execution {
 	optional sint64 timeExecuted = 7;
 	optional Fill fill = 8;
 	repeated Fill legFills = 9;
+	optional OrderModification modification = 10;
 
 }
 
@@ -306,6 +307,21 @@ message Order {
 	repeated Execution history = 22;
 
 	optional string ID = 23;
+
+}
+
+message OrderModification {
+
+	optional Order.Type type = 1;
+
+	optional sint64 newLimitMantissa = 2;
+	optional sint32 newLimitExponent = 3;
+
+	optional sint64 newStopMantissa = 4;
+	optional sint32 newStopExponent = 5;
+
+	optional sint64 newQtyMantissa = 6;
+	optional sint32 newQtyExponent = 7;
 
 }
 

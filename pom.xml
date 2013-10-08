@@ -30,6 +30,8 @@ Protocol Layout Project.
 		<module>archon</module>
 
 		<module>generic</module>
+		
+		<module>gateway</module>
 		<module>news</module>
 		<module>session</module>
 
