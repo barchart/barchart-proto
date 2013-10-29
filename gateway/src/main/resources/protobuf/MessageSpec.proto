@@ -295,18 +295,24 @@ message Order {
 	optional sint64 lastFillPriceMantissa = 14;
 	optional sint32 lastFillPriceExponent = 15;
 
-	optional sint64 totalQtyMantissa = 16;
-	optional sint32 totalQtyExponent = 17;
+	optional sint64 avgFillPriceMantissa = 16;
+	optional sint32 avgFillPriceExponent = 17;
 
-	optional sint64 cumulativeFilledQtyMantissa = 18;
-	optional sint32 cumulativeFilledQtyExponent = 19;
+	optional sint64 totalQtyMantissa = 18;
+	optional sint32 totalQtyExponent = 19;
 
-	optional sint64 remainingQtyMantissa = 20;
-	optional sint32 remainingQtyExponent = 21;
+	optional sint64 lastFillQtyMantissa = 20;
+	optional sint32 lastFillQtyExponent = 21;
 
-	repeated Execution history = 22;
+	optional sint64 cumulativeFilledQtyMantissa = 22;
+	optional sint32 cumulativeFilledQtyExponent = 23;
 
-	optional string ID = 23;
+	optional sint64 remainingQtyMantissa = 24;
+	optional sint32 remainingQtyExponent = 25;
+
+	repeated Execution history = 26;
+
+	optional string ID = 27;
 
 }
 
