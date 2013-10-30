@@ -89,7 +89,10 @@ message Portfolio {
 	optional sint64 profitLossMantissa = 13;
 	optional sint32 profitLossExponent = 14;
 
-	optional sint64 time = 15;
+	optional sint64 valAtCloseMantissa = 15;
+	optional sint32 valAtCloseExponent = 16;
+
+	optional sint64 time = 17;
 
 }
 
