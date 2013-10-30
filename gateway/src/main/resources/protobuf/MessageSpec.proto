@@ -89,6 +89,8 @@ message Portfolio {
 	optional sint64 profitLossMantissa = 13;
 	optional sint32 profitLossExponent = 14;
 
+	optional sint64 time = 15;
+
 }
 
 message Account {
@@ -101,6 +103,7 @@ message Account {
 	optional sint64 modified = 6;
 	optional PortfolioPermission permission = 7;
 	optional string userID = 8;
+	optional string gatewayID = 9;
 
 }
 
