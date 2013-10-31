@@ -83,16 +83,13 @@ message Portfolio {
 	optional sint64 previousDayBallanceMantissa = 9;
 	optional sint32 previousDayBallanceExponent = 10;
 
-	optional sint64 netLiquidityMantissa = 11;
-	optional sint32 netLiquidityExponent = 12;
+	optional sint64 profitLossMantissa = 11;
+	optional sint32 profitLossExponent = 12;
 
-	optional sint64 profitLossMantissa = 13;
-	optional sint32 profitLossExponent = 14;
+	optional sint64 valAtCloseMantissa = 13;
+	optional sint32 valAtCloseExponent = 14;
 
-	optional sint64 valAtCloseMantissa = 15;
-	optional sint32 valAtCloseExponent = 16;
-
-	optional sint64 time = 17;
+	optional sint64 time = 15;
 
 }
 
@@ -319,6 +316,9 @@ message Order {
 	repeated Execution history = 26;
 
 	optional string ID = 27;
+
+	optional sint64 instPointValMantissa = 28;
+	optional sint32 instPointValExponent = 29;
 
 }
 
