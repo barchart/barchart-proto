@@ -10,7 +10,7 @@
 	</parent>
   
   	<artifactId>barchart-proto-buf-gateway</artifactId>
-  	<version>1.0.1-SNAPSHOT</version>
+  	<version>1.0.1</version>
   	<packaging>bundle</packaging>
   	
   	<description>
@@ -25,7 +25,7 @@ Barchart News Protocol.
 		<url>https://github.com/barchart/barchart-proto</url>
 		<connection>scm:git:git://github.com/barchart/barchart-proto.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-proto.git</developerConnection>
-	  <tag>master</tag>
+	  <tag>barchart-proto-buf-gateway-1.0.1</tag>
   </scm>
   	
 </project>
