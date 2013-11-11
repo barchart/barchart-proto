@@ -60,6 +60,7 @@ message PortfolioResponse {
 	optional string responseText = 3;
 	optional string gatewayID = 4;
 	optional string requestID = 5;
+	optional string responseID = 6;
 
 }
 
@@ -190,6 +191,7 @@ message OrderResponse {
 	optional Account account = 5;
 	optional string gatewayID = 6;
 	optional string requestID = 7;
+	optional string responseID = 8;
 
 }
 
