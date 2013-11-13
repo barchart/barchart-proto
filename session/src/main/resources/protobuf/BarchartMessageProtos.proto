@@ -1,0 +1,39 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+package com.barchart.proto.streamingfeed;
+
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+
+enum BarchartMessageType {
+	UNKNOWN = 100;
+	SUBSCRIPTION_REQUEST = 101;
+	SUBSCRIPTION_RESPONSE = 102;
+}
+
+
+message SubscriptionRequest {
+	optional sint64 requestId = 1;
+	optional sint64 instrumentId = 2;
+}
+
+message SubscriptionResponse {
+	enum Result {
+		SUCCESS = 0;
+		SUBSCRIPTION_DENIED = 1;
+		INSTRUMENT_ID_UNKNOWN = 2;
+		GENERIC_FAILURE = 127;
+	}
+
+	optional sint64 requestId = 1;
+	optional Result result = 2;
+	optional string message = 3;
+}
