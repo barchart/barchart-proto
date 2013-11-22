@@ -19,10 +19,15 @@ enum BarchartMessageType {
 	SUBSCRIPTION_RESPONSE = 102;
 }
 
-
 message SubscriptionRequest {
+	enum Type {
+		BY_SYMBOL = 1;
+		BY_MARKET_ID = 2;
+	}
 	optional sint64 requestId = 1;
-	optional sint64 instrumentId = 2;
+	optional Type type = 2;
+	optional string symbol = 3;
+	optional sint64 instrumentId = 4;
 }
 
 message SubscriptionResponse {
@@ -30,6 +35,7 @@ message SubscriptionResponse {
 		SUCCESS = 0;
 		SUBSCRIPTION_DENIED = 1;
 		INSTRUMENT_ID_UNKNOWN = 2;
+		SYMBOL_UKNOWN = 3;
 		GENERIC_FAILURE = 127;
 	}
 
