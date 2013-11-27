@@ -27,19 +27,20 @@ message SubscriptionRequest {
 	optional sint64 requestId = 1;
 	optional Type type = 2;
 	optional string symbol = 3;
-	optional sint64 instrumentId = 4;
+	optional sint64 marketId = 4;
 }
 
 message SubscriptionResponse {
 	enum Result {
 		SUCCESS = 0;
 		SUBSCRIPTION_DENIED = 1;
-		INSTRUMENT_ID_UNKNOWN = 2;
+		MARKET_ID_UNKNOWN = 2;
 		SYMBOL_UKNOWN = 3;
 		GENERIC_FAILURE = 127;
 	}
 
 	optional sint64 requestId = 1;
-	optional Result result = 2;
-	optional string message = 3;
+	optional sint64 marketId = 2;
+	optional Result result = 3;
+	optional string message = 4;
 }
