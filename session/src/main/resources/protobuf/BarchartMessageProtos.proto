@@ -17,6 +17,8 @@ enum BarchartMessageType {
 	UNKNOWN = 100;
 	SUBSCRIPTION_REQUEST = 101;
 	SUBSCRIPTION_RESPONSE = 102;
+
+	MARKET_ID_AVAILABILITY_MESSAGE = 110;
 }
 
 message SubscriptionRequest {
@@ -43,4 +45,8 @@ message SubscriptionResponse {
 	optional sint64 marketId = 2;
 	optional Result result = 3;
 	optional string message = 4;
+}
+
+message MarketIdAvailabilityMessage {
+	repeated sint64 availableMarketIds = 1;
 }

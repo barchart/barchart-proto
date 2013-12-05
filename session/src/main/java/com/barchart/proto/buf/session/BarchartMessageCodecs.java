@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.openfeed.messaging.MessageCodec;
 
 import com.barchart.proto.streamingfeed.BarchartMessageType;
+import com.barchart.proto.streamingfeed.MarketIdAvailabilityMessage;
 import com.barchart.proto.streamingfeed.SubscriptionRequest;
 import com.barchart.proto.streamingfeed.SubscriptionResponse;
 
@@ -49,6 +50,30 @@ public class BarchartMessageCodecs {
 		@Override
 		public Class<SubscriptionResponse> getMessageClass() {
 			return SubscriptionResponse.class;
+		}
+
+		@Override
+		public int getTypeCode() {
+			return BarchartMessageType.SUBSCRIPTION_RESPONSE_VALUE;
+		}
+
+	};
+
+	public static final MessageCodec<MarketIdAvailabilityMessage> MARKET_ID_AVAILABILITY_MESSAGE_CODEC = new MessageCodec<MarketIdAvailabilityMessage>() {
+
+		@Override
+		public MarketIdAvailabilityMessage decode(byte[] bytes) throws IOException {
+			return MarketIdAvailabilityMessage.parseFrom(bytes);
+		}
+
+		@Override
+		public byte[] encode(MarketIdAvailabilityMessage message) throws IOException {
+			return message.toByteArray();
+		}
+
+		@Override
+		public Class<MarketIdAvailabilityMessage> getMessageClass() {
+			return MarketIdAvailabilityMessage.class;
 		}
 
 		@Override
