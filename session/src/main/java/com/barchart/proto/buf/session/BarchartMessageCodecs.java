@@ -78,7 +78,7 @@ public class BarchartMessageCodecs {
 
 		@Override
 		public int getTypeCode() {
-			return BarchartMessageType.SUBSCRIPTION_RESPONSE_VALUE;
+			return BarchartMessageType.MARKET_ID_AVAILABILITY_MESSAGE_VALUE;
 		}
 
 	};
