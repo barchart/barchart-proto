@@ -227,7 +227,7 @@ message Execution {
 
 	optional sint32 chainIndex = 2;
 
-	optional Account account = 3;
+	optional string portID = 3;
 	optional string gatewayID = 4;
 	optional string instID = 5;
 	optional string orderID = 6;
@@ -235,6 +235,7 @@ message Execution {
 	optional Fill fill = 8;
 	repeated Fill legFills = 9;
 	optional OrderModification modification = 10;
+	optional string userID = 11;
 
 }
 
@@ -285,7 +286,7 @@ message Order {
 
 	optional TimeInForce timeInForce = 4;
 
-	optional Account account = 5;
+	optional string portID= 5;
 	optional string instID = 6;
 	optional sint64 timeCreated = 7;
 	optional sint64 timeModified = 8;
@@ -321,6 +322,8 @@ message Order {
 
 	optional sint64 instPointValMantissa = 28;
 	optional sint32 instPointValExponent = 29;
+
+	optional string userID = 30;
 
 }
 
