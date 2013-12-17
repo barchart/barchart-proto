@@ -38,7 +38,6 @@ message PortfolioRequest {
 	}
 
 	optional RequestType requestType = 1;
-	optional Account account = 2;
 	optional Portfolio portfolio = 3;
 	optional PortfolioPermission permissions = 4;
 	optional string contestID = 5;
@@ -72,7 +71,7 @@ message Portfolio {
 	}
 
 	optional Status status = 1;
-	optional Account account = 2;
+
 	optional PortfolioPermission permission = 3;
 	repeated Position positions = 4;
 	repeated Order openOrders = 5;
@@ -90,21 +89,16 @@ message Portfolio {
 	optional sint64 valAtCloseMantissa = 13;
 	optional sint32 valAtCloseExponent = 14;
 
-	optional sint64 time = 15;
+	optional sint64 created = 15;
+	optional sint64 modified = 16;
 
-}
+	optional string name = 17;
+	optional string userID = 18;
+	optional string gatewayID = 19;
+	optional string id = 20;
 
-message Account {
-
-	optional string name = 1;
-	optional string id = 2;
-	optional string clearingPartyNo = 3;
-	optional string clearingPartyName = 4;
-	optional sint64 created = 5;
-	optional sint64 modified = 6;
-	optional PortfolioPermission permission = 7;
-	optional string userID = 8;
-	optional string gatewayID = 9;
+	optional string clearingPartyNo = 21;
+	optional string clearingPartyName = 22;
 
 }
 
@@ -167,11 +161,14 @@ message OrderRequest {
 	}
 
 	optional RequestType requestType = 1;
-	optional Account account = 2;
+
 	optional string instID = 3;
 	optional Order order = 4;
 	optional string gatewayID = 5;
 	optional string requestID = 6;
+
+	optional string userID = 7;
+	optional string portID = 8;
 
 }
 
@@ -188,7 +185,6 @@ message OrderResponse {
 	optional string responseText = 2;
 	optional Execution execution = 3;
 	optional Order order = 4;
-	optional Account account = 5;
 	optional string gatewayID = 6;
 	optional string requestID = 7;
 	optional string responseID = 8;
