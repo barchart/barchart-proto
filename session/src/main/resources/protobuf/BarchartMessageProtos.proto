@@ -21,6 +21,37 @@ enum BarchartMessageType {
 	MARKET_ID_AVAILABILITY_MESSAGE = 110;
 }
 
+// Session message types
+enum BarchartSessionMessageType {
+
+	// Server feature support
+	CAPABILITIES = 201;
+
+	// Encryption negotiation
+	START_TLS = 210;
+	STOP_TLS = 211;
+
+	// Heartbeat / keepalive
+	PING = 220;
+	PONG = 221;
+
+	// Authentication / account management
+	AUTH_REQUEST = 230;
+	AUTH_RESPONSE = 231;
+	ACCOUNT_REQUEST = 232;
+	ACCOUNT_RESPONSE = 233;
+	PERMISSIONS_REQUEST = 234;
+	PERMISSIONS_RESPONSE = 235;
+
+	// Application session maintenance
+	SESSION_CREATE = 250;
+	SESSION_EXPIRE = 251;
+	SESSION_RESPONSE = 252;
+	SESSION_STATUS = 253;
+	SESSION_RESUME = 254;
+
+}
+
 message SubscriptionRequest {
 	enum Type {
 		BY_SYMBOL = 1;

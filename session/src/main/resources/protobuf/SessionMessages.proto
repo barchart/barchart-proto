@@ -13,33 +13,6 @@ option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
 option optimize_for = SPEED;
 
-// Session message types
-enum SessionMessageType {
-
-	// Server feature support
-	CAPABILITIES = 201;
-
-	// Encryption negotiation
-	START_TLS = 210;
-	STOP_TLS = 211;
-
-	// Heartbeat / keepalive
-	PING = 220;
-	PONG = 221;
-
-	// Authentication
-	AUTH_REQUEST = 230;
-	AUTH_RESPONSE = 231;
-
-	// Session maintenance
-	SESSION_CREATE = 240;
-	SESSION_DESTROY = 241;
-	SESSION_RESPONSE = 242;
-	SESSION_STATUS = 243;
-	SESSION_RESUME = 244;
-
-}
-
 /*
  * Server feature support
  */
@@ -55,9 +28,11 @@ message CapabilitiesMessage {
  */
 
 message StartTLSMessage {
+	optional uint32 reference = 1;
 }
 
 message StopTLSMessage {
+	optional uint32 reference = 1;
 }
 
 /*
@@ -65,12 +40,14 @@ message StopTLSMessage {
  */
 
 message PingMessage {
+	optional uint32 reference = 1;
 	optional sint64 timestamp = 2;
 }
 
 message PongMessage {
-	optional sint64 timestamp = 1;
-	optional sint64 pinged = 2;
+	optional uint32 reference = 1;
+	optional sint64 timestamp = 2;
+	optional sint64 pinged = 3;
 }
 
 /*
@@ -78,14 +55,18 @@ message PongMessage {
  */
 
 message AuthRequestMessage {
-
-	optional string username = 1;
-	optional bytes secret = 2;
-
-	optional string method = 3;
-	optional string scheme = 4;
-	optional string domain = 5;
-
+	optional uint32 reference = 1;
+	optional string username = 2;
+	optional bytes secret = 3;
+	optional string method = 4;
+	optional string scheme = 5;
+	optional string domain = 6;
+	optional string source = 7;
+	optional string device = 8;
+	// If this is a delegated auth request for a downstream client,
+	// set to true and the result will not affect the authorized user
+	// for the current session.
+	optional bool delegation = 9;
 }
 
 message AuthResponseMessage {
@@ -96,9 +77,20 @@ message AuthResponseMessage {
 		LOCKED = 2;
 	}
 
-	optional Status status = 1;
-	optional AccountMessage account = 2;
+	optional uint32 reference = 1;
+	optional Status status = 2;
+	optional AccountMessage account = 3;
 
+}
+
+// Request details for the currently authorized account
+message AccountRequestMessage {
+	optional uint32 reference = 1;
+}
+
+message AccountResponseMessage {
+	optional uint32 reference = 1;
+	optional AccountMessage account = 2;
 }
 
 message AccountMessage {
@@ -117,40 +109,68 @@ message AccountMessage {
 
 }
 
+message PermissionsRequestMessage {
+	optional uint32 reference = 1;
+	optional string prefix = 2;
+	optional string name = 3;
+	// If account is omitted, it will use the currently authorized account.
+	// If another account is specified but not allowed, response will return nothing.
+	optional string account = 4;
+}
+
+message PermissionsResponseMessage {
+
+	message Permission {
+		optional string name = 1;
+		optional bytes value = 2;
+	}
+
+	optional uint32 reference = 1;
+	optional string account = 2;
+	repeated Permission permission = 3;
+
+}
+
 /*
  * Session management
  */
 
 message SessionCreateMessage {
-	optional string account = 1;
-	optional string service = 2;
-	optional string device = 3;
-	optional bool claim = 4;
-	optional bytes context = 5;
+	optional uint32 reference = 1;
+	optional string account = 2;
+	optional string service = 3;
+	optional string device = 4;
+	optional bool claim = 5;
+	optional bytes context = 6;
 }
 
 message SessionResumeMessage {
-	optional string sessionId = 1;
+	optional uint32 reference = 1;
+	optional string sessionId = 2;
 }
 
-message SessionDestroyMessage {
-	optional string sessionId = 1;
+message SessionExpireMessage {
+	optional uint32 reference = 1;
+	optional string sessionId = 2;
 }
 
 message SessionResponseMessage {
-	optional SessionMessage.Status status = 1;
-	optional string requested = 2;
-	optional SessionMessage session = 3;
+	optional uint32 reference = 1;
+	optional SessionMessage.Status status = 2;
+	optional string requested = 3;
+	optional SessionMessage session = 4;
 }
 
 message SessionRenewMessage {
-	repeated string sessionId = 1;
-	optional bytes context = 2;
+	optional uint32 reference = 1;
+	repeated string sessionId = 2;
+	optional bytes context = 3;
 }
 
 message SessionStatus{
-	optional string sessionId = 1;
-	optional SessionMessage.Status status = 2;
+	optional uint32 reference = 1;
+	optional string sessionId = 2;
+	optional SessionMessage.Status status = 3;
 }
 
 
