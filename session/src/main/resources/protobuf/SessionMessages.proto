@@ -17,26 +17,26 @@ option optimize_for = SPEED;
 enum SessionMessageType {
 
 	// Server feature support
-	CAPABILITIES = 1;
+	CAPABILITIES = 201;
 
 	// Encryption negotiation
-	START_TLS = 10;
-	STOP_TLS = 11;
+	START_TLS = 210;
+	STOP_TLS = 211;
 
 	// Heartbeat / keepalive
-	PING = 20;
-	PONG = 21;
+	PING = 220;
+	PONG = 221;
 
 	// Authentication
-	AUTH_REQUEST = 30;
-	AUTH_RESPONSE = 31;
+	AUTH_REQUEST = 230;
+	AUTH_RESPONSE = 231;
 
 	// Session maintenance
-	SESSION_CREATE = 100;
-	SESSION_DESTROY = 101;
-	SESSION_RESPONSE = 102;
-	SESSION_STATUS = 103;
-	SESSION_RESUME = 104;
+	SESSION_CREATE = 240;
+	SESSION_DESTROY = 241;
+	SESSION_RESPONSE = 242;
+	SESSION_STATUS = 243;
+	SESSION_RESUME = 244;
 
 }
 
