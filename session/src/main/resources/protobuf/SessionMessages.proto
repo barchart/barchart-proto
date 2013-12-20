@@ -1,0 +1,178 @@
+/**
+ * Copyright (C) 2011-2013 Barchart, Inc. <http://www.barchart.com/>
+ *
+ * All rights reserved. Licensed under the OSI BSD License.
+ *
+ * http://www.opensource.org/licenses/bsd-license.php
+ */
+
+package com.barchart.proto.buf.session;
+
+// Builder options
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option optimize_for = SPEED;
+
+// Session message types
+enum SessionMessageType {
+
+	// Server feature support
+	CAPABILITIES = 1;
+
+	// Encryption negotiation
+	START_TLS = 10;
+	STOP_TLS = 11;
+
+	// Heartbeat / keepalive
+	PING = 20;
+	PONG = 21;
+
+	// Authentication
+	AUTH_REQUEST = 30;
+	AUTH_RESPONSE = 31;
+
+	// Session maintenance
+	SESSION_CREATE = 100;
+	SESSION_DESTROY = 101;
+	SESSION_RESPONSE = 102;
+	SESSION_STATUS = 103;
+	SESSION_RESUME = 104;
+
+}
+
+/*
+ * Server feature support
+ */
+
+message CapabilitiesMessage {
+	repeated string capability = 1;
+	optional string version = 2;
+	optional string minVersion = 3;
+}
+
+/*
+ * Encryption negotiation
+ */
+
+message StartTLSMessage {
+}
+
+message StopTLSMessage {
+}
+
+/*
+ * Connection heartbeat
+ */
+
+message PingMessage {
+	optional sint64 timestamp = 2;
+}
+
+message PongMessage {
+	optional sint64 timestamp = 1;
+	optional sint64 pinged = 2;
+}
+
+/*
+ * Authentication
+ */
+
+message AuthRequestMessage {
+
+	optional string username = 1;
+	optional bytes secret = 2;
+
+	optional string method = 3;
+	optional string scheme = 4;
+	optional string domain = 5;
+
+}
+
+message AuthResponseMessage {
+
+	enum Status {
+		AUTHENTICATED = 0;
+		INVALID = 1;
+		LOCKED = 2;
+	}
+
+	optional Status status = 1;
+	optional AccountMessage account = 2;
+
+}
+
+message AccountMessage {
+
+	enum Status {
+		ACTIVE = 0;
+		LOCKED = 1;
+	}
+
+	optional string id = 1;
+	optional Status status = 2;
+	optional string scheme = 3;
+	optional string domain = 4;
+	optional string username = 5;
+	optional string billingId = 6;
+
+}
+
+/*
+ * Session management
+ */
+
+message SessionCreateMessage {
+	optional string account = 1;
+	optional string service = 2;
+	optional string device = 3;
+	optional bool claim = 4;
+	optional bytes context = 5;
+}
+
+message SessionResumeMessage {
+	optional string sessionId = 1;
+}
+
+message SessionDestroyMessage {
+	optional string sessionId = 1;
+}
+
+message SessionResponseMessage {
+	optional SessionMessage.Status status = 1;
+	optional string requested = 2;
+	optional SessionMessage session = 3;
+}
+
+message SessionRenewMessage {
+	repeated string sessionId = 1;
+	optional bytes context = 2;
+}
+
+message SessionStatus{
+	optional string sessionId = 1;
+	optional SessionMessage.Status status = 2;
+}
+
+
+message SessionMessage {
+
+	enum Status {
+		ACTIVE = 1;
+		DUPLICATE = 2;
+		EXPIRED = 3;
+		LOCKOUT = 4;
+		INVALID = 5;
+	}
+
+	optional string id = 1;
+	optional Status status = 2;
+	optional string account = 3;
+	optional string service = 4;
+	optional string device = 5;
+	optional sint64 created = 6;
+	optional sint64 renewed = 7;
+	optional uint32 timeout = 8;
+
+	optional bytes context = 9;
+
+}
