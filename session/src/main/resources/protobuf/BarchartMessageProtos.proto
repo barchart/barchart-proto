@@ -82,7 +82,19 @@ message SubscribeMarketIdRequest {
 	optional sint64 marketId = 2;
 }
 
+message UnsubscribeMarketIdRequest {
+	optional sint64 requestId = 1;
+	optional sint64 marketId = 2;
+}
+
 message SubscribeMarketIdResponse {
+	optional sint64 requestId = 1;
+	optional sint64 marketId = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message UnsubscribeMarketIdResponse {
 	optional sint64 requestId = 1;
 	optional sint64 marketId = 2;
 	optional SubscriptionResult result = 3;
