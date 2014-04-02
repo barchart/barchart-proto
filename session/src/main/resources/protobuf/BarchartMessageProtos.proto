@@ -20,6 +20,8 @@ enum BarchartMessageType {
 	SUBSCRIBE_MARKET_ID_REQUEST = 103;
 	SUBSCRIBE_MARKET_ID_RESPONSE = 104;
 	MARKET_ID_AVAILABILITY_MESSAGE = 110;
+	SYMBOL_LOOKUP_REQUEST = 120;
+	SYMBOL_LOOKUP_RESPONSE = 121;
 }
 
 // Session message types
@@ -61,6 +63,8 @@ enum SubscriptionResult {
 	GENERIC_FAILURE = 127;
 }
 
+
+
 message SubscribeSymbolRequest {
 	optional sint64 requestId = 1;
 	optional string symbol = 3;
@@ -83,6 +87,24 @@ message SubscribeMarketIdResponse {
 	optional sint64 marketId = 2;
 	optional SubscriptionResult result = 3;
 	optional string message = 4;	
+}
+
+message SymbolLookupRequest {
+	optional sint64 requestId = 1;
+	optional string symbolQuery = 2;
+}
+
+message SymbolLookupResponse {
+
+	enum Status {
+		SUCCESS = 0;
+		GENERIC_FAILURE = 127;
+	}
+
+	optional sint64 requestId = 1;
+	optional string symbolQuery = 2;
+	optional sint64 marketId = 3;
+	optional Status status = 4;
 }
 
 message MarketIdAvailabilityMessage {

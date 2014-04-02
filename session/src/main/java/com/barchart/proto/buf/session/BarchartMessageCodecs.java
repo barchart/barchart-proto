@@ -10,6 +10,8 @@ import com.barchart.proto.streamingfeed.SubscribeMarketIdRequest;
 import com.barchart.proto.streamingfeed.SubscribeMarketIdResponse;
 import com.barchart.proto.streamingfeed.SubscribeSymbolRequest;
 import com.barchart.proto.streamingfeed.SubscribeSymbolResponse;
+import com.barchart.proto.streamingfeed.SymbolLookupRequest;
+import com.barchart.proto.streamingfeed.SymbolLookupResponse;
 
 public class BarchartMessageCodecs {
 
@@ -129,6 +131,54 @@ public class BarchartMessageCodecs {
 		@Override
 		public int getTypeCode() {
 			return BarchartMessageType.MARKET_ID_AVAILABILITY_MESSAGE_VALUE;
+		}
+
+	};
+
+	public static final MessageCodec<SymbolLookupRequest> SYMBOL_LOOKUP_REQUEST_CODEC = new MessageCodec<SymbolLookupRequest>() {
+
+		@Override
+		public SymbolLookupRequest decode(byte[] bytes) throws IOException {
+			return SymbolLookupRequest.parseFrom(bytes);
+		}
+
+		@Override
+		public byte[] encode(SymbolLookupRequest message) throws IOException {
+			return message.toByteArray();
+		}
+
+		@Override
+		public Class<SymbolLookupRequest> getMessageClass() {
+			return SymbolLookupRequest.class;
+		}
+
+		@Override
+		public int getTypeCode() {
+			return BarchartMessageType.SYMBOL_LOOKUP_REQUEST_VALUE;
+		}
+
+	};
+
+	public static final MessageCodec<SymbolLookupResponse> SYMBOL_LOOKUP_RESPONSE_CODEC = new MessageCodec<SymbolLookupResponse>() {
+
+		@Override
+		public SymbolLookupResponse decode(byte[] bytes) throws IOException {
+			return SymbolLookupResponse.parseFrom(bytes);
+		}
+
+		@Override
+		public byte[] encode(SymbolLookupResponse message) throws IOException {
+			return message.toByteArray();
+		}
+
+		@Override
+		public Class<SymbolLookupResponse> getMessageClass() {
+			return SymbolLookupResponse.class;
+		}
+
+		@Override
+		public int getTypeCode() {
+			return BarchartMessageType.SYMBOL_LOOKUP_RESPONSE_VALUE;
 		}
 
 	};
