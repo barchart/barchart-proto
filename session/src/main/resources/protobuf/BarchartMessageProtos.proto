@@ -15,9 +15,10 @@ option optimize_for = SPEED;
 
 enum BarchartMessageType {
 	UNKNOWN = 100;
-	SUBSCRIPTION_REQUEST = 101;
-	SUBSCRIPTION_RESPONSE = 102;
-
+	SUBSCRIBE_SYMBOL_REQUEST = 101;
+	SUBSCIRBE_SYMBOL_RESPONSE = 102;
+	SUBSCRIBE_MARKET_ID_REQUEST = 103;
+	SUBSCRIBE_MARKET_ID_RESPONSE = 104;
 	MARKET_ID_AVAILABILITY_MESSAGE = 110;
 }
 
@@ -52,30 +53,36 @@ enum BarchartSessionMessageType {
 
 }
 
-message SubscriptionRequest {
-	enum Type {
-		BY_SYMBOL = 1;
-		BY_MARKET_ID = 2;
-	}
-	optional sint64 requestId = 1;
-	optional Type type = 2;
-	optional string symbol = 3;
-	optional sint64 marketId = 4;
+enum SubscriptionResult {
+	SUCCESS = 0;
+	SUBSCRIPTION_DENIED = 1;
+	MARKET_ID_UNKNOWN = 2;
+	SYMBOL_UKNOWN = 3;
+	GENERIC_FAILURE = 127;
 }
 
-message SubscriptionResponse {
-	enum Result {
-		SUCCESS = 0;
-		SUBSCRIPTION_DENIED = 1;
-		MARKET_ID_UNKNOWN = 2;
-		SYMBOL_UKNOWN = 3;
-		GENERIC_FAILURE = 127;
-	}
+message SubscribeSymbolRequest {
+	optional sint64 requestId = 1;
+	optional string symbol = 3;
+}
 
+message SubscribeSymbolResponse {
+	optional sint64 requestId = 1;
+	optional string symbol = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;
+}
+
+message SubscribeMarketIdRequest {
 	optional sint64 requestId = 1;
 	optional sint64 marketId = 2;
-	optional Result result = 3;
-	optional string message = 4;
+}
+
+message SubscribeMarketIdResponse {
+	optional sint64 requestId = 1;
+	optional sint64 marketId = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
 }
 
 message MarketIdAvailabilityMessage {
