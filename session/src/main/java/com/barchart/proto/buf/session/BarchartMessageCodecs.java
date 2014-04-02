@@ -40,27 +40,23 @@ public class BarchartMessageCodecs {
 	public static final MessageCodec<SubscribeSymbolResponse> SUBSCRIBE_SYMBOL_RESPONSE_CODEC = new MessageCodec<SubscribeSymbolResponse>() {
 
 		@Override
-		public SubscribeSymbolResponse decode(byte[] arg0) throws IOException {
-			// TODO Auto-generated method stub
-			return null;
+		public SubscribeSymbolResponse decode(byte[] bytes) throws IOException {
+			return SubscribeSymbolResponse.parseFrom(bytes);
 		}
 
 		@Override
-		public byte[] encode(SubscribeSymbolResponse arg0) throws IOException {
-			// TODO Auto-generated method stub
-			return null;
+		public byte[] encode(SubscribeSymbolResponse message) throws IOException {
+			return message.toByteArray();
 		}
 
 		@Override
 		public Class<SubscribeSymbolResponse> getMessageClass() {
-			// TODO Auto-generated method stub
-			return null;
+			return SubscribeSymbolResponse.class;
 		}
 
 		@Override
 		public int getTypeCode() {
-			// TODO Auto-generated method stub
-			return 0;
+			return BarchartMessageType.SUBSCRIBE_SYMBOL_RESPONSE_VALUE;
 		}
 
 	};
