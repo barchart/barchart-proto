@@ -12,6 +12,8 @@ import com.barchart.proto.streamingfeed.SubscribeSymbolRequest;
 import com.barchart.proto.streamingfeed.SubscribeSymbolResponse;
 import com.barchart.proto.streamingfeed.SymbolLookupRequest;
 import com.barchart.proto.streamingfeed.SymbolLookupResponse;
+import com.barchart.proto.streamingfeed.UnsubscribeMarketIdRequest;
+import com.barchart.proto.streamingfeed.UnsubscribeMarketIdResponse;
 
 public class BarchartMessageCodecs {
 
@@ -111,6 +113,57 @@ public class BarchartMessageCodecs {
 
 	};
 
+	
+	public static final MessageCodec<UnsubscribeMarketIdRequest> UNSUBSCRIBE_MARKET_ID_REQUEST_CODEC = new MessageCodec<UnsubscribeMarketIdRequest>() {
+
+		@Override
+		public UnsubscribeMarketIdRequest decode(byte[] bytes) throws IOException {
+			return UnsubscribeMarketIdRequest.parseFrom(bytes);
+		}
+
+		@Override
+		public byte[] encode(UnsubscribeMarketIdRequest message) throws IOException {
+			return message.toByteArray();
+		}
+
+		@Override
+		public Class<UnsubscribeMarketIdRequest> getMessageClass() {
+			return UnsubscribeMarketIdRequest.class;
+		}
+
+		@Override
+		public int getTypeCode() {
+			return BarchartMessageType.UNSUBSCRIBE_MARKET_ID_REQUEST_VALUE;
+		}
+
+	};
+
+	public static final MessageCodec<UnsubscribeMarketIdResponse> UNSUBSCRIBE_MARKET_ID_RESPONSE_CODEC = new MessageCodec<UnsubscribeMarketIdResponse>() {
+
+		@Override
+		public UnsubscribeMarketIdResponse decode(byte[] bytes) throws IOException {
+			return UnsubscribeMarketIdResponse.parseFrom(bytes);
+		}
+
+		@Override
+		public byte[] encode(UnsubscribeMarketIdResponse message) throws IOException {
+			return message.toByteArray();
+		}
+
+		@Override
+		public Class<UnsubscribeMarketIdResponse> getMessageClass() {
+			return UnsubscribeMarketIdResponse.class;
+		}
+
+		@Override
+		public int getTypeCode() {
+			return BarchartMessageType.UNSUBSCRIBE_MARKET_ID_RESPONSE_VALUE;
+		}
+
+	};
+	
+	
+	
 	public static final MessageCodec<MarketIdAvailabilityMessage> MARKET_ID_AVAILABILITY_MESSAGE_CODEC = new MessageCodec<MarketIdAvailabilityMessage>() {
 
 		@Override
