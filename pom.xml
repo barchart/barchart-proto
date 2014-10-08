@@ -34,7 +34,6 @@ Protocol Layout Project.
 		<module>gateway</module>
 		<module>news</module>
 		<module>session</module>
-		<module>gateway</module>
 
 		<!-- Dead? Bad dependencies
 		<module>assm</module>
