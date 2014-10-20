@@ -26,10 +26,6 @@ enum BarchartMessageType {
 	MARKET_ID_AVAILABILITY_MESSAGE = 110;
 	SYMBOL_LOOKUP_REQUEST = 120;
 	SYMBOL_LOOKUP_RESPONSE = 121;
-  LOGIN_REQUEST = 130;
-  LOGIN_RESPONSE = 131;
-  LOGOUT_REQUEST = 132;
-  LOGOUT_RESPONSE = 133;
 }
 
 // Session message types
@@ -131,19 +127,3 @@ message MarketIdAvailabilityMessage {
 	repeated sint64 availableMarketIds = 1;
 }
 
-message LoginRequest {
-  optional sint64 requestId = 1;
-	optional string username = 2;
-	optional string password = 3;
-}
-
-message LoginResponse {
-  enum Status {
-    SUCCESS = 0;
-    GENERIC_FAILURE = 127;
-  }
-
-  optional sint64 requestId = 1;
-  optional Status status = 2;
-  optional string message = 3;
-}
