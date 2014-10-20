@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.openfeed.messaging.MessageCodec;
 
 import com.barchart.proto.streamingfeed.BarchartMessageType;
-import com.barchart.proto.streamingfeed.LoginRequest;
-import com.barchart.proto.streamingfeed.LoginResponse;
 import com.barchart.proto.streamingfeed.MarketIdAvailabilityMessage;
 import com.barchart.proto.streamingfeed.SubscribeMarketIdRequest;
 import com.barchart.proto.streamingfeed.SubscribeMarketIdResponse;
@@ -19,55 +17,6 @@ import com.barchart.proto.streamingfeed.UnsubscribeMarketIdResponse;
 
 public class BarchartMessageCodecs {
 
-	public static final MessageCodec<LoginRequest> LOGIN_REQUEST_CODEC = new MessageCodec<LoginRequest>() {
-
-		@Override
-		public LoginRequest decode(byte[] bytes) throws IOException {
-			return LoginRequest.parseFrom(bytes);
-		}
-
-		@Override
-		public byte[] encode(LoginRequest message) throws IOException {
-			return message.toByteArray();
-		}
-
-		@Override
-		public Class<LoginRequest> getMessageClass() {
-			return LoginRequest.class;
-		}
-
-		@Override
-		public int getTypeCode() {
-			return BarchartMessageType.LOGIN_REQUEST_VALUE;
-		}
-
-	};
-	
-	
-	public static final MessageCodec<LoginResponse> LOGIN_RESPONSE_CODEC = new MessageCodec<LoginResponse>() {
-
-		@Override
-		public LoginResponse decode(byte[] bytes) throws IOException {
-			return LoginResponse.parseFrom(bytes);
-		}
-
-		@Override
-		public byte[] encode(LoginResponse message) throws IOException {
-			return message.toByteArray();
-		}
-
-		@Override
-		public Class<LoginResponse> getMessageClass() {
-			return LoginResponse.class;
-		}
-
-		@Override
-		public int getTypeCode() {
-			return BarchartMessageType.LOGIN_RESPONSE_VALUE;
-		}
-
-	};
-	
 	public static final MessageCodec<SubscribeSymbolRequest> SUBSCRIBE_SYMBOL_REQUEST_CODEC = new MessageCodec<SubscribeSymbolRequest>() {
 
 		@Override
