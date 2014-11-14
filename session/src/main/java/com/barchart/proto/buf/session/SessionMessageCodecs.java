@@ -175,6 +175,31 @@ public class SessionMessageCodecs {
 
 	};
 
-	
+
+	public static final MessageCodec<SessionResponseMessage> SESSION_RESPONSE_CODEC =
+			new MessageCodec<SessionResponseMessage>() {
+
+				@Override
+				public SessionResponseMessage decode(byte[] bytes) throws IOException {
+					return SessionResponseMessage.parseFrom(bytes);
+				}
+
+				@Override
+				public byte[] encode(SessionResponseMessage message) throws IOException {
+					return message.toByteArray();
+				}
+
+				@Override
+				public Class<SessionResponseMessage> getMessageClass() {
+					return SessionResponseMessage.class;
+				}
+
+				@Override
+				public int getTypeCode() {
+					return BarchartSessionMessageType.SESSION_RESPONSE_VALUE;
+				}
+
+			};
+
 	// TODO:  Add the rest of them. Are they being used?
 }
