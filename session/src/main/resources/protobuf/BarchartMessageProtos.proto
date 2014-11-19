@@ -19,13 +19,21 @@ enum BarchartMessageType {
 	SUBSCRIBE_SYMBOL_RESPONSE = 102;
 	SUBSCRIBE_MARKET_ID_REQUEST = 103;
 	SUBSCRIBE_MARKET_ID_RESPONSE = 104;
-	UNSUBSCRIBE_SYMBOL_REQUEST = 105;
-	UNSUBSCRIBE_SYMBOL_RESPONSE = 106;
-	UNSUBSCRIBE_MARKET_ID_REQUEST = 107;
-	UNSUBSCRIBE_MARKET_ID_RESPONSE = 108;
-	MARKET_ID_AVAILABILITY_MESSAGE = 110;
-	SYMBOL_LOOKUP_REQUEST = 120;
-	SYMBOL_LOOKUP_RESPONSE = 121;
+	SUBSCRIBE_CHANNEL_REQUEST = 105;
+	SUBSCRIBE_CHANNEL_RESPONSE = 106;
+	SUBSCRIBE_EXCHANGE_REQUEST = 106;
+	SUBSCRIBE_EXCHANGE_RESPONSE = 107;
+	UNSUBSCRIBE_SYMBOL_REQUEST = 111;
+	UNSUBSCRIBE_SYMBOL_RESPONSE = 112;
+	UNSUBSCRIBE_MARKET_ID_REQUEST = 113;
+	UNSUBSCRIBE_MARKET_ID_RESPONSE = 114;
+	UNSUBSCRIBE_CHANNEL_REQUEST = 115;
+	UNSUBSCRIBE_CHANNEL_RESPONSE = 116;
+	UNSUBSCRIBE_EXCHANGE_REQUEST = 117;
+	UNSUBSCRIBE_EXCHANGE_RESPONSE = 118;
+	MARKET_ID_AVAILABILITY_MESSAGE = 120;
+	SYMBOL_LOOKUP_REQUEST = 121;
+	SYMBOL_LOOKUP_RESPONSE = 122;
 }
 
 enum SubscriptionResult {
@@ -33,6 +41,8 @@ enum SubscriptionResult {
 	SUBSCRIPTION_DENIED = 1;
 	MARKET_ID_UNKNOWN = 2;
 	SYMBOL_UKNOWN = 3;
+	CHANNEL_UNKNOWN = 4;
+	EXCHANGE_UNKNOWN = 5;
 	GENERIC_FAILURE = 127;
 }
 
@@ -40,7 +50,7 @@ enum SubscriptionResult {
 
 message SubscribeSymbolRequest {
 	optional sint64 requestId = 1;
-	optional string symbol = 3;
+	optional string symbol = 2;
 }
 
 message SubscribeSymbolResponse {
@@ -55,11 +65,6 @@ message SubscribeMarketIdRequest {
 	optional sint64 marketId = 2;
 }
 
-message UnsubscribeMarketIdRequest {
-	optional sint64 requestId = 1;
-	optional sint64 marketId = 2;
-}
-
 message SubscribeMarketIdResponse {
 	optional sint64 requestId = 1;
 	optional sint64 marketId = 2;
@@ -67,9 +72,74 @@ message SubscribeMarketIdResponse {
 	optional string message = 4;	
 }
 
-message UnsubscribeMarketIdResponse {
+message SubscribeChannelRequest {
+	optional sint64 requestId = 1;
+	optional sint64 channel = 2;
+}
+
+message SubscribeChannelResponse {
+	optional sint64 requestId = 1;
+	optional sint64 channel = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message SubscribeExchangeRequest {
+	optional sint64 requestId = 1;
+	optional sint64 exchange = 2;
+}
+
+message SubscribeExchangeResponse {
+	optional sint64 requestId = 1;
+	optional sint64 exchange = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message UnsubscribeSymbolRequest {
+	optional sint64 requestId = 1;
+	optional string symbol = 2;
+}
+
+message UnsubscribeSymbolResponse {
+	optional sint64 requestId = 1;
+	optional string symbol = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message UnsubscribeMarketIdRequest {
 	optional sint64 requestId = 1;
 	optional sint64 marketId = 2;
+}
+
+message UnsubscribeMarketIdResponse {
+	optional sint64 requestId = 1;
+	optional sint64 MarketId = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message UnsubscribeChannelRequest {
+	optional sint64 requestId = 1;
+	optional sint64 channel = 2;
+}
+
+message UnsubscribeChannelResponse {
+	optional sint64 requestId = 1;
+	optional sint64 channel = 2;
+	optional SubscriptionResult result = 3;
+	optional string message = 4;	
+}
+
+message UnsubscribeExchangeRequest {
+	optional sint64 requestId = 1;
+	optional sint64 exchange = 2;
+}
+
+message UnsubscribeExchangeResponse {
+	optional sint64 requestId = 1;
+	optional sint64 exchange = 2;
 	optional SubscriptionResult result = 3;
 	optional string message = 4;	
 }
@@ -93,6 +163,6 @@ message SymbolLookupResponse {
 }
 
 message MarketIdAvailabilityMessage {
-	repeated sint64 availableMarketIds = 1;
+	repeated sint64 availableMarketIds = 1 [packed=true];
 }
 
