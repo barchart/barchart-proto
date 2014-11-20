@@ -17,20 +17,12 @@ enum BarchartMessageType {
 	UNKNOWN = 100;
 	SUBSCRIBE_SYMBOL_REQUEST = 101;
 	SUBSCRIBE_SYMBOL_RESPONSE = 102;
-	SUBSCRIBE_MARKET_ID_REQUEST = 103;
-	SUBSCRIBE_MARKET_ID_RESPONSE = 104;
-	SUBSCRIBE_CHANNEL_REQUEST = 105;
-	SUBSCRIBE_CHANNEL_RESPONSE = 106;
-	SUBSCRIBE_EXCHANGE_REQUEST = 106;
-	SUBSCRIBE_EXCHANGE_RESPONSE = 107;
+	SUBSCRIBE_REQUEST = 103;
+	SUBSCRIBE_RESPONSE = 104;
 	UNSUBSCRIBE_SYMBOL_REQUEST = 111;
 	UNSUBSCRIBE_SYMBOL_RESPONSE = 112;
-	UNSUBSCRIBE_MARKET_ID_REQUEST = 113;
-	UNSUBSCRIBE_MARKET_ID_RESPONSE = 114;
-	UNSUBSCRIBE_CHANNEL_REQUEST = 115;
-	UNSUBSCRIBE_CHANNEL_RESPONSE = 116;
-	UNSUBSCRIBE_EXCHANGE_REQUEST = 117;
-	UNSUBSCRIBE_EXCHANGE_RESPONSE = 118;
+	UNSUBSCRIBE_REQUEST = 113;
+	UNSUBSCRIBE_RESPONSE = 114;
 	MARKET_ID_AVAILABILITY_MESSAGE = 120;
 	SYMBOL_LOOKUP_REQUEST = 121;
 	SYMBOL_LOOKUP_RESPONSE = 122;
@@ -39,14 +31,16 @@ enum BarchartMessageType {
 enum SubscriptionResult {
 	SUCCESS = 0;
 	SUBSCRIPTION_DENIED = 1;
-	MARKET_ID_UNKNOWN = 2;
-	SYMBOL_UKNOWN = 3;
-	CHANNEL_UNKNOWN = 4;
-	EXCHANGE_UNKNOWN = 5;
+	NOT_FOUND = 2;
 	GENERIC_FAILURE = 127;
 }
 
-
+enum SubscriptionType {
+	INSTRUMENT = 1;
+	CHANNEL = 2;
+	EXCHANGE = 3;
+	ALL = 4;
+}
 
 message SubscribeSymbolRequest {
 	optional sint64 requestId = 1;
@@ -60,40 +54,19 @@ message SubscribeSymbolResponse {
 	optional string message = 4;
 }
 
-message SubscribeMarketIdRequest {
+message SubscribeRequest {
 	optional sint64 requestId = 1;
-	optional sint64 marketId = 2;
+	optional SubscriptionType type = 2;
+	optional sint64 id = 3;
+	optional string name = 4;
 }
 
-message SubscribeMarketIdResponse {
+message SubscribeResponse {
 	optional sint64 requestId = 1;
-	optional sint64 marketId = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
-}
-
-message SubscribeChannelRequest {
-	optional sint64 requestId = 1;
-	optional sint64 channel = 2;
-}
-
-message SubscribeChannelResponse {
-	optional sint64 requestId = 1;
-	optional sint64 channel = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
-}
-
-message SubscribeExchangeRequest {
-	optional sint64 requestId = 1;
-	optional sint64 exchange = 2;
-}
-
-message SubscribeExchangeResponse {
-	optional sint64 requestId = 1;
-	optional sint64 exchange = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
+	optional SubscriptionType type = 2;
+	optional sint64 id = 3;
+	optional SubscriptionResult result = 4;
+	optional string message = 5;
 }
 
 message UnsubscribeSymbolRequest {
@@ -108,40 +81,19 @@ message UnsubscribeSymbolResponse {
 	optional string message = 4;	
 }
 
-message UnsubscribeMarketIdRequest {
+message UnsubscribeRequest {
 	optional sint64 requestId = 1;
-	optional sint64 marketId = 2;
+	optional SubscriptionType type = 2;
+	optional sint64 id = 3;
+	optional string name = 4;
 }
 
-message UnsubscribeMarketIdResponse {
+message UnsubscribeResponse {
 	optional sint64 requestId = 1;
-	optional sint64 MarketId = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
-}
-
-message UnsubscribeChannelRequest {
-	optional sint64 requestId = 1;
-	optional sint64 channel = 2;
-}
-
-message UnsubscribeChannelResponse {
-	optional sint64 requestId = 1;
-	optional sint64 channel = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
-}
-
-message UnsubscribeExchangeRequest {
-	optional sint64 requestId = 1;
-	optional sint64 exchange = 2;
-}
-
-message UnsubscribeExchangeResponse {
-	optional sint64 requestId = 1;
-	optional sint64 exchange = 2;
-	optional SubscriptionResult result = 3;
-	optional string message = 4;	
+	optional SubscriptionType type = 2;
+	optional sint64 id = 3;
+	optional SubscriptionResult result = 4;
+	optional string message = 5;
 }
 
 message SymbolLookupRequest {

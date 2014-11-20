@@ -6,14 +6,14 @@ import org.openfeed.messaging.MessageCodec;
 
 import com.barchart.proto.streamingfeed.BarchartMessageType;
 import com.barchart.proto.streamingfeed.MarketIdAvailabilityMessage;
-import com.barchart.proto.streamingfeed.SubscribeMarketIdRequest;
-import com.barchart.proto.streamingfeed.SubscribeMarketIdResponse;
+import com.barchart.proto.streamingfeed.SubscribeRequest;
+import com.barchart.proto.streamingfeed.SubscribeResponse;
 import com.barchart.proto.streamingfeed.SubscribeSymbolRequest;
 import com.barchart.proto.streamingfeed.SubscribeSymbolResponse;
 import com.barchart.proto.streamingfeed.SymbolLookupRequest;
 import com.barchart.proto.streamingfeed.SymbolLookupResponse;
-import com.barchart.proto.streamingfeed.UnsubscribeMarketIdRequest;
-import com.barchart.proto.streamingfeed.UnsubscribeMarketIdResponse;
+import com.barchart.proto.streamingfeed.UnsubscribeRequest;
+import com.barchart.proto.streamingfeed.UnsubscribeResponse;
 
 public class BarchartMessageCodecs {
 
@@ -65,105 +65,109 @@ public class BarchartMessageCodecs {
 
 	};
 
-	public static final MessageCodec<SubscribeMarketIdRequest> SUBSCRIBE_MARKET_ID_REQUEST_CODEC = new MessageCodec<SubscribeMarketIdRequest>() {
+	public static final MessageCodec<SubscribeRequest> SUBSCRIBE_REQUEST_CODEC =
+			new MessageCodec<SubscribeRequest>() {
 
 		@Override
-		public SubscribeMarketIdRequest decode(byte[] bytes) throws IOException {
-			return SubscribeMarketIdRequest.parseFrom(bytes);
+				public SubscribeRequest decode(byte[] bytes) throws IOException {
+					return SubscribeRequest.parseFrom(bytes);
 		}
 
 		@Override
-		public byte[] encode(SubscribeMarketIdRequest message) throws IOException {
+				public byte[] encode(SubscribeRequest message) throws IOException {
 			return message.toByteArray();
 		}
 
 		@Override
-		public Class<SubscribeMarketIdRequest> getMessageClass() {
-			return SubscribeMarketIdRequest.class;
+				public Class<SubscribeRequest> getMessageClass() {
+					return SubscribeRequest.class;
 		}
 
 		@Override
 		public int getTypeCode() {
-			return BarchartMessageType.SUBSCRIBE_MARKET_ID_REQUEST_VALUE;
+					return BarchartMessageType.SUBSCRIBE_REQUEST_VALUE;
 		}
 
 	};
 
-	public static final MessageCodec<SubscribeMarketIdResponse> SUBSCRIBE_MARKET_ID_RESPONSE_CODEC = new MessageCodec<SubscribeMarketIdResponse>() {
+	public static final MessageCodec<SubscribeResponse> SUBSCRIBE_RESPONSE_CODEC =
+			new MessageCodec<SubscribeResponse>() {
 
 		@Override
-		public SubscribeMarketIdResponse decode(byte[] bytes) throws IOException {
-			return SubscribeMarketIdResponse.parseFrom(bytes);
+				public SubscribeResponse decode(byte[] bytes) throws IOException {
+					return SubscribeResponse.parseFrom(bytes);
 		}
 
 		@Override
-		public byte[] encode(SubscribeMarketIdResponse message) throws IOException {
+				public byte[] encode(SubscribeResponse message) throws IOException {
 			return message.toByteArray();
 		}
 
 		@Override
-		public Class<SubscribeMarketIdResponse> getMessageClass() {
-			return SubscribeMarketIdResponse.class;
+				public Class<SubscribeResponse> getMessageClass() {
+					return SubscribeResponse.class;
 		}
 
 		@Override
 		public int getTypeCode() {
-			return BarchartMessageType.SUBSCRIBE_MARKET_ID_RESPONSE_VALUE;
+					return BarchartMessageType.SUBSCRIBE_RESPONSE_VALUE;
 		}
 
 	};
 
-	
-	public static final MessageCodec<UnsubscribeMarketIdRequest> UNSUBSCRIBE_MARKET_ID_REQUEST_CODEC = new MessageCodec<UnsubscribeMarketIdRequest>() {
+
+	public static final MessageCodec<UnsubscribeRequest> UNSUBSCRIBE_REQUEST_CODEC =
+			new MessageCodec<UnsubscribeRequest>() {
 
 		@Override
-		public UnsubscribeMarketIdRequest decode(byte[] bytes) throws IOException {
-			return UnsubscribeMarketIdRequest.parseFrom(bytes);
+				public UnsubscribeRequest decode(byte[] bytes) throws IOException {
+					return UnsubscribeRequest.parseFrom(bytes);
 		}
 
 		@Override
-		public byte[] encode(UnsubscribeMarketIdRequest message) throws IOException {
+				public byte[] encode(UnsubscribeRequest message) throws IOException {
 			return message.toByteArray();
 		}
 
 		@Override
-		public Class<UnsubscribeMarketIdRequest> getMessageClass() {
-			return UnsubscribeMarketIdRequest.class;
+				public Class<UnsubscribeRequest> getMessageClass() {
+					return UnsubscribeRequest.class;
 		}
 
 		@Override
 		public int getTypeCode() {
-			return BarchartMessageType.UNSUBSCRIBE_MARKET_ID_REQUEST_VALUE;
+					return BarchartMessageType.UNSUBSCRIBE_REQUEST_VALUE;
 		}
 
 	};
 
-	public static final MessageCodec<UnsubscribeMarketIdResponse> UNSUBSCRIBE_MARKET_ID_RESPONSE_CODEC = new MessageCodec<UnsubscribeMarketIdResponse>() {
+	public static final MessageCodec<UnsubscribeResponse> UNSUBSCRIBE_RESPONSE_CODEC =
+			new MessageCodec<UnsubscribeResponse>() {
 
 		@Override
-		public UnsubscribeMarketIdResponse decode(byte[] bytes) throws IOException {
-			return UnsubscribeMarketIdResponse.parseFrom(bytes);
+				public UnsubscribeResponse decode(byte[] bytes) throws IOException {
+					return UnsubscribeResponse.parseFrom(bytes);
 		}
 
 		@Override
-		public byte[] encode(UnsubscribeMarketIdResponse message) throws IOException {
+				public byte[] encode(UnsubscribeResponse message) throws IOException {
 			return message.toByteArray();
 		}
 
 		@Override
-		public Class<UnsubscribeMarketIdResponse> getMessageClass() {
-			return UnsubscribeMarketIdResponse.class;
+				public Class<UnsubscribeResponse> getMessageClass() {
+					return UnsubscribeResponse.class;
 		}
 
 		@Override
 		public int getTypeCode() {
-			return BarchartMessageType.UNSUBSCRIBE_MARKET_ID_RESPONSE_VALUE;
+					return BarchartMessageType.UNSUBSCRIBE_RESPONSE_VALUE;
 		}
 
 	};
-	
-	
-	
+
+
+
 	public static final MessageCodec<MarketIdAvailabilityMessage> MARKET_ID_AVAILABILITY_MESSAGE_CODEC = new MessageCodec<MarketIdAvailabilityMessage>() {
 
 		@Override
