@@ -65,8 +65,9 @@ message SubscribeResponse {
 	optional sint64 requestId = 1;
 	optional SubscriptionType type = 2;
 	optional sint64 id = 3;
-	optional SubscriptionResult result = 4;
-	optional string message = 5;
+	optional string name = 4;
+	optional SubscriptionResult result = 5;
+	optional string message = 6;
 }
 
 message UnsubscribeSymbolRequest {
@@ -92,8 +93,9 @@ message UnsubscribeResponse {
 	optional sint64 requestId = 1;
 	optional SubscriptionType type = 2;
 	optional sint64 id = 3;
-	optional SubscriptionResult result = 4;
-	optional string message = 5;
+	optional string name = 4;
+	optional SubscriptionResult result = 5;
+	optional string message = 6;
 }
 
 message SymbolLookupRequest {
