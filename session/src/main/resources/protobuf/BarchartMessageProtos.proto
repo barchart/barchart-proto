@@ -26,6 +26,8 @@ enum BarchartMessageType {
 	MARKET_ID_AVAILABILITY_MESSAGE = 120;
 	SYMBOL_LOOKUP_REQUEST = 121;
 	SYMBOL_LOOKUP_RESPONSE = 122;
+	SUPPORTED_EXCHANGEAS_REQUEST = 130;
+	SUPPORTED_EXCHANGEAS_RESPONSE = 131;
 }
 
 enum SubscriptionResult {
@@ -120,3 +122,13 @@ message MarketIdAvailabilityMessage {
 	repeated sint64 availableMarketIds = 1 [packed=true];
 }
 
+message SupportedExchangesRequest {
+	optional sint64 requestId = 1;
+	optional string address = 2;
+}
+
+message SupportedExchangesResponse {
+	optional sint64 requestId = 1;
+	optional string address = 2;
+	repeated string supportedExchanges = 3;
+}
