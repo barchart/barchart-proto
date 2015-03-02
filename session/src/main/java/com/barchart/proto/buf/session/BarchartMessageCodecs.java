@@ -10,6 +10,8 @@ import com.barchart.proto.streamingfeed.SubscribeRequest;
 import com.barchart.proto.streamingfeed.SubscribeResponse;
 import com.barchart.proto.streamingfeed.SubscribeSymbolRequest;
 import com.barchart.proto.streamingfeed.SubscribeSymbolResponse;
+import com.barchart.proto.streamingfeed.SupportedExchangesRequest;
+import com.barchart.proto.streamingfeed.SupportedExchangesResponse;
 import com.barchart.proto.streamingfeed.SymbolLookupRequest;
 import com.barchart.proto.streamingfeed.SymbolLookupResponse;
 import com.barchart.proto.streamingfeed.UnsubscribeRequest;
@@ -240,4 +242,53 @@ public class BarchartMessageCodecs {
 
 	};
 
+	public static final MessageCodec<SupportedExchangesRequest> SUPPORTED_EXCHANGES_REQUEST_CODEC =
+			new MessageCodec<SupportedExchangesRequest>() {
+
+				@Override
+				public SupportedExchangesRequest decode(byte[] bytes) throws IOException {
+					return SupportedExchangesRequest.parseFrom(bytes);
+				}
+
+				@Override
+				public byte[] encode(SupportedExchangesRequest message) throws IOException {
+					return message.toByteArray();
+				}
+
+				@Override
+				public Class<SupportedExchangesRequest> getMessageClass() {
+					return SupportedExchangesRequest.class;
+				}
+
+				@Override
+				public int getTypeCode() {
+					return BarchartMessageType.SUPPORTED_EXCHANGEAS_REQUEST_VALUE;
+				}
+
+			};
+
+	public static final MessageCodec<SupportedExchangesResponse> SUPPORTED_EXCHANGES_RESPONSE_CODEC =
+			new MessageCodec<SupportedExchangesResponse>() {
+
+				@Override
+				public SupportedExchangesResponse decode(byte[] bytes) throws IOException {
+					return SupportedExchangesResponse.parseFrom(bytes);
+				}
+
+				@Override
+				public byte[] encode(SupportedExchangesResponse message) throws IOException {
+					return message.toByteArray();
+				}
+
+				@Override
+				public Class<SupportedExchangesResponse> getMessageClass() {
+					return SupportedExchangesResponse.class;
+				}
+
+				@Override
+				public int getTypeCode() {
+					return BarchartMessageType.SUPPORTED_EXCHANGEAS_RESPONSE_VALUE;
+				}
+
+			};
 }
