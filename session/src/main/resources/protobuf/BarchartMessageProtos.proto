@@ -130,5 +130,6 @@ message SupportedExchangesRequest {
 message SupportedExchangesResponse {
 	optional sint64 requestId = 1;
 	optional string address = 2;
-	repeated string supportedExchanges = 3;
+	optional string availabilityZone = 3;
+	repeated string supportedExchanges = 4;
 }
